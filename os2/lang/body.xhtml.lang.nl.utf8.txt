@@ -1,0 +1,33 @@
+# ***** Orca Search - Dutch [Nederlands] body.xhtml.php Language File **********
+# This file contains language strings used in the body.xhtml.php
+# output file. See the readme.txt file for installation and usage
+# instructions.
+#
+# Compatible with 2.4
+#
+# Works with page charset of:
+#   - UTF-8
+#
+# Translated by A. de Vries
+# *******************************************************************
+
+
+# body.xhtml.php
+000=Resultaten <strong>%1$d</strong> - <strong>%2$d</strong> van <strong>%3$d</strong> voor <strong>%4$s</strong> (<strong>%5$s</strong> seconden)
+001=Kan geen verbinding maken met de database.
+002=De zoekdatabase wordt momenteel bijgewerkt; probeer het over een paar minuten nogmaals.
+003=De volgende zoekwoorden zijn genegeerd: <strong>%s</strong>
+004=Vorige
+005=Volgende
+006=Geen resultaten gevonden voor <strong>%s</strong>
+007=Probeer deze zoekopdracht in <a href="%1$s?q=%2$s">alle categoriën</a>?
+008=Geef uw zoekopdracht hieronder.
+009=Zoekwoorden met minder dan %d tekens worden genegeerd
+00a=Groepeer zoekwoorden tussen aanhalingstekens (&quot;&quot;) om naar zinsdelen te zoeken
+00b=Begin zoekwoorden met een plus-teken (+) om ze belangrijk te maken
+00c=Begin met een min-teken (-) of uitroepteken (!) om zoekwoorden uit te sluiten
+00d=in
+00e=alle categoriën
+00f=Zoek
+00g=Categorie
+00h=Zoeken in categorie: <strong>%s</strong>

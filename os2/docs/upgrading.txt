@@ -1,0 +1,52 @@
+  The Orca Search is designed to make upgrading easy!  Upgrade code is
+included which will silently upgrade any version 2.0 Final or later, to
+the version of the release you have just downloaded.
+
+NOTE: If you are currently using a release marked as "beta" or "release
+candidate" you will not be able to upgrade your search installation
+normally.  The automatic upgrade included with each final release will
+NOT work properly on beta releases.  To "upgrade" a beta release, I
+recommend installing final versions into a new directory and specifying
+a new MySQL table, then importing your previous settings manually.
+
+To upgrade your Orca Search, just follow these simple steps:
+
+   i. Extract all the files from this package into a temporary directory
+      on your computer.
+
+  ii. If you have a config.ini.php file in your existing installation,
+      skip to step vii, otherwise go on to step iii.
+
+  -----
+ iii. From your *existing* installation on your webserver, download and
+      open the "config.php" file in any text editor.
+
+  iv. From the temporary directory, open the "config.ini.php" file so
+      you have two text editor windows open.
+
+   v. Paste the seven config variables from "config.php" into the new
+      "config.ini.php", overwriting the ones that are already there.
+      Save this file.  From now on, the setup details will be contained
+      in this new ini file which you won't have to overwrite.
+
+  vi. Upload "config.ini.php" into the directory of your existing
+      installation.
+
+  -----
+ vii. Overwrite all files in your installation directory, except for
+      "config.ini.php", with the corresponding files from the temporary
+      directory (the new version files).
+
+      NOTE: if you have made changes to your "control.css" and/or
+        "body.xhtml.css" stylesheets, you may want to keep your old
+        copies and merge any new styles in as needed.
+
+viii. IMPORTANT: Open both your existing "config.ini.php" and the new
+      copy from the zip package; new config lines may have been added or
+      other changes may have been made.  Manually copy these changes
+      from new file to your existing file.
+
+      NOTE: "config.ini.php" variables have changed in version 2.3
+
+  ix. On the next visit to the Control Panel or search interface with
+      any web browser, the Orca Search will be automatically upgraded!

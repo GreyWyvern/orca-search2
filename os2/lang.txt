@@ -1,0 +1,458 @@
+# ***** Orca Search - English Language File *************************
+# This file contains language strings for the Control Panel and
+# Spider output. See the readme.txt file for installation and usage
+# instructions.
+#
+# Compatible with: 2.3a
+#
+# If you translate this file into your native language, please send
+# me a copy so I can include it in the search package.  Your name
+# will appear in the header of the file you translate :)
+#
+# Works with Control Panel Display Charset of:
+#   - ISO-8859-1
+#   - UTF-8
+# *******************************************************************
+
+# New for 2.3a
+# 01y, 0jn, 0jo, 0m2, 0m3
+
+
+# Login
+000=Orca Search Control Panel Login
+001=Name
+002=Password
+003=Login
+
+
+# Misc terms
+010=Submit
+011=Confirm Changes
+012=Note
+013=Important
+014=days
+015=hours
+016=minutes
+017=seconds
+018=ago
+019=Always
+01a=Hourly
+01b=Daily
+01c=Weekly
+01d=Monthly
+01e=Yearly
+01f=Never
+01g=Not Found
+01h=Blocked
+01i=Unlisted
+01j=OK
+01k=Orphan
+01l=Unread
+01m=Indexed
+01n=Added
+01o=Unknown
+01p=Dump
+01q=Name
+01r=Value
+01s=Cancel
+01t=Title
+01u=Set
+01v=Go
+01w=Previous
+01x=Next
+01y=Not OK
+
+
+# Menu and Misc
+020=Logout
+021=Statistics
+022=Spider
+023=Entry List
+024=Search
+025=Tools
+026=Control Panel
+027=URI
+
+
+# Error messages
+030=Error
+031=Another user logged in while you were idle
+032=Username and/or password incorrect
+033=Another user is already logged in (Last action was %s seconds ago)
+034=Error initializing Javascript Writer
+035=No category selected
+036=Category does not exist
+037=%1$s error at URI: %2$s
+038=%1$s redirected to: %2$s
+039=Could not connect to host: %s
+03a=Invalid URI
+03b=Specified URI already exists in the database
+03c=Error adding %s to the database
+03d=Could not find selected entry
+03e=Invalid character in Indexed MIME-types
+03f=Invalid character in Ignore Extensions
+03g=Invalid character in Remove Elements
+03h=Invalid character in Increase HTML Element Weight
+03i=Invalid character in charset value
+03j=No matching domains!
+03k=Could not open Sitemap for writing!
+03l=Invalid character in Replace Extensions...
+03m=Could not connect to database
+03n=Your session has expired due to inactivity
+03o=Could not delete temporary file: %s
+
+
+# Success messages
+060=%s added successfully
+061=Spider cancelled
+062=Sitemap written successfully
+
+
+# Tools panel strings
+090=Control Panel Options
+091=Display Charset
+092=You should set this value to match the language file being used, and if possible, the majority of pages indexed
+093=Sitemap Options
+094=Enable Sitemap
+095=Path to Sitemap
+096=Target file not found at this path!
+097=Target file not writable!
+098=Enable GZip Compression
+099=PHP Zlib library not detected!
+09a=Domain
+09b=Include URIs only from this domain
+09c=None available
+09d=Include Unlisted Entries
+09e=Include entries marked as Unlisted in the Sitemap?
+09f=Enable Automatic Change Frequency
+09g=Attempt to assign an appropriate <em>changefreq</em> value to each entry, based upon how often new content is found there.
+09h=Write Sitemap
+09i=Compile your Sitemap without spidering
+09j=This operation is provided for the purposes of testing and convenience.  Under normal operation, the Sitemap is automatically rewritten after each spidering event.
+09k=Write to Sitemap File
+09l=JWriter Options
+09m=Enable JWriter
+09n=JWriter Script URI
+09o=Javascript writer module not found at this path!
+09p=Path to Offline Javascript File
+09q=Remove URI Base
+09r=The following base URIs will be removed from offline links to make search links relative rather than full.  Plain text matches only.
+09s=Directory Index Filename
+09t=What does your offline mirroring program name files found for &quot;/&quot; URIs?
+09u=Replace Extensions
+09v=If checked, the JWriter will replace or add an appropriate file extension to each entry based on its content type.
+09w=
+09x=
+09y=Results Per Page
+09z=Number of results to display per page before pagination
+0a0=Result Template
+0a1=The (X)HTML template to use for displaying each listed result.  To restore the default, just submit a blank textarea.
+0a2=JWriter Activation
+0a3=Write Offline Javascript File
+0a4=Write to Javascript File
+0a5=Your search index table is currently <strong>%1$sMB</strong>.  Your PHP <em>memory_limit</em> is currently <strong>%2$s</strong>.
+0a6=Configuration Variable Dump
+0a7=Output the config variable table for copying and pasting, or saving as an HTML file.
+0a8=JWriter malfunction
+0a9=Check <a href="%s">the JWriter URI</a> for more information.
+
+
+# Search panel strings
+0c0=Search Cache Operations
+0c1=Manually Purge Cache
+0c2=Usually done automatically whenever the search database changes
+0c3=Limit Cache Size
+0c4=A cache limit of 0kB disables caching
+0c5=Enable GZip'd Cache
+0c6=Your <strong>%1$s</strong> cached entries average <strong>%2$s</strong>kB per entry.
+0c7=The cache is currently empty.
+0c8=PHP version 4.3.0 or higher and the ZLib library are required to enable this option.
+0c9=Searching Options
+0ca=Ignore URI Matches
+0cb=Lines prefixed with an asterisk (*) will be treated as simple regular expressions; plain text matches otherwise.
+0cc=Limit Number of Terms
+0cd=The maximum number of discrete terms allowed in any search query
+0ce=Terms
+0cf=Term Length Lower Limit
+0cg=Terms with a character length below this value will be ignored
+0ch=Characters
+0ci=Match Weighting
+0cj=Score applied to matches found in specific areas
+0ck=
+0cl=Page Body
+0cm=Keywords
+0cn=Weighted Elements
+0co=Applies extra weight to elements listed in the Increase Element Weight textarea below
+0cp=Bonus Multipliers
+0cq=Multi-term Bonus
+0cr=Important (+) Bonus
+0cs=Latin Accent Matching
+0ct=Only works properly with UTF-8 (with <em>UTF-8 Indexing</em> enabled) or ISO-8859-1 encoding.
+0cu=Increase Element Weight
+0cv=Text within these HTML elements receive an additional score according to the Weighted Elements value above.
+0cw=Changes will not take effect until the next spidering event.
+0cx=Maximum Returned Results
+0cy=Results
+0cz=Maximum Matched Text Displayed
+0d0=Show Orphans
+0d1=Display orphaned pages in search results?
+0d2=Purge
+0d3=Current cache size
+
+
+# Entry List panel strings
+0f0=No pages in index
+0f1=Add Entry
+0f2=Add an entry manually
+0f3=Assign a new Category
+0f4=Category
+0f5=Select a Category
+0f6=New Category
+0f7=Cancel this operation
+0f8=
+0f9=Bulk Set Sitemap Change Frequency
+0fa=Change Frequency
+0fb=Bulk Set Sitemap Priority
+0fc=Priority
+0fd=Edit this entry
+0fe=Add entry
+0ff=Respider
+0fg=Character Encoding
+0fh=None specified
+0fi=
+0fj=Description
+0fk=Keywords
+0fl=Toggle Unlist
+0fm=Data Lock
+0fn=Unlisted
+0fo=Sitemap
+0fp=List in Sitemap
+0fq=Data locked
+0fr=
+0fs=Change Frequency
+0ft=Priority
+0fu=URI's you submit will not be indexed until the next spider event. Until then they will be marked with status &quot;Added&quot; and not listed in any search results.
+0fv=Status
+0fw=Edit
+0fx=Filters
+0fy=Show Updated listings only
+0fz=No Updated listings to show
+0g0=Match
+0g1=Filter by Text Match
+0g2=Exclude
+0g3=Exclude by Text Match
+0g4=Filter by Category
+0g5=Filter by Status
+0g6=Show all
+0g7=Are you sure you wish to respider the selected entries?
+0g8=Invalid MIME-type: %s
+0g9=This page cannot be listed
+0ga=Toggle Data Lock
+0gb=Other Options
+0gc=
+0gd=
+0ge=Set selected filters
+0gf=Clear
+0gg=Remove all filters
+0gh=Select all entries
+0gi=Apply an action to selected entries
+0gj=Select action
+0gk=Delete
+0gl=
+0gm=
+0gn=Change Category
+0go=Toggle Sitemap Unlist
+0gp=
+0gq=Set Sitemap Changefreq
+0gr=Set Sitemap Priority
+0gs=
+0gt=Apply selected action
+0gu=or
+0gv=Page
+0gw=Show this many entries per page
+0gx=Not listed in Sitemap
+0gy=No matching entries
+0gz=Clear filters?
+0h0=Remove all filters
+0h1=Do you really want to delete the selected entries?
+
+
+# Spider panel strings
+0i0=Commit Spider Manually
+0i1=Force Spider
+0i2=Force
+0i3=The database is currently locked.
+0i4=A spider event is currently in progress
+0i5=However, it has been more than %s seconds since the spider's last action. If the database is &quot;stuck&quot; you can force a spider using this button.
+0i6=Start Spider
+0i7=Make sure you have confirmed all desired options below (did you press the &quot;Submit&quot; button?) before starting the spider!
+0i8=Seamless Spidering
+0i9=Previous Spider
+0ia=There has not yet been a Spidering event
+0ib=Spidering Options
+0ic=Spider Script URI
+0id=Spider not found at this URI!
+0ie=Starting URIs
+0if=Use Crontab Trigger
+0ig=Enabling this option means you're only half done. See the <em>readme.txt</em> for information on setting up a crontab to execute the spider.
+0ih=Interval Between Spiders
+0ii=A value of zero (0) disables automatic spidering
+0ij=Page Index Limit
+0ik=Default Category
+0il=Default category for new entries
+0im=Automatic Categorisation
+0in=Instruct the spider to assign specified categories to new entries based on URI/Title text matching. See the <em>readme.txt</em> for more details.
+0io=Email Results
+0ip=Send a summary of spider results to this address
+0iq=To use file-indexing extensions, you must enable script writing permission on this directory
+0ir=Full scan
+0is=UTF-8 Indexing
+0it=Allows a larger range of searchable and displayable characters. Enable this option <em>only</em> if you are spidering UTF-8 encoded pages and serving your search results in UTF-8 as well.
+0iu=<strong>%s%%</strong> of the pages currently indexed are served with a UTF-8 character encoding.
+0iv=Indexed MIME-types
+0iw=Allowed Domains
+0ix=No wildcards; fully qualified domain names only; one entry per line in order of decreasing preference.
+0iy=Ignore URI Matches
+0iz=Lines prefixed with an asterisk (*) will be treated as simple regular expressions; plain text matches otherwise.
+0j0=Ignore Extensions
+0j1=Separate each entry by spaces.
+0j2=Remove Title Strings
+0j3=The following strings of text will be stripped from the HTML title of found files.
+0j4=Remove Elements
+0j5=The listed HTML elements will be removed <em>along with their contents</em> before indexing.
+0j6=Accepts simple CSS syntax selectors separated by spaces.  See the <em>readme.txt</em> for more information.
+0j7=Require URI Matches
+0j8=Only URIs matching at least one of these entries will be spidered.
+0j9=Force a rescan of all entries, even if they don't seem to have been updated since the previous spider
+0ja=Spider malfunction
+0jb=Check <a href="%s">the spider URI</a> for more information.
+0jc=Accept Cookies
+0jd=Additional Accepted MIME-types
+0je=Files with MIME-types listed here will be included when spidering, but not indexed.  One entry per line
+0jf=Pages with these MIME-types will have their content stored for searching
+0jg=Link Depth Limit
+0jh=The maximum number of links to follow away from your starting URIs
+0ji=Spider can be triggered either by Crontab or by PHP-based self trigger
+0jk=or
+0jl=With this option enabled, the spider works on a <em>copy</em> of the index table, preventing display of the <q>The search database is currently being updated</q> message.  Requires additional MySQL storage space.
+0jm=Handler not found!  %s
+0jn=File Size Limit
+0jo=Files of sizes over this limit will be blocked to prevent out-of-memory errors
+
+
+# Statistics panel strings
+0l0=Spider Statistics
+0l1=Last Spider Time
+0l2=Last Spider Execution Time
+0l3=The previous Spider took this amount of time to index all requested pages
+0l4=Total Data Transferred
+0l5=Total Indexed Data
+0l6=Efficiency
+0l7=Indexed Pages
+0l8=Accepted Pages
+0l9=A count of all pages with either the OK or Orphan status
+0la=A count of all pages with the OK status
+0lb=Categories
+0lc=Content Encoding Makeup
+0ld=A breakdown of all page encodings encountered by the spider
+0le=None specified
+0lf=Query Log Options
+0lg=Reset Query Log
+0lh=Manually erase the entire cache and the stored log of all requested search queries.
+0li=Reset
+0lj=Do you really want to erase the entire Search Query Log?
+0lk=Interval Between Query Log Resets
+0ll=Periodic resets keep this table from growing out of control
+0lm=Most recent query returned this many results
+0ln=Last Query Log Reset
+0lo=Query Log
+0lp=Query
+0lq=Sort by Query
+0lr=Hits
+0ls=Sort by number of Hits
+0lt=Last Request
+0lu=Sort by Last Request time
+0lv=Total Pages
+0lw=Results
+0lx=Search Statistics
+0ly=Average Searches Per Hour
+0lz=Average Results Returned Per Query
+0m0=Based on the most recent instance of each query
+0m1=Average Searches Per Day
+0m2=Query Log results for %s to %s.
+0m3=Triggered by search interface at:
+
+
+# JWriter
+0o0=Offline Search Engine Writer
+0o1=Writing to Javascript File
+0o2=Incorrect key to initiate JWriter
+0o3=Linkback URI required
+0o4=Results <strong>%1$s</strong> - <strong>%2$s</strong> of <strong>%3$s</strong> for <strong>%4$s</strong> (<strong>%5$s</strong> seconds)
+0o5=These terms were ignored
+0o6=No matches found for <strong>%s</strong>
+0o7=Please wait...
+0o8=Try this search in <a href="%s">all categories</a>?
+0o9=Please enter a search query
+0oa=in
+0ob=all categories
+0oc=Success!
+0od=Process took <strong>%ss</strong>
+0oe=<strong>%1$skB</strong> online index was compressed by <strong>%2$s%%</strong> to <strong>%3$skB</strong>.
+0of=Return to Control Panel
+
+
+# Spider
+0p0=Spider must be initialized either automatically or through the form on the control panel.
+0p1=Page limit reached
+0p2=Incorrect key to initiate spider
+0p3=Error: Cron function not enabled
+0p4=Spider initiated at %1$s via %2$s
+0p5= by %s
+0p6=Orca Search Spidering Engine
+0p7=Spider Ready
+0p8=Accepted cookies
+0p9=Checking robots.txt...
+0pa=Required directory /temp not found or could not be opened!
+0pb=Index table already locked!
+0pc=Aborting scan
+0pd=Another scan is already in progress
+0pe=Index table locked
+0pf=Scanning...
+0pg=Spider cancelled by user
+0ph=%1$s error at %2$s !  (Referer: %3$s )
+0pi=%1$s was redirected to: %2$s !  (Referer: %3$s )
+0pj=%s was updated to new Location
+0pk=%s was removed in favour of new Location
+0pl=%1$s removed.  Identical content at %2$s  (Referer: %3$s )
+0pm=%1$s ignored.  Identical content at %2$s  (Referer: %3$s )
+0pn=%s links scanned successfully
+0po=Processing time
+0pp=Processing time per link
+0pq=New pages found
+0pr=Existing pages updated
+0ps=Indexed pages not found
+0pt=Indexed pages orphaned
+0pu=Existing pages blocked
+0pv=Generating Sitemap
+0pw=Could not open Sitemap for writing!
+0px=Sitemap written successfully
+0py=Success!
+0pz=The following links were scanned
+0q0=Starting URI was blocked
+0q1=Return to Control Panel
+0q2=Process Information
+0q3=Applicable robots.txt rules
+0q4=Time taken
+0q5=Spider results
+0q6=Error while processing
+0q7=Aborting spider...
+0q8=Error level
+0q9=Details
+0qa=Line number
+0qb=Timed out while receiving data from %s !
+0qc=%1$s not indexed; redirected via META refresh to %2$s
+0qd=%s deleted in favour of new URI
+0qe=Spider is waiting for crontab trigger
+0qf=Could not access data in /temp directory!
+0qg=Operation

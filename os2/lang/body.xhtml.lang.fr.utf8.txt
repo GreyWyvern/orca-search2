@@ -1,0 +1,33 @@
+# ***** Orca Search - French body.xhtml.php Language File **********
+# This file contains language strings used in the body.xhtml.php
+# output file. See the readme.txt file for installation and usage
+# instructions.
+#
+# Compatible with 2.4
+#
+# Works with page charset of:
+#   - UTF-8
+#
+# Translation by Kelljery
+# *******************************************************************
+
+
+# body.xhtml.php
+000=Résultat(s) <strong>%1$d</strong> - <strong>%2$d</strong> de <strong>%3$d</strong> pour <strong>%4$s</strong> (<strong>%5$s</strong> secondes)
+001=Connexion impossible avec la base de données.
+002=La base de donnée du moteur de recherche est en cours de mise à jour; Veuillez réssayer dans quelques minutes.
+003=Ces termes ont été ignorés: <strong>%s</strong>
+004=Précédent
+005=Suivant
+006=Aucune correspondance trouvée pour <strong>%s</strong>
+007=Essayer cette recherche dans <a href="%1$s?q=%2$s">toutes les catégories</a>?
+008=Veuillez entrer les termes pour votre recherche ci-dessous.
+009=Les termes de recherche de moins de %d caractères sont ignorés
+00a=Placez votre terme de recherche entre guillement (&quot;&quot;) pour rechercher une phrase exacte
+00b=Placez un signe plus (+) pour donner plus d'importance à un mot
+00c=Placez un signe moins (-) ou un point d'exclamation (!) pour exclure un mot de la recherche
+00d=dans
+00e=toutes les catégories
+00f=Go
+00g=Catégorie
+00h=Recherche dans la catégorie: <strong>%s</strong>

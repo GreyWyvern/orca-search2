@@ -1,0 +1,171 @@
+Orca Search - FAQ
+
+*** Contents
+1. When executing the spider, this error message appears: "Undefined
+index: queue"
+
+2. When executing the spider, this error message appears: "fsockopen():
+unable to connect to www.example.com:80"
+
+3. No matter what I do, this/these entries are marked as "Orphan".  Is
+this bad?
+
+4. I want users to be able to search through all of my pages even though
+some are marked as "Orphan".
+
+5. There are many pages at my website which I don't want to spider, but
+they are in many different locations.  Do I have to make up "Ignore URI"
+rules for all of them?
+
+6. What is a phpinfo(); file?
+
+7. Can I run this script in PHPs safe mode?
+
+8. I set up a crontab, but it does not email me automatically.  How can
+I make it do so?
+
+9. Can I remove the "An Orca Script" footer from the body.xhtml.php?
+
+
+
+*** Answers
+------------------------------------------------------------------------
+1. When executing the spider, this error message appears: "Undefined
+index: queue"
+
+   This means your Starting URI(s) was/were rejected by the parser.
+Thus when the spider tries to go to the first URI in the queue, it finds
+that the queue is empty.
+
+Return to the Control Panel and double check that you have typed in a
+valid Starting URI, and that no other rules you have inserted in the
+Spider Options conflict and actually block your Starting URI.
+
+
+------------------------------------------------------------------------
+2. When executing the spider, this error message appears: "fsockopen():
+unable to connect to www.example.com:80"
+
+   First, double check your Starting URIs to see if you may have mis-
+typed them and pointed to a non existant domain.
+
+Next, a few hosting companies specifically block traffic originating
+from one of their servers, trying to contact itself via HTTP.  I plan to
+include a list of these hosting companies here, eventually as there is
+little I can do within the script to overcome this.  The best thing to
+do, if you find yourself in this situation, would be to host your spider
+on a different domain than the files you are indexing, if possible.
+
+Please let me know if you are getting this error, so I can see if it
+should be added to my list.
+
+
+------------------------------------------------------------------------
+3. No matter what I do, this/these entries are marked as "Orphan".  Is
+this bad?
+
+   Orphan pages are pages not linked to any document in a domain listed
+in your Allowed Domains list.  So, if you add http://www.example.com to
+your Entry List manually, but do not include www.example.com in your
+Allowed Domains, it will be marked as an Orphan no matter what else you
+do.
+
+Sometimes this is desirable behavior, since you can specifically add
+pages this way, and prevent the spider from grabbing other pages at that
+domain, without resorting to complicated Ignore URI rules.  For example,
+if you want to index *only* the front page of Yahoo!, but do not want to
+spider any links there, you can manually add http://www.yahoo.com/ to
+your Entry List, but *don't* add www.yahoo.com as an Allowed Domain.
+This means that all the links the spider finds on this page which stay
+within the www.yahoo.com domain will be automatically discarded.
+
+It is very important to note that Orphaned pages ARE STILL INDEXED.
+They will be scanned for content and stored for searching, even though
+they won't appear in any search results by default.  If you would like
+to display Oprhaned pages in your search results, you can switch on the
+"Show Orphans" option in the Search Panel.
+
+
+------------------------------------------------------------------------
+4. I want users to be able to search through all of my pages even though
+some are marked as "Orphan".
+
+   Go to the Search Panel, and check the Show Orphans option.  Orphan
+pages will now appear in your search results.
+
+
+------------------------------------------------------------------------
+5. There are many pages at my website which I don't want to spider, but
+they are in many different locations.  Do I have to make up "Ignore URI"
+rules for all of them?
+
+   Not at all.  The easiest way to deal with a situation like this is
+to create Ignore URI rules for the easiest subsets to block, and then
+simply allow the spider to crawl all the rest.  Once the spider has run,
+go to the Entry List panel and manually Unlist the pages which you don't
+want to appear in your search results.
+
+   When you manually Unlist an entry, the "Unlisted" status will stay
+with it from spider to spider without further input.  To relist it
+again, simply do so from the Entry List panel.
+
+
+------------------------------------------------------------------------
+6. What is a phpinfo(); file?
+
+A phpinfo(); file is a simple text file containing the following line:
+
+<?php phpinfo(); ?>
+
+Save that text file as info.php and upload it to your server.  When you
+request this file through a web browser, it will display a great deal of
+useful information about your server's PHP installation.
+
+
+------------------------------------------------------------------------
+7. Can I run this script in PHPs Safe Mode?
+
+Yes you can, but there are a few limitations.  These limitations are as
+follows:
+
+ a) The Spider cannot extend the script timeout limit.  If your database
+is large, the spider may time out before it spiders all pages.  This
+also applies to the JWriter.
+
+ b) The Spider may be unable to remove temporarily downloaded binary
+data from the /temp directory, requiring you to "clean it out" every now
+and then.
+
+... More limitations of Safe Mode may arise as I hear about them.
+
+
+------------------------------------------------------------------------
+8. I set up a crontab, but it does not email me automatically.  How can
+I make it do so?
+
+This is usually the case when you are required to set up the crontab
+manually, rather than through a host's control panel.  If so, you will
+need to add the code to email you as an addition to the crontab command.
+
+The command to add to your crontab is as below:
+
+| /usr/bin/mail -s "Email subject" address@example.com
+
+This will send the output from your crontab, with the subject as listed,
+to the email address provided.  /usr/bin/mail is the path to your
+server's sendmail service.  Your completed crontab command will look
+like this (all on one line):
+
+/usr/bin/php /path/to/the/spider.php | /usr/bin/mail -s "Email subject"
+ address@example.com
+
+If you still have problems with this setup, make sure to ask your host
+if there are any special setup details required.
+
+
+------------------------------------------------------------------------
+9. Can I remove the "An Orca Script" footer from the body.xhtml.php?
+
+Obviously I would prefer if you left the link there as a thank-you for
+the script :)  However, I have no problems with removal of the footer,
+and you will not be violating any licence conditions if you do so.

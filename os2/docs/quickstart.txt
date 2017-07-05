@@ -1,0 +1,71 @@
+  If you are an advanced user you can use the Quick Start guides below.
+These guides will skip over the nitty-gritty of how everything works
+together and just go through the steps required to get the script up and
+functioning.  Good Luck!
+
+
+Quick Start - Orca Search
+
+    i. Extract all the files from the zipped package to a temporary
+       local directory.
+
+   ii. Open the config.ini.php file and edit the seven user variables to
+       your preference.  The fifth variable is the prefix the script
+       will use to create three tables in your database.  The sixth and
+       seventh will be the username and password you'll use to log in to
+       the Control Panel.
+
+  iii. In your www or public HTML directory, create a directory named
+       "os2".
+  
+   iv. Upload the following files into the "os2" directory:
+         body.xhtml.php
+         body.xhtml.lang.txt
+         body.xhtml.css
+         config.ini.php
+         config.php
+         control.css
+         control.php
+         head.php
+         lang.txt
+         phpmailer.php
+         spider.php
+
+    v. Upload the following file into "os2"s parent directory:
+         _search.php
+
+   vi. Visit "/os2/control.php" with your web browser.  On your first
+       visit to this page, it will create the tables required for
+       running the script.  If there are no errors, installation was a
+       success.  You can now log into the Control Panel and configure
+       the script as you wish.
+
+
+Quick Start - JWriter
+
+    i. Upload the following files into the "os2" directory:
+         jwriter.php
+         egg.js
+
+   ii. CHMOD "egg.js" to 766 or 777.  Windows users, make sure this file
+       isn't marked as "Read-Only" or "Archive".
+
+  iii. Enable the JWriter extension in the Tools Panel.
+
+
+Quick Start - Sitemap
+
+    i. Upload the following file into "os2"s parent directory:
+         sitemap.xml
+
+   ii. CHMOD "sitemap.xml" to 766 or 777. Windows users, make sure this
+       file isn't marked as "Read-Only" or "Archive".
+
+  iii. Enable the Sitemap extension in the Tools Panel.
+
+   iv. If you wish to serve your sitemap gzipped (saves much space and
+       transfer), check the "Enable GZip Compression" option and rename
+       this file "sitemap.xml.gz".
+
+    v. Use the "Write to Sitemap File" button to test your setup before
+       spidering, if desired.

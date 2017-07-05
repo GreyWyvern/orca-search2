@@ -1,0 +1,3 @@
+This directory is for temporary storage of plugin file data by the Orca
+Search site search script.  If a spider event is not currently running,
+you may safely delete all leftover files in this directory.

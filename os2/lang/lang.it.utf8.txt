@@ -1,0 +1,554 @@
+# ***** Orca Search - Italian Language File *************************
+# This file contains language strings for the Control Panel and
+# Spider output. See the readme.txt file for installation and usage
+# instructions.
+#
+# Compatible with: 2.3a - 2.4
+#
+# Works with Control Panel Display Charset of:
+#   - UTF-8
+#
+# Translated by: Gualtiero Giovanetto ( www.ttnk.it )
+# *******************************************************************
+
+# Not yet translated
+01m=Indexed
+01n=Added
+01o=Unknown
+01p=Dump
+01q=Name
+01r=Value
+01s=Cancel
+01t=Title
+01u=Set
+01v=Go
+01w=Previous
+01x=Next
+01y=Not OK
+03g=Invalid character in Remove Elements
+03h=Invalid character in Increase HTML Element Weight
+03n=Your session has expired due to inactivity
+03o=Could not delete temporary file: %s
+09v=If checked, the JWriter will replace or add an appropriate file extension to each entry based on its content type.
+09w=
+09x=
+0a5=Your search index table is currently <strong>%1$sMB</strong>.  Your PHP <em>memory_limit</em> is currently <strong>%2$s</strong>.
+0a6=Configuration Variable Dump
+0a7=Output the config variable table for copying and pasting, or saving as an HTML file.
+0a8=JWriter malfunction
+0a9=Check <a href="%s">the JWriter URI</a> for more information.
+0ck=
+0cn=Weighted Elements
+0co=Applies extra weight to elements listed in the Increase Element Weight textarea below
+0cq=Multi-term Bonus
+0cu=Increase Element Weight
+0cv=Text within these HTML elements receive an additional score according to the Weighted Elements value above.
+0f8=
+0ff=Respider
+0fi=
+0fl=Toggle Unlist
+0fm=Data Lock
+0fq=Data locked
+0fr=
+0g7=Are you sure you wish to respider the selected entries?
+0g8=Invalid MIME-type: %s
+0g9=This page cannot be listed
+0ga=Toggle Data Lock
+0gb=Other Options
+0gc=
+0gd=
+0gl=
+0gm=
+0go=Toggle Sitemap Unlist
+0gp=
+0gq=Set Sitemap Changefreq
+0gr=Set Sitemap Priority
+0gs=
+0i8=Seamless Spidering
+0iq=To use file-indexing extensions, you must enable script writing permission on this directory
+0ir=Full scan
+0j4=Remove Elements
+0j5=The listed HTML elements will be removed <em>along with their contents</em> before indexing.
+0j6=Accepts simple CSS syntax selectors separated by spaces.  See the <em>readme.txt</em> for more information.
+0j9=Force a rescan of all entries, even if they don't seem to have been updated since the previous spider
+0jc=Accept Cookies
+0jd=Additional Accepted MIME-types
+0je=Files with MIME-types listed here will be included when spidering, but not indexed.  One entry per line
+0jf=Pages with these MIME-types will have their content stored for searching
+0jg=Link Depth Limit
+0jh=The maximum number of links to follow away from your starting URIs
+0ji=Spider can be triggered either by Crontab or by PHP-based self trigger
+0jk=or
+0jl=With this option enabled, the spider works on a <em>copy</em> of the index table, preventing display of the <q>The search database is currently being updated</q> message.  Requires additional MySQL storage space.
+0jm=Handler not found!  %s
+0jn=File Size Limit
+0jo=Files of sizes over this limit will be blocked to prevent out-of-memory errors
+0l0=Spider Statistics
+0l8=Accepted Pages
+0lm=Most recent query returned this many results
+0lv=Total Pages
+0lw=Results
+0lx=Search Statistics
+0ly=Average Searches Per Hour
+0lz=Average Results Returned Per Query
+0m0=Based on the most recent instance of each query
+0m1=Average Searches Per Day
+0m2=Query Log results for %s to %s.
+0m3=Triggered by search interface at:
+0o0=Offline Search Engine Writer
+0o1=Writing to Javascript File
+0o2=Incorrect key to initiate JWriter
+0o3=Linkback URI required
+0o4=Results <strong>%1$s</strong> - <strong>%2$s</strong> of <strong>%3$s</strong> for <strong>%4$s</strong> (<strong>%5$s</strong> seconds)
+0o5=These terms were ignored
+0o6=No matches found for <strong>%s</strong>
+0o8=Try this search in <a href="%s">all categories</a>?
+0o9=Please enter a search query
+0oa=in
+0ob=all categories
+0oc=Success!
+0od=Process took <strong>%ss</strong>
+0oe=<strong>%1$skB</strong> online index was compressed by <strong>%2$s%%</strong> to <strong>%3$skB</strong>.
+0of=Return to Control Panel
+0p1=Page limit reached
+0p8=Accepted cookies
+0pa=Required directory /temp not found or could not be opened!
+0qc=%1$s not indexed; redirected via META refresh to %2$s
+0qd=%s deleted in favour of new URI
+0qe=Spider is waiting for crontab trigger
+0qf=Could not access data in /temp directory!
+0qg=Operation
+
+
+# Connessione
+000=Accesso al Pannello di Controllo Orca Search Control
+001=Nome
+002=Password
+003=Accedi
+
+
+# Termini Vari
+010=Invia
+011=Conferma i cambiamenti
+012=Note
+013=Importante
+014=giorni
+015=ore
+016=minuti
+017=secondi
+018=fa
+019=Sempre
+01a=Ogni ora
+01b=Giornalmente
+01c=Settimanalmente
+01d=Mensilmente
+01e=Annualmente
+01f=Mai
+01g=Non trovato
+01h=Bloccato
+01i=Non elencato
+01j=OK
+01k=Orfano
+01l=Non letto
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Menù e varie
+020=Disconnetti
+021=Statistiche
+022=Spider
+023=Lista Voci
+024=Ricerca
+025=Strumenti
+026=Pannello di Controllo
+027=URI
+
+
+# Messaggi di errore
+030=Errore
+031=Un altro utente si è connesso mentre tu eri inattivo
+032=Nome e/o password errati
+033=Un altro utente è già connesso (ultimo comando eseguito %s secondi fa)
+034=Errore durante l'inizializzazione del Writer Javascript
+035=Nessuna categoria selezionata
+036=La categoria non esiste
+037=%1$s errore all'URI: %2$s
+038=%1$s reindirizzato a: %2$s
+039=Impossibile connettersi a questo host: %s
+03a=URI non valida
+03b=La URI specificata è già presente nel database
+03c=Errore nell'aggiunta di %s al database
+03d=Impossibile trovare la voce selezionata
+03e=Carattere non valido nei tipi MIME presenti nel campo "Indice"
+03f=Carattere non valido nel campo "Estensioni da Ignorare"
+
+
+03i=Carattere non valido nel valore del set di caratteri (charset)
+03j=Nessun dominio coincidente!
+03k=Impossibile aprire Sitemap per la scrittura!
+03l=Carattere non valido nel campo "Estensioni sostituite"...
+03m=Impossibile connettersi al database
+
+
+
+
+# Messaggi validi
+060=%s aggiunto con successo
+061=Spider annullato
+062=Sitemap scritto con successo
+
+
+# Stringhe del pannello degli strumenti
+090=Opzioni del Pannello di Cobtrollo
+091=Mostra Set di caratteri (Charset)
+092=Dovresti impostare questo valore affinchè corrisponda al file della lingua utilizzata, e se possibile, della maggioranza delle pagine indicizzate
+093=Opzioni Sitemap
+094=Abilita Sitemap
+095=Percorso per il Sitemap
+096=File Obiettivo non trovato a questo percorso!
+097=File Obiettivo non scrivibile!
+098=Abilita Compressione GZip
+099=Libreria PHP Zlib non rilevata!
+09a=Dominio
+09b=Includi URI solo di questo dominio
+09c=Nessuno disponibile
+09d=Includi Voci non elencate
+09e=Vuoi includere in Sitemap le voci marcate come Non Elencate?
+09f=Abilita il Cambio Frequenza Automatico
+09g=Tenta di assegnare ad ogni voce un valore <em>cambio frequenza</em> appropriato, basato su quanto spesso nuovi contenuti sono qui rilevati.
+09h=Scrivi Sitemap
+09i=Compila Sitemap senza attivare lo Spider
+09j=Questa operazione è fornita con finalità di sperimentazione e per comodità.  Nella normale operatività, Sitemap viene automaticamente riscritto dopo ogni scansione dello Spider.
+09k=Scrivi sul File Sitemap
+09l=Opzioni JWriter
+09m=Abilita JWriter
+09n=JWriter Script URI
+09o=Modulo scrittura Javascript non rilevato su questo percorso!
+09p=Percorso per il File Offline Javascript
+09q=Rimuovi archivio URI
+09r=Il seguente archivio di URI verrà rimosso dai collegamenti offline per rendere i collegamenti di ricerca relativi invece che completi. Rispondenza solo su testo semplice.
+09s=Nome File dell'Indice delle Directory
+09t=Come nomina il tuo programma di mirroring offline i files trovati per le &amp;quot;/&amp;quot; URI?
+09u=Sostituisci le Estensioni...
+
+
+
+09y=Risultati per pagina
+09z=Numero di risultati da mostrare per pagina prima dell'impaginazione
+0a0=Modello di Risultato
+0a1=Modello (X)HTML da usare per mostrare ogni risultato elencato.  Per ripristinare lo standard, sottoponi semplicemente un area di testo vuota.
+0a2=Attivazione JWriter
+0a3=Scrivi il File Offline Javascript
+0a4=Scrivi sul File Javascript
+
+
+
+
+
+
+
+# Stringhe del pannello di ricerca
+0c0=Operazioni della Cache di Ricerca
+0c1=Depura manualmente la Cache
+0c2=Abitualmente eseguito automaticamente ogniqualvolta il database di ricerca varia
+0c3=Limite Dimensione Cache
+0c4=Un limite cache pari a  0kB disabilita l'attività di caching
+0c5=Abilita la Cache GZip'd
+0c6=Le tue <strong>%1$s</strong> voci presenti in cache hanno una dimensione media di <strong>%2$s</strong>kB per singola voce.
+0c7=La cache è attualmente vuota.
+0c8=PHP versione 4.3.0 o superiore e la libreria ZLib sono necessari per abilitare questa opzione.
+0c9=Opzioni di ricerca
+0ca=Ignora rispondenze URI
+0cb=Linee con anteposto un asterisco (*) saranno trattate come semplici espressioni regolari ; altrimenti il testo piano trova rispondenza.
+0cc=Numero limite di termini
+0cd=Numero massimo di termini distinti ammessi per ogni ricerca
+0ce=Termini
+0cf=Limite minimo di lunghezza dei Termini
+0cg=I termini con un numero di caratteri inferiore a questo valore saranno ignorati
+0ch=Caratteri
+0ci=Peso Rispondenza
+0cj=Punteggio applicato per le rispondenza trovate nelle specifiche aree
+
+0cl=Corpo Pagina
+0cm=Parole chiave
+
+
+0cp=Moltiplicatori di Bonus
+
+0cr=Bonus (+) di Importanza
+0cs=Rispondenza Accento Latino
+0ct=Funziona correttamente solo con UTF-8 (con indicizzazione <em>UTF-8 Indexing</em> abilitata) oppure codifica ISO-8859-1.
+
+
+0cw=Le variazioni non avranno effetto sino alla prossima scansione dello spider.
+0cx=Numero massimo di risultati restituiti
+0cy=Risultati
+0cz=Quantità massima di Testo rispondente visualizzata
+0d0=Mostra Collegamenti "Orfani"
+0d1=Vuoi visualizzare tra i risultati della ricerca anche le pagine con collegamenti orfani?
+0d2=Depura
+0d3=Dimensione attuale della cache
+
+
+# Stringhe del pannello della Lista Voci
+0f0=Nessuna pagina nell'indice
+0f1=Aggiungi una voce
+0f2=Aggiungi manualmente una voce
+0f3=Assegna una nuova categoria
+0f4=Categoria
+0f5=Seleziona una Categoria
+0f6=Nuova Categoria
+0f7=Annulla questa operazione
+
+0f9=Frequenza cambiamento Sitemap di grandi dimensioni
+0fa=Cambia la Frequenza
+0fb=Priorità  Sitemap di grandi dimensioni
+0fc=Priorità
+0fd=Modifica questa voce
+0fe=Aggiungi una voce
+
+0fg=Codifica Carattere
+0fh=Nessuno specificato
+
+0fj=Descrizione
+0fk=Parole chiave
+
+
+0fn=Non elencate
+0fo=Sitemap
+0fp=Elenca in Sitemap
+
+
+0fs=Cambia Frequenza
+0ft=Priorità
+0fu=Le URI's che tu sottoponi non saranno indicizzate fino alla prossima scansione dello spider. Sino ad alloran saranno contrassegnate dallo stato &amp;quot;Non letted&amp;quot; e non saranno elencate in nessun risultato di ricerca.
+0fv=Stato
+0fw=Modifica
+0fx=Filtri
+0fy=Mostra soltanto gli elenchi aggiornati
+0fz=Nessun elenco aggiornato da visualizzare
+0g0=Rispondenza
+0g1=Filtra per Rispondenza di Testo
+0g2=Escludi
+0g3=Escludi per Rispondenza di Testo
+0g4=Filtra per Categoria
+0g5=Filtra per Stato
+0g6=Mostra tutto
+
+
+
+
+
+
+
+0ge=Imposta i filtri selezionati
+0gf=Annulla
+0gg=Rimuovi tutti i filtri
+0gh=Seleziona tutte le voci
+0gi=Applica un'azione alle voci selezionate
+0gj=Seleziona un'azione
+0gk=Annulla
+
+
+0gn=Cambia Categoria
+
+
+
+
+
+0gt=Applica l'azione selezionata
+0gu=o
+0gv=Pagina
+0gw=Mostra questo numero di voci per pagina
+0gx=Non elencato in Sitemap
+0gy=Nessuna voce rispondente
+0gz=Cancellare i filtri?
+0h0=Rimuovi tutti i filtri
+0h1=Vuoi davvero eliminare le voci selezionate?
+
+
+# Stringhe del pannello dello Spider
+0i0=Avvia manualmente una scansione dello Spider
+0i1=Forza lo Spider
+0i2=Forza
+0i3=Il database è attualmente bloccato.
+0i4=Una scansione spider è attualmente in corso
+0i5=Comunque, sono passati più di %s secondi dall'ultima azione dello spider. Se il database è &amp;quot;bloccato&amp;quot; puoi forzare una scansione dello spider usando questo pulsante.
+0i6=Avvia lo Spider
+0i7=Assicurati di aver confermato qui sotto tutte le opzioni desiderate  (hai cliccato ilpulsante &amp;quot;Sottopono&amp;quot;?) prima di avviare lo spider!
+
+0i9=Precedente Spider
+0ia=Non c'è ancora stata alcuna scansione dello Spider
+0ib=Opzioni di Spidering
+0ic=URI dello script dello Spider Script
+0id=Spider non rilevato a questa URI!
+0ie=URI di avvio
+0if=Usa l'attivatore Crontab
+0ig=Abilitando questa opzione sei a metà strada. Leggi nel file <em>readme.txt</em> come impostare il crontab per l'esecuzione dello spider.
+0ih=Intervallo tra le scansioni dello Spider
+0ii=Il valore a zero (0) disabilita lo spidering automatico
+0ij=Limite dell'indice di pagina
+0ik=Categoria predefinita
+0il=Categoria predefinita per nuove voci
+0im=Assegnazione automatica categoria
+0in=Ordina allo spider di assegnare categorie determinate alle nuovi voci in base alle rispondenze URI/Titolo. Leggi nel file <em>readme.txt</em> ulteriori dettagli su questa funzionalità.
+0io=Invia i risultati via E-mail
+0ip=Invia un sommario dei risultati della scansione a questo indirizzo
+
+
+0is=Indicizzazione UTF-8
+0it=Consente una più ampia e rintracciabile gamma di caratteri. Abilita questa opzione <em>solo</em> se stai indicizzando pagine con codifica UTF-8 e restituisci i risultati di ricerca in codifica UTF-8.
+0iu=<strong>%s%%</strong> delle pagine attualmente indicizzate sono impostate con la codifica di carattere UTF-8.
+0iv=Pagine MIME-types indicizzate
+0iw=Consenti Domini
+0ix=Non ammette caretteri jolly (wildcards); sono consentiti soltanto nomi di dominio pienamente definiti; elenca una voce per linea, in ordine decrescente di preferenza.
+0iy=Ignora le rispondenze di URI
+0iz=Linee a cui è anteposto un asterisco (*) saranno trattare come semplici espressioni regolari; testo semplice trova comunque rispondenza.
+0j0=Ignora queste Estensioni
+0j1=Separa ogni voce con spazi.
+0j2=Rimuovi le stringhe dei titoli
+0j3=Le seguenti stringhe di testo saranno eliminate dal titolo HTML dei files trovati.
+
+
+
+0j7=Richiedi rispondenza su URI
+0j8=Soltanto URI con almeno una rispondenza con queste vocie sarà indicizzata.
+
+0ja=Malfuzionamento dello Spider.
+0jb=Controlla <a href="%s">lo spider URI</a> per maggiori informazioni.
+
+
+
+
+
+
+
+
+
+
+
+
+# Stringhe del pannello Statistiche
+
+0l1=Ultima scansione dello Spider
+0l2=Durata dell'ultima scansione dello Spider
+0l3=La precedente scansione dello Spider ha richiesto questo tempo per indicizzare tutte le pagine richieste
+0l4=Ammontare Dati Trasferiti
+0l5=Totale Dati Indicizzati
+0l6=Efficienza
+0l7=Pagine Indicizzate
+
+0l9=Conteggio di tutte le pagine con lo stato di OK oppure Orfane
+0la=Conteggio di tutte le pagine con lo stato di OK
+0lb=Categorie
+0lc=Composizione della codifica di contnuto
+0ld=Analisi di tutte le codifiche di pagina rilevate dallo Spider
+0le=Non specificata
+0lf=Opzioni della Query di connessione
+0lg=Azzera la Query di connessione
+0lh=Cancella manualmente l'intera cache ed il registro di tutte le ricerche effettuate.
+0li=Azzera
+0lj=Vuoi davvero cancellare l'intero registro delle ricerche effettuate?
+0lk=Intervallo tra l'azzeramento del registro delle ricerche
+0ll=Azzeramenti periodici consentono di evitare la crescita incontrollata di questa tabella.
+
+0ln=Ultimo azzeramento del registro delle ricerche
+0lo=Registro delle ricerche
+0lp=Ricerca
+0lq=Ordina per ricerca
+0lr=Numero di richieste
+0ls=Ordina per numero di richieste
+0lt=Ultima richiesta
+0lu=Ordina per ora di richiesta decrescente
+
+
+
+
+
+
+
+
+
+# JWriter
+
+
+
+
+
+
+
+0o7=Attendi Prego...
+
+
+
+
+
+
+
+
+
+
+# Spider
+0p0=Lo Spider deve essere inizializzato automaticamente oppure attraverso il modulo sul pannello di controllo.
+
+0p2=Voce per inizializzazione spider non corretta
+0p3=Errore: funzione Cron  Abilitata
+0p4=Spider inizializzato a %1$s mediante %2$s
+0p5= da %s
+0p6=Motore di Rierca Orca Search
+0p7=Spider Pronto
+
+0p9=Controllo robots.txt...
+
+0pb=Tabella Indice già bloccata!
+0pc=Annullamento scansione in corso
+0pd=Un'altra scansione è già in corso
+0pe=Tabella Indice bloccata
+0pf=Scansione in corso ...
+0pg=Spider annullato dall'utente
+0ph=%1$s errore a %2$s !  (Pagina di origine: %3$s )
+0pi=%1$s è stato reindirizzato a to: %2$s !  (Pagina di origine: %3$s )
+0pj=%s è stato aggiornato ad un nuovo indirizzo
+0pk=%s è stato rimosso in favore di un nuovo indirizzo
+0pl=%1$s rimosso.  Contenuto identico a %2$s  (Pagina di origine: %3$s )
+0pm=%1$s ignorato.  Contenuto identico a %2$s  (Pagina di origine: %3$s )
+0pn=%s collegamenti rilevati con successo
+0po=Tempo di esecuzione
+0pp=Tempo di esecuzione per collegamento
+0pq=Nuove pagine trovate
+0pr=Pagine esistenti aggiornate
+0ps=Pagine indicizzate non trovate
+0pt=Pagine indicizzate orfane
+0pu=Pagine esistenti bloccate
+0pv=Generazione Sitemap in corso
+0pw=Impossibile aprire Sitemap per la scrittura!
+0px=Sitemap scritto con successo
+0py=Riuscito!
+0pz=I seguenti collegamenti sono stati esaminati
+0q0=La URI di partenza è stata bloccata
+0q1=Ritorna al pannello di Controllo
+0q2=Scarico Informazione di Processo
+0q3=Regole robots.txt applicabili
+0q4=Tempo richiesto (secondi)
+0q5=Risultati della scansione dello Spider
+0q6=Errore durante l'esecuzione
+0q7=Annullamento scansione spider in corso...
+0q8=Livello di Errore
+0q9=Dettagli
+0qa=Numero della Linea
+0qb=Superato il tempo limite durante la ricezione dei dati da %s !
+
+
+
+

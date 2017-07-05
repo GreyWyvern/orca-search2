@@ -1,0 +1,400 @@
+/* ***** Orca Search - Control Panel Stylesheet ****************** */
+
+
+body#osc_body {
+  margin:0px;
+  padding:30px 0px 0px 0px;
+  color:#000000;
+  background-color:#ffffff;
+  font:normal 100% Arial,Geneva,sans-serif;
+}
+
+#osc_body input,
+#osc_body select,
+#osc_body button {
+  font-size:9pt;
+  margin:0px;
+  vertical-align:middle;
+}
+#osc_body input[type=text],
+#osc_body input[type=password] {
+  font-size:90%;
+}
+
+#osc_body table {
+  font-size:100%;
+}
+#osc_body table tr.drow {
+  background-color:#dddddd !important;
+}
+#osc_body table tr.lrow {
+  background-color:#eeeeee !important;
+}
+#osc_body table tr .min {
+  white-space:nowrap;
+  width:1%;
+}
+
+#osc_body ul li.drow {
+  background-color:#bbbbbb !important;
+}
+
+#osc_body .warning {
+  font-weight:bold;
+  color:#dd0000;
+}
+
+#osc_body h2 {
+  text-align:center;
+}
+
+#osc_body #login {
+  text-align:center;
+}
+#osc_body #login h3 {
+  margin:10px 0px 5px 0px;
+}
+#osc_body #login div label {
+  margin:0px 10px;
+}
+
+#osc_body #error,
+#osc_body #success {
+  margin:15px 3em;
+  padding:0px;
+}
+
+#osc_body #error {
+  color:#dd0000;
+  background-color:transparent;
+}
+
+#osc_body #menu {
+  position:fixed;
+  top:0px;
+  left:0px;
+  width:100%;
+
+  color:#000000;
+  background-color:#bbbbbb;
+  list-style-type:none;
+  margin:0px;
+  padding:0px;
+  text-align:right;
+  border-bottom:2px outset #bbbbbb;
+  font-size:90%;
+  height:25px;
+}
+#osc_body #menu li {
+  display:inline;
+  padding:0px;
+  margin:0px;
+  font-weight:bold;
+}
+#osc_body #menu li.first {
+  float:left;
+  padding:2px 4px;
+  font-size:115%;
+}
+#osc_body #menu li a {
+  display:block;
+  float:right;
+  height:20px;
+  text-decoration:none;
+  padding:5px 10px 0px 10px;
+  border-top:0px none transparent;
+  border-right:2px outset #bbbbbb;
+  border-bottom:2px outset #bbbbbb;
+  border-left:2px outset #bbbbbb;
+}
+#osc_body #menu li a.selected {
+  background-color:#dddddd;
+  border-color:#dddddd;
+}
+#osc_body #menu li a:hover {
+  color:#ffffff;
+  background-color:#000000;
+  border-style:inset;
+}
+
+#osc_body #mainlist {
+  margin:5px 10px 10px 10px;
+  text-align:center;
+  clear:both;
+}
+#osc_body #mainlist table {
+  text-align:left;
+  width:95%;
+  margin:0px auto;
+  font-size:90%;
+}
+#osc_body #mainlist table thead tr th {
+  font-size:120%;
+  white-space:nowrap;
+  padding:3px 15px 3px 0px;
+}
+#osc_body #mainlist table thead tr td {
+  border-bottom:2px solid #000000;
+  white-space:nowrap;
+  text-align:center;
+  font-size:95%;
+}
+#osc_body #mainlist table thead tr td.actions {
+  text-align:left;
+}
+#osc_body #mainlist table thead tr#filters {
+  background-color:#cccccc;
+}
+#osc_body #mainlist table thead tr#filters th {
+  padding:1px 2px;
+  border:2px solid #777777;
+  font-weight:bold;
+  width:50%;
+}
+#osc_body #mainlist table thead tr#filters td {
+  padding:1px 2px;
+  border-top:2px solid #777777;
+  border-right:2px solid #777777;
+  border-bottom:2px solid #777777;
+}
+
+#osc_body #mainlist table tbody tr th {
+  font-weight:normal;
+  text-align:left;
+}
+#osc_body #mainlist table tbody tr td {
+  white-space:nowrap;
+  text-align:center;
+}
+#osc_body #mainlist table tbody tr th.titlecol {
+  white-space:normal;
+}
+#osc_body #mainlist table tbody tr th.titlecol a {
+  color:#000000;
+  text-decoration:none;
+}
+#osc_body #mainlist table tbody tr th.titlecol a.strong {
+  font-weight:bold;
+}
+#osc_body #mainlist table tbody tr th.titlecol a:hover {
+  text-decoration:underline;
+}
+#osc_body #mainlist table tbody tr td div.priority {
+  overflow:hidden;
+  height:16px;
+  width:6px;
+  margin:0px auto;
+  border:1px solid #000000;
+  background-color:#00aa00;
+}
+#osc_body #mainlist table tbody tr td div.disabled {
+  background-color:#bbbbbb;
+}
+#osc_body #mainlist table tbody tr td div.priority div {
+  overflow:hidden;
+  background-color:#ffffff;
+}
+#osc_body #mainlist table tbody tr td small {
+  font-size:80%;
+}
+#osc_body #mainlist table tbody tr td input,
+#osc_body #mainlist table tbody tr td select,
+#osc_body #mainlist table tbody tr td button {
+  font-size:85%;
+}
+#osc_body #mainlist table tbody tr td.unread {
+  text-decoration:line-through;
+}
+
+#osc_body #mainlist table tfoot tr td {
+  border-top:2px solid #000000;
+  white-space:nowrap;
+  text-align:center;
+  font-size:95%;
+}
+#osc_body #mainlist table tfoot tr td.actions {
+  text-align:left;
+}
+
+#osc_body #editform {
+  text-align:center;
+}
+#osc_body #editform h3 {}
+#osc_body #editform ul {
+  list-style-type:none;
+  margin:0px auto;
+  padding:0px;
+  width:60%
+}
+#osc_body #editform ul li {
+  border-top:1px solid #000000;
+  padding:4px 0px 5px 0px;
+  text-align:right;
+}
+#osc_body #editform ul li h4 {
+  display:inline;
+  float:left;
+  margin:0px 1em 0px 0px;
+}
+
+#osc_body #editform ul li.title {
+  background-color:#dddddd;
+  border-top:1px solid #000000;
+  padding:4px 0px 5px 0px;
+  text-align:left;
+}
+#osc_body #editform ul li.title h3 {
+  margin:0px;
+}
+
+#osc_body #editform ul li p {
+  margin:3px 2em;
+  text-align:center;
+}
+
+#osc_body .optionform {
+  width:90%;
+  font-size:95%;
+  border:2px inset #808080;
+  margin:10px auto;
+}
+#osc_body .optionform h3 {
+  margin:0px;
+  padding:3px;
+  color:#ffffff;
+  background-color:#808080;
+}
+#osc_body .optionform ul {
+  list-style-type:none;
+  margin:0px;
+  padding:0px;
+  background-color:#dddddd;
+}
+#osc_body .optionform ul li {
+  padding:3px;
+  text-align:left;
+  font-size:90%;
+  clear:both;
+  height:1%;
+}
+#osc_body .optionform ul li h4 {
+  font-size:110%;
+  margin:0px;
+}
+#osc_body .optionform ul li var {
+  display:block;
+  float:right;
+  margin:0px 0px 0px 10px;
+  white-space:nowrap;
+  font-size:108%;
+  text-align:right;
+  font-style:normal;
+}
+#osc_body .optionform ul li var big {
+  vertical-align:top;
+}
+#osc_body .optionform ul li var textarea.smooth {
+  font:normal 90% Arial,Geneva,sans-serif;
+}
+#osc_body .optionform ul li code {
+  width:90%;
+  white-space:nowrap;
+}
+#osc_body .optionform ul li div {
+  height:1px;
+  overflow:hidden;
+  clear:both;
+}
+#osc_body .optionform ul li hr.msgsep {
+  text-align:left;
+  width:60%;
+  margin-left:0px;
+}
+#osc_body .optionform ul li table caption {
+  border-bottom:2px groove #dddddd;
+  margin-bottom:3px;
+  font:italic 90% Arial,Geneva,sans-serif;
+}
+#osc_body .optionform ul li table.doubleopt tbody tr td {
+  width:48%;
+}
+#osc_body .optionform ul li table.doubleopt tbody tr td.mini {
+  width:4%;
+  font:bold 120% Arial,sans-serif;
+  text-align:center;  
+  text-transform:uppercase;
+  background-color:#bbbbbb;
+  border:2px groove #dddddd;
+}
+#osc_body .optionform ul li table.doubleopt tbody tr td.padr {
+  padding-right:5px;
+}
+#osc_body .optionform ul li table.doubleopt tbody tr td.padl {
+  padding-left:5px;
+}
+#osc_body .optionform ul li table.plaindata {
+  margin:2px 0px 5px auto;
+  width:98%;
+}
+#osc_body .optionform ul li table.plaindata thead th {
+  padding-right:3em;
+  text-align:left;
+}
+#osc_body .optionform ul li table.plaindata tbody td {
+  white-space:nowrap;
+  padding:1px 2em 1px 1em;
+}
+
+#osc_body #querylog {
+  border:2px inset #808080;
+  width:90%;
+  margin:10px auto;
+}
+#osc_body #querylog thead tr td {
+  padding:3px;
+  color:#ffffff;
+  background-color:#808080;
+  font-size:115%;
+  font-weight:bold;
+  text-align:left;
+}
+#osc_body #querylog thead tr th {
+  padding:2px 0.5em;
+  text-align:left;
+  white-space:nowrap;
+}
+#osc_body #querylog thead tr th.off {
+  text-decoration:underline;
+  cursor:pointer;
+  cursor:hand;
+}
+#osc_body #querylog thead tr th.on {
+  font-style:italic;
+}
+#osc_body #querylog thead tr th.nosort {
+  text-decoration:none;
+  cursor:auto;
+  color:#444444;
+}
+#osc_body #querylog tbody tr {
+  background-color:#eeeeee;
+  font-size:85%;
+}
+#osc_body #querylog tbody tr th {
+  padding:1px 3px;
+  text-align:left;
+}
+#osc_body #querylog tbody tr td {
+  width:1%;
+  white-space:nowrap;
+  padding:0px 5px 0px 1em;
+  text-align:right;
+}
+
+/* ***** MSIE-only styles ******************************************* */
+body#osc_body {
+  _padding:0px;
+}
+#osc_body #menu {
+  _position:static;
+}

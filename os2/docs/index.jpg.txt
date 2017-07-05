@@ -1,0 +1,33 @@
+************************************************************************
+* Orca Search JPEG indexing plugin - Installation guide                *
+************************************************************************
+
+This plugin will enable the Orca Search script to index JPEG files.
+This plugin will *not* turn your search script into a Google Images
+clone.  Rather, the plugin will try to extract APP13 image information
+from JPEGs to which it finds links.
+
+The VAST MAJORITY of JPEG images online will contain no data, but if you
+are indexing photographs for which someone has lovingly taken the time
+to add descriptive information to each image, this plugin may be useful
+to you.
+
+To install, just upload the index.jpg.php file to the os2/plugins/
+directory and include the file in your "config.ini.php" file:
+
+include "plugins/index.jpg.php";
+
+The next step is to enable indexing of the jpeg MIME-type in the Spider
+Panel (image/jpeg).  Since the script creates temporary files while
+indexing, the os2/temp/ directory needs to have script writing
+permissions enabled.  That's CHMOD 777 on *nix servers.
+
+If there are no more visible error messages after submitting, the
+extension is functional!  Linked JPEGs should now be grabbed and indexed
+during the next spider crawl.
+
+IMPORTANT: you should double check your URI ignoring and filtering rules
+in the Spider Panel to make sure your soon-to-be-indexed JPEGs will not
+be blocked.  The Orca Search comes with the jpg, jpeg and jfif
+extensions blocked by default; you will need to manually remove these
+extensions from the list of Ignored Extensions.

@@ -1,0 +1,33 @@
+# ***** Orca Search - Arabic body.xhtml.php Language File ***********
+# This file contains language strings used in the body.xhtml.php
+# output file. See the readme.txt file for installation and usage
+# instructions.
+#
+# Compatible with 2.4
+#
+# Works with page charset of:
+# - UTF-8
+#
+# Translation by Safaa Roumani
+# *******************************************************************
+
+
+# body.xhtml.php
+000=نتيجة <strong>%1$d</strong> - <strong>%2$d</strong> من <strong>%3$d</strong> للمصلح <strong>%4$s</strong> ( ثانية <strong>%5$s</strong>)
+001=لم نتمكن من الاتصال مع قاعدة البيانات
+002=يتم حاليا تطوير قاعدة بيانات البحث، يرجى إعادة البحث مجددا خلال بضع دقائق
+003= <strong>%s</strong> جرى تجاهل هذه المصطلحات
+004=السابق
+005=اللاحق
+006=لم نجد ما يتوافق مع <strong>%s</strong> 
+007=؟<a href="%1$s?q=%2$s">جميع القئات</a> حاول البحث في
+008=يرجى إدخال المصطلح الذي تبحث عنه في الأسفل
+009=يتم تجاهل مصطلحات البحث التي تقل عن %d حرفا 
+00a= ضع مجموعة المصطلحات  داخل هلالين صغيرين (&amp;quot;&amp;quot;) للبحث عن العبارات
+00b=ضع إشارة (+) قبل المصطلحات لتشير إلى أهميتها
+00c=ضع إشارة (-) أو إشارة (!) قبل المصطلحات لتستثنيها
+00d=ضمن
+00e=جميع الفئات
+00f=ابحث
+00g=فئة 
+00h=<strong>%s</strong> البحث في فئة

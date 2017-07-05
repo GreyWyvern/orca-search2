@@ -1,0 +1,33 @@
+# ***** Orca Search - German body.xhtml.php Language File ***********
+# This file contains language strings used in the body.xhtml.php
+# output file. See the readme.txt file for installation and usage
+# instructions.
+#
+# Compatible with 2.4
+#
+# Works with page charset of:
+#   - ISO-8859-1
+#
+# Translated by Jürgen Ihlau
+# *******************************************************************
+
+
+# body.xhtml.php
+000=Ergebnis <strong>%1$d</strong> - <strong>%2$d</strong> von <strong>%3$d</strong> für <strong>%4$s</strong> (<strong>%5$s</strong> seconds)
+001=Ich kann zur Datenbank keine Verbindung aufnehmen.
+002=Die Suchdatenbank durchläuft gerade ein Update; Bitte starten Sie Ihre Suche in ein paar Sekunden. Danke
+003=Diese Ausdrücke wurden ignoiert: <strong>%s</strong>
+004=Letzte
+005=Nächtste
+006=Es wurde nichts gefunden für <strong>%s</strong>
+007=Suche in <a href="%1$s?q=%2$s">allen Kategorien</a>?
+008=Geben Sie hier Ihren Suchbegriff ein.
+009=Suchbegriffe mit weniger als %d Zeichen werden ignoriert.
+00a=Setzen Sie mehrere Suchbegriffe in (&quot;&quot;), um nach zusammenhängenden Ausdrücken zu suchen
+00b=Setzen Sie vor einen Suchbegriff ein (+), damit ist dieser Begriff wichtiger als die anderen
+00c=Setzen Sie vor einen Suchbegriff ein (-) oder ein (!) um Sie auszuschliessen
+00d=in
+00e=alle Kategorien
+00f=Los
+00g=Kategorie
+00h=Suche in Kategorie: <strong>%s</strong>

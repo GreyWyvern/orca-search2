@@ -1,0 +1,263 @@
+Version 2.4     - September 21, 2016
+  - Wow, seven years! Where has the time gone?
+  - Upgraded SQL API to PDO. The script now requires PHP 5.1 or above
+  - Miscellaneous fixes that have accumulated over the years
+
+
+Version 2.3a    - February 23, 2009
+  - Spider
+    - Added support for ID's and Classes containing hyphens (-) and colons (:) as per HTML 4.01
+    - Added File Size Limit option to prevent out-of-memory errors (Spider Panel)
+    - URI storage is now case sensitive, prevents overwriting of case-fixing redirects
+    - Improved handling of complex robots.txt files
+    - Fixed division by zero bug when no pages complete scanning
+
+  - Control Panel
+    - Fixed display of Match Weighting values if submitted without any change
+    - Added "Not OK" selection to Entry List drop down filter
+    - Option to email the Query Log before a reset (Statistics Panel)
+    - Category lists in drop downs are alphabetically ordered
+
+  - Search Interface
+    - Fixed hard-coded stylesheet directory, now uses directory specified in config.ini.php
+    - Fixed error message on terms containing a slash (/)
+    - Fixed error message from RSS2.0 feed results when database is locked
+
+  - General
+    - Orca Search now uses PHPMailer for emailing
+    - Made language file loading algorithm more resilient
+
+  - Languages
+    - Added Arabic language files for body.xhtml.php (Safaa Roumani)
+    - Added Swedish language files for body.xhtml.php (Sofi)
+    - Added Polish language files for control.php and body.xhtml.php (Paweł Fadrowski)
+
+
+Version 2.3     - May 16, 2007
+  - Spider
+    - Images are replaced with their alt text before indexing
+    - Fixed PDF indexing problem on some Windows servers
+    - Fix for spidering internal webservers without proper DNS entries
+
+  - Control Panel
+    - Increased cookie security a notch
+    - Increased Control Panel cookie timeout to 1.5 hours from 0.5 hours
+    - Small category filter fix
+
+  - Search Interface
+    - body.xhtml.php now includes its CSS file automatically
+
+  - General
+    - Reorganized variable names and MySQL queries to ease integration with other PHP applications
+    - NOTE: Changes made to config.ini.php!
+      - Move the values MANUALLY from your previous copy to the new version
+
+  - Languages
+    - Added French language files for body.xhtml.php (Kelljery)
+
+
+Version 2.2b     - November 28, 2006
+  - Spider
+    - Added support for URI's containing apostrophes (')
+
+  - Control Panel
+    - Automatic Change Frequency set to on by default for new installations
+    - Fixed "Undefined index: priority" error when editing sites while sitemapping is disabled
+    - Fixed "Divide by zero" error when reseting the search query log
+    - Fixed "Undefined variable qadd" when creating a sitemap using the Tools panel
+    - Sitemap URIs with ampersands (&) are now escaped properly
+    - Some javascript fixes
+
+  - Search Interface
+    - Results which displayed no matching text/description now show a random string of text from the page
+
+  - Languages
+    - Added Dutch language files for body.xhtml.php (A. de Vries)
+
+
+Version 2.2a     - August 11, 2006
+  - Spider
+    - Fixed regression, directory URIs ending in / could result in a truncated base URI for links
+    - Fixed bug where keywords and descriptions would not get updated if added or changed
+
+  - Control Panel
+    - Entry list titles now link to the associated page
+
+  - Languages
+    - Added German language files for body.xhtml.php (Jürgen Ihlau)
+    - Added (incomplete) Italian language files for control.php (Gualtiero Giovanetto)
+
+
+Version 2.2      - July 10, 2006
+  - Spider
+    - "Starting URI Blocked" error no longer halts the spider if more pages exist in the database
+    - PHP5 E_STRICT errors (code 2048) no longer cause the spider to halt
+    - Added Seamless Spidering option: search interface does not lock during spider crawls
+    - Improvements to Remove Elements and Weighted Elements matching system
+      - Class matches can now match tags with multiple classes (eg. class="class1 class2")
+    - Respidering now only checks the robots.txt of required domains rather than all of them
+    - Removed/Ignored links now display both referer URIs for link debugging
+    - Added support for URIs containing spaces
+
+  - Control Panel
+    - Fixed error when manually setting sitemap changefreq
+    - Added some Search Statistics to Statistics Panel
+
+  - Search Interface
+    - When only one category exists, it is no longer displayed in search result headings
+    - Fixed some spacing issues with highlighted terms
+    - When searching within a category, the search scope is declared before the results
+
+
+Version 2.1d     - May 02, 2006
+  - Spider
+    - Fixed bug where spider could fail on a single no-socket error
+    - Fixed sent HTTP headers which caused a "spider malfunction" on Zeus servers
+    - Added a powerful selector-style matching system to Remove Elements and Weighted Elements
+    - Remove Elements is now applied before Weighted Elements during indexing
+    - UTF-8 Indexing now handles and converts many more HTML entities
+    - Small improvements to spider output styling
+
+  - Search Interface
+    - HTML entities should now display properly in encodings other than UTF-8
+    - Replace codes (eg. {R_URI}) appearing in page text are no longer replaced
+
+  - General
+    - Corrected a minor CSS property error in control.css
+    - Moved some missed untranslated lines from spider.php to the lang.txt file
+    - Fixed JWriter output script failure in IE
+    - Added searching of Weighted Elements to JWriter output
+
+
+Version 2.1c     - Apr 08, 2006
+  - Spider
+    - Spider now accepts Hexidecimal-format HTML entities (eg. &#x221a; ~ Square root symbol)
+    - Decimal-format HTML entities with a leading zero (eg. &#064;) are no longer mistranslated as octal
+
+  - Control Panel
+    - Added "Results" column to Query Log table, showing results found for the last query
+
+  - Search Interface
+    - Fixed a cache-limit endless loop bug affecting MySQL versions between 3.23 and 4.0
+
+  - General
+    - Fixed lowercasing bug with JWriter if terms were highlighted in page titles
+    - Additions to lang.txt
+
+
+Version 2.1b     - Feb 27, 2006
+  - Spider
+    - Reaching the Page Limit causes the spider to "finish" rather than quit with an error
+    - Crontab language file not-found regression fixed
+
+  - Control Panel
+    - Fixed a Statistics reporting bug if database contained similarily named tables
+    - Added PHP, MySQL and search database version info to the Configuration Variable Dump page
+
+  - Search Interface
+    - Fixed a bug with incorrect links if _search.php was placed in a subdirectory
+    - Fixed a bug with HTML entities when using non-UTF8 charsets
+    - Cleaned up display of URIs in search listings and links
+
+  - General
+    - Major database cleanup for increased efficiency
+    - URI matching now enabled by default, with a weight of 0.2 per match
+
+
+Version 2.1a     - Jan 28, 2006
+  - Spider
+    - Fixed bug, filetypes remained unblocked even if unchecked under Indexed MIME-types
+    - Fixed a significant Spider memory leak
+
+  - Control Panel
+    - Fixed bug, Add Entry, New Category text field was disabled if no other pages were in the database
+    - Added a Configuration Variable Dump function for debugging (Tools panel)
+    - Small fix to control.css
+
+  - General
+    - Fixed an installation bug which occured if the MySQL database initially contained no tables
+    - Overhaul to JWriter engine: Now much faster and uses less memory
+    - Renamed jpeg indexing plugin to jpg for JWriter compatibility
+    - Added translatable elements to JWriter output
+
+
+Version 2.1      - Jan 07, 2006
+  - Spider:
+    - Numerous Spider stability fixes
+    - Fixed bug where a blank or broken <base> tag could halt spidering
+    - Fixed crontab language file error
+    - Spider optionally accepts cookies
+    - Added ability to extend Indexed MIME-types with plugins (PDF and JPEG indexing plugins included)
+    - Added ability to spider to a certain link depth
+    - Added "Full scan" option: spider all files even if headers indicate no recent modification
+    - META refresh tags are only considered if they are less than ten seconds
+    - META description and keywords found in pages now supercede existing description/keywords
+      - If no description or keywords are found, the existing information is retained
+    - Spider attempts to remove pages containing META refresh tags in favour of new target
+    - Spider sends an If-Modified-Since header to save bandwidth when downloading static files
+    - Spider can no longer travel to parent directories from starting URIs
+
+  - Control Panel:
+    - Simplified Entry List action drop-down options
+    - Added ability to spider single or a selection of pages
+    - Added Data Lock function to prevent spider overwriting custom Titles, Descriptions and Keywords
+    - Automatic logout after 30 minutes of inactivity
+
+  - Search Interface:
+    - Improved Latin Accent Matching algorithm
+    - Added "filetype:" search query keyword (eg. "filetype:pdf")
+    - URI matches are no longer highlighted if disabled
+    - Fixed bug with mishandling of matched text if a term was at the beginning of a match
+    - Broke body.xhtml.php into separate PHP and language files to ease translation
+
+  - General
+    - Overhaul to page Status system
+    - Overhaul to HTTP request system
+    - Improved JWriter timeout detection
+    - JWriter no longer tries to adjust the memory_limit automatically
+    - User supplied variables now in config.ini.php
+    - Added documentation text to body.xhtml.php
+    - Many additions and changes to lang.txt
+
+
+Version 2.0b     - Nov 16, 2005
+  - Spider:
+    - Spider now detects and "times-out" of connections which stop responding
+    - Spider no longer dies prematurely if the first URI is unreachable
+    - Fixed bug where it was possible for spider to skip all orphaned entries
+    - Fixed bug where meta refresh tags were mishandled
+    - Added some additional email headers to Results email
+
+  - Search Interface:
+    - Altered search algorithm to limit term "spamming"
+    - Added search matching against entry URIs (off by default)
+
+  - General:
+    - Additions to lang.txt
+    - Modifications to body.xhtml.php
+
+
+Version 2.0a     - Oct 30, 2005
+  - Spider:
+    - Fixed bug where spider execution would halt at a non-existant domain
+    - Improved aborted-spider detection
+    - Added support for spidering URIs with a port suffix
+    - Added support for multiple Starting URIs
+
+  - Control Panel:
+    - Script can now discern between "not found" and "malfunctioning" when detecting "spider.php"
+    - Added "Require URI Matches" in Spider panel
+
+  - Search Interface:
+    - Fixed bug where submitting a blank query with a category selected would display the "No results found" dialogue
+    - Fixed bug where a PHP error would appear if client did not send a User-Agent header
+    - Modified default $resultTemplate in body.xhtml.php/css
+    - body.xhtml.php now outputs version info in an HTML comment tag
+
+  - General:
+    - Some fixes and additions to lang.txt
+    - Added faq.txt to package
+
+
+Version 2.0      - Oct 19, 2005
+  - Initial release

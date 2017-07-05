@@ -1,0 +1,33 @@
+# ***** Orca Search - Swedish body.xhtml.php Language File **********
+# This file contains language strings used in the body.xhtml.php
+# output file. See the readme.txt file for installation and usage
+# instructions.
+#
+# Compatible with 2.4
+#
+# Works with page charset of:
+#   - ISO-8859-1
+#
+# Translation by Sofi
+# *******************************************************************
+ 
+ 
+# body.xhtml.php
+000=Resultat <strong>%1$d</strong> - <strong>%2$d</strong> av <strong>%3$d</strong> för <strong>%4$s</strong> (<strong>%5$s</strong> sekunder)
+001=Kunde inte koppla till databasen.
+002=Sökdatabasen är under uppdatering; Försök igen lite senare.
+003=Dessa termer blev ignorerade: <strong>%s</strong>
+004=Tillbaks
+005=Nästa
+006=Inga resultat för <strong>%s</strong>
+007=Prova denna sökning i <a href="%1$s?q=%2$s">alla kategorier</a>?
+008=Fyll i sökord nedan.
+009=Sökord med mindre än %d bokstäver blir ignorerade.
+00a=Vid sök av hela fraser lägg in dem i citationstecken (&quot;&quot;).
+00b=Lägg till ett plus tecken (+) innan för att poängtera vikt.
+00c=Lägg till ett minus tecken (-) eller utropstecken (!) innan för att utesluta ord.
+00d=i
+00e=alla kategorier
+00f=Sök
+00g=Kategori
+00h=Sökning i kategori: <strong>%s</strong>

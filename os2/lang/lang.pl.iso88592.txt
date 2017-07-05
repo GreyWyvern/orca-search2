@@ -1,0 +1,455 @@
+# ***** Orca Search - Polish Language File ***********
+# This file contains language strings for the Control Panel and
+# Spider output. See the readme.txt file for installation and usage
+# instructions.
+#
+# Compatible with: 2.3a - 2.4
+#
+# Works with Control Panel Display Charset of:
+#   - ISO-8859-2
+#
+# Translated by Pawe³ Fadrowski (www.pawelfadrowski.eu)
+# *******************************************************************
+
+# Nowe dla 2.3a
+# 01y, 0jn, 0jo, 0m2, 0m3
+
+
+# Logowanie
+000=Logowanie do panelu kontrolnego Orca Search
+001=Nazwa
+002=Has³o
+003=Login
+
+
+# Ró¿ne terminy
+010=Wykonaj
+011=Zatwierd¼ zmiany
+012=Uwaga
+013=Wa¿ne
+014=dni
+015=godziny
+016=minuty
+017=sekundy
+018=temu
+019=Zawsze
+01a=Co godzinê
+01b=Codziennie
+01c=Co tydzieñ
+01d=Co miesi±c
+01e=Co rok
+01f=Nigdy
+01g=Nie znaleziono
+01h=Zablokowano
+01i=Nieodnotowany
+01j=OK
+01k=&quot;Sierota&quot;
+01l=Nieprzeczytane
+01m=Zindeksowane
+01n=Dodane
+01o=Nieznane
+01p=Porzuæ
+01q=Nazwa
+01r=Warto¶æ
+01s=Anuluj
+01t=Tytu³
+01u=Ustaw
+01v=Wykonaj
+01w=Poprzednia
+01x=Nastêpna
+01y=Nie OK
+
+
+# Menu i ró¿ne
+020=Wyloguj
+021=Statystyki
+022=Przeszukiwanie
+023=Lista wpisów
+024=Wyszukiwanie
+025=Narzêdzia
+026=Panel kontrolny
+027=URI
+
+
+# Wiadomo¶ci b³êdów
+030=B³±d
+031=Inny u¿ytkownik zalogowa³ siê, kiedy by³e¶ nieaktywny
+032=Nieprawid³owa nazwa u¿ytkownika i/lub has³o
+033=Inny u¿ytkownik jest ju¿ zalogowany (ostatnia czynno¶æ odby³a siê %s sekund temu)
+034=B³±d inicjowania Javascript Writer
+035=Nie wybrano kategorii
+036=Kategoria nie istnieje
+037=%1$s b³±d dotycz±cy URI: %2$s
+038=%1$s przekierowano do: %2$s
+039=Nie mo¿na po³±czyæ z hostem: %s
+03a=B³êdny URI
+03b=Okre¶lony URI istnieje ju¿ w bazie danych
+03c=B³±d podczas dodawania %s do bazy danych
+03d=Nie mo¿na odnale¼æ zaznaczonego wpisu
+03e=B³êdne znaki w zindeksowanym MIME-types
+03f=B³êdne znaki w ignorowanych rozszerzeniach
+03g=B³êdne znaki w elementach do usuniêcia
+03h=B³êdne znaki w zwiêkszonej wadze elementów HTML
+03i=B³êdne znaki w warto¶ci charset
+03j=Nie pasuj±ce domeny!
+03k=Nie mo¿na otworzyæ mapy strony w celu zapisania!
+03l=B³êdny znak w zamianie rozszerzenia...
+03m=Nie mo¿na po³±czyæ siê z baz± danych
+03n=Twoja sesja wygas³a ze wzglêdu na brak aktywno¶ci
+03o=Nie mo¿na usun±æ tymczasowego pliku: %s
+
+
+# Wiadomo¶ci powodzenia
+060=%s dodane pomy¶lnie
+061=Przeszukiwanie anulowane
+062=Mapa strony zapisana pomy¶lnie
+
+
+# Panel narzêdzi
+090=Opcje panelu kontrolnego
+091=Wy¶wietl Charset
+092=Powiniene¶ ustawiæ tê warto¶æ w celu dopasowania pliku jêzykowego dla komponentu oraz, je¿eli to mo¿liwe, wiêkszo¶ci zindeksowanych stron
+093=Opcje mapy strony
+094=W³±cz mapê strony
+095=¦cie¿ka do mapy strony
+096=Wybrany plik nie zosta³ znaleziony w ramach ¶cie¿ki!
+097=Wybrany plik nie jest zapisywalny!
+098=W³±cz kompresjê GZip
+099=Nie wykryto biblioteki PHP Zlib!
+09a=Domena
+09b=Do³±cz URI wy³±cznie z tej domeny
+09c=Brak dostêpnych
+09d=Do³±cz nieodnotowane wpisy
+09e=Do³±czyæ wpisy oznaczone jako nieodnotowane do mapy strony?
+09f=W³±cz automatyczn± zmianê czêstotliwo¶ci
+09g=Spróbuj wyznaczyæ odpowiedni± warto¶æ <em>zmiany czêstotliwo¶ci</em> dla ka¿dego wpisu, bazuj±c± na czêstotliwo¶ci znajdowania nowej tre¶ci.
+09h=Zapisz mapê strony
+09i=Opracuj swoj± mapê strony bez przeszukiwania
+09j=Ta operacja jest wykonywana w celu testów i udogodnieñ. W przypadku normalnej funkcjonalno¶ci, mapa strony jest automatycznie nadpisywana po ka¿dym przeszukiwaniu.
+09k=Zapisz do pliku mapy strony
+09l=Opcje JWriter
+09m=W³±cz JWriter
+09n=URI skryptu JWriter
+09o=Modu³ Javascript writer nie zosta³ odnaleziony w ramach tej ¶cie¿ki!
+09p=¦cie¿ka do pliku offline Javascript
+09q=Usuñ bazê URI
+09r=Nastêpuj±ca baza URI zostanie usuniêta z listy linków offline w celu uzyskania bardziej wzglêdnych ni¿ pe³nych linków wyszukiwania. Pasuj±cy jest wy³±cznie czysty tekst.
+09s=Nazwa pliku indeksu katalogowego
+09t=Jakie nazwy plików znlaz³ twój dzia³aj±cy offline alternatywny program dla &quot;/&quot; URI?
+09u=Zamieñ rozszerzenia
+09v=Je¿eli zaznaczone, JWriter zamieni lub doda po¿±dane rozszerzenie pliku do ka¿dego wpisu, bazuj±c na typie jego zawarto¶ci.
+09w=
+09x=
+09y=Ilo¶æ wyników na stronie
+09z=Ilo¶æ wyników do wy¶wietlenia na stronie przed paginacj±
+0a0=Szablon wyników
+0a1=Szablon (X)HTML do wy¶wietlenia ka¿dej listy wyników. W celu przywrócenia ustawieñ domy¶lnych, pozostaw puste pole tekstowe.
+0a2=Aktywacja JWriter
+0a3=Zapisz w trybie offline plik Javascript
+0a4=Zapisz do pliku Javascript
+0a5=Twoja tablica zindeksowanego wyszukiwania zajmuje obecnie <strong>%1$sMB</strong>.  Twój PHP <em>memory_limit</em> wynosi obecnie <strong>%2$s</strong>.
+0a6=Porzucenie zmiennej konfiguracyjnej
+0a7=Wy³±cz tablicê zmiennej konfiguracyjnej dla kopiowania i wklejania lub zapisz jako plik HTML.
+0a8=Awaria JWriter
+0a9=Przejd¼ do <a href="%s">JWriter URI</a> po wiêcej informacji.
+
+
+# Panel wyszukiwania
+0c0=Operacje wyszukiwania Cache
+0c1=Rêczne czyszczenie Cache
+0c2=Zazwyczaj wykonywane automatycznie ilekroæ baza danych wyszukiwania ulega zmianie
+0c3=Ograniczenie rozmiaru Cache
+0c4=Ograniczenie cache 0kB wy³±cza buforowanie
+0c5=W³±cz GZip'd Cache
+0c6=Twoje <strong>%1$s</strong> wpisy cache zajmuj± ¶rednio <strong>%2$s</strong>kB na wpis.
+0c7=Cache jest obecnie puste.
+0c8=Wersja PHP 4.3.0 lub wy¿sza oraz biblioteka ZLib s± niezbêdne w celu w³±czenia tej opcji.
+0c9=Opcje wyszukiwania
+0ca=Zignoruj dopasowania URI
+0cb=Linie oznaczone gwiazdk± (*) bêd± traktowane jako proste wyra¿enia regularne; inaczej bêdzie traktowany czysty tekst.
+0cc=Ograniczenie ilo¶ci wyrazów
+0cd=Maksymalna ilo¶æ odrêbnych wyrazów dopuszczalnych w ka¿dym zapytaniu wyszukiwania
+0ce=Wyrazy
+0cf=Ograniczenie d³ugo¶ci wyrazu
+0cg=Wyrazy krótsze ni¿ podana warto¶æ bêd± ignorowane
+0ch=Znaki
+0ci=Waga dopasowania
+0cj=Ocena stosowana to dopasowañ znalezionych w specyficznych obszarach
+0ck=
+0cl=Element body
+0cm=S³owa kluczowe
+0cn=Wagi elementów
+0co=Zastosuj dodatkow± istotno¶æ do elementów wyszczególnionych w poni¿szym polu tekstowym zwiêkszonej wagi elementów
+0cp=Dodatek wielowarstwowy
+0cq=Dodatek wielowyrazowy
+0cr=Dodatek wa¿no¶ci (+)
+0cs=Dopasowanie akcentu ³aciñskiego
+0ct=Dzia³a w³a¶ciwie wy³±cznie z UTF-8 (z w³±czonym<em>indeksowaniem UTF-8</em>) lub kodowaniem ISO-8859-1.
+0cu=Zwiêksz wagê elementów
+0cv=Tekst wewn±trz niniejszych elementów HTML otrzymuje dodatkowy punkt w zakresie powy¿szej warto¶ci wagi elementów.
+0cw=Zmiany nie przynios± efektu do czasu nastêpnego przeszukiwania.
+0cx=Maksimum zwróconych wyników
+0cy=Wyniki
+0cz=Maksimum wy¶wietlanego tekstu dopasowania
+0d0=Poka¿ &quot;sieroty&quot;
+0d1=Wy¶wietliæ &quot;osierocone&quot; strony w wynikach wyszukiwania?
+0d2=Wyczy¶æ
+0d3=Obecny rozmiar cache
+
+
+# Panel listy wpisów
+0f0=¯adna strona nie zosta³a zindeksowana
+0f1=Dodaj wpis
+0f2=Dodaj wpis rêcznie
+0f3=Przypisz now± kategoriê
+0f4=Kategoria
+0f5=Wybierz kategoriê
+0f6=Nowa kategoria
+0f7=Anuluj operacjê
+0f8=
+0f9=Skomansowane ustawienia zmiany czêstotliwo¶ci mapy strony
+0fa=Zmieñ czêstotliwo¶æ
+0fb=Skomansowane ustawienia priorytetów mapy strony
+0fc=Priorytet
+0fd=Edytuj wpis
+0fe=Dodaj wpis
+0ff=Przeszukuj ponownie
+0fg=Kodowanie znaków
+0fh=¯aden nie zosta³ okre¶lony
+0fi=
+0fj=Opis
+0fk=S³owa kluczowe
+0fl=Prze³±cz nieodnotowane
+0fm=Blokada danych
+0fn=Nieodnotowane
+0fo=Mapa strony
+0fp=Odnotuj w mapie strony
+0fq=Dane zablokowano
+0fr=
+0fs=Zmieñ czêstotliwo¶æ
+0ft=Priorytet
+0fu=URI, które doda³e¶ nie zostan± zindeksowane do czasu nastêpnego przeszukiwania. Do tego momentu bêd± oznaczone jako &quot;dodane&quot; i nie bêd± odnotowane w wynikach wyszukiwania.
+0fv=Status
+0fw=Edytuj
+0fx=Filtry
+0fy=Poka¿ wy³±cznie listy zaktualizowane
+0fz=Brak list zaktualizowanych
+0g0=Dopasuj
+0g1=Filtrowanie wed³ug tekstu dopasowania
+0g2=Wyklucz
+0g3=Wyklucz wed³ug tekstu dopasowania
+0g4=Filtrowanie wed³ug kategorii
+0g5=Filtrowanie wed³ug statusu
+0g6=Poka¿ wszystko
+0g7=Jeste¶ pewien, ¿e chcesz ponownie przeszukaæ wybrane wpisy?
+0g8=B³êdny MIME-type: %s
+0g9=Ta strona nie mo¿e zostaæ odnotowana
+0ga=Prze³±cz blokadê danych
+0gb=Inne opcje
+0gc=
+0gd=
+0ge=Ustaw wybrane filtry
+0gf=Wyczy¶æ
+0gg=Usuñ wszystkie filtry
+0gh=Wybierz wszystkie wpisy
+0gi=Zastosuj akcjê do wybranych wpisów
+0gj=Wybierz akcjê
+0gk=Usuñ
+0gl=
+0gm=
+0gn=Zmieñ kategoriê
+0go=Prze³±cz nieodnotowane w mapie strony
+0gp=
+0gq=Ustaw zmianê czêstotliwo¶ci mapy strony
+0gr=Ustaw priorytet mapy strony
+0gs=
+0gt=Zastosuj wybrane akcje
+0gu=lub
+0gv=Strona
+0gw=Poka¿ te wpisy na stronie
+0gx=Nieodnotowane w mapie strony
+0gy=Brak pasuj±cych wpisów
+0gz=Wyczy¶ciæ filtry?
+0h0=Usuñ wszystkie filtry
+0h1=Czy na pewno chcesz usun±æ wybrane wpisy?
+
+
+# Panel przeszukiwania
+0i0=Dokonaj przeszukiwania rêcznie
+0i1=Wymu¶ przeszukiwanie
+0i2=Wymu¶
+0i3=Baza danych jest obecnie zablokowana.
+0i4=Przeszukiwanie jest obecnie w toku
+0i5=Jednak, up³ynê³o ponad %s sekund od ostatniej aktywno¶ci przeszukiwania. Je¿eli baza danych &quot;siê zaciê³a&quot; mo¿esz wymusiæ przeszukiwanie za pomoc± przycisku.
+0i6=Rozpocznij przeszukiwanie
+0i7=Upewnij siê, ¿e potwierdzi³e¶ wszystkie po¿±dane opcje poni¿ej (czy nacisn±³e¶ przycisk &quot;Wykonaj&quot;?) zanim rozpoczniesz przeszukiwanie!
+0i8=&quot;Bezszwowe&quot; przeszukiwanie
+0i9=Poprzednie przeszukiwanie
+0ia=Nie odby³o siê jeszcze ¿adne przeszukiwanie
+0ib=Opcje przeszukiwania
+0ic=URI skryptu przeszukiwanie
+0id=Nie znaleziono skryptu przeszukiwania pod wskazanym URI!
+0ie=Pocz±tkowe URI
+0if=U¿yj Crontab Trigger
+0ig=Mo¿liwo¶æ w³±czenia tej opcji oznacza, ¿e jeste¶ dopiero w po³owie drogi. Przejd¼ do <em>readme.txt</em> po wiêcej informacji na temat ustawiania crontab na potrzeby przeszukiwania.
+0ih=Odstêp pomiêdzy przeszukiwaniami
+0ii=Warto¶æ zera (0) wy³±cza automatyczne przeszukiwanie
+0ij=Ograniczenie indeksowania stron
+0ik=Domy¶lna kategoria
+0il=Domy¶lna kategoria dla nowych wpisów
+0im=Automatyczna kategoryzacja
+0in=Instrukcje przeszukiwania w celu przypisywania okre¶lonych kategorii do nowych wpisów, bazuj±ca na URI/dopasowaniu tekstu tytu³u. Przejd¼ do <em>readme.txt</em> po dalsze szczegó³y.
+0io=Prze¶lij wyniki na e-mail
+0ip=Prze¶lij podsumowanie wyników przeszukiwania na ten adres
+0iq=W celu u¿ycia rozszerzeñ indeksowanych plików, musisz udostêpniæ prawa zapisu dla danego katalogu
+0ir=Pe³ne skanowanie
+0is=Indeksowanie UTF-8
+0it=Dopuszcza wiêkszy zakres wyszukiwalnych i mo¿liwych do wy¶wietlenia znaków. W³±cz tê opcjê <em>jedynie</em> przy przeszukiwaniu stron kodowanych w UTF-8 i obs³uguj±cych wyniki wyszukiwania równie¿ w UTF-8.
+0iu=<strong>%s%%</strong> stron jest obecnie zindeksowanych i obs³ugiwanych w kodowaniu UTF-8.
+0iv=Zindeksowane MIME-types
+0iw=Dopuszczone domeny
+0ix=Nie u¿ywaæ wildcards; wy³±cznie w pe³ni kwalifikowalne nazwy domen; jeden wpis w linii w celu zmniejszenia priorytetu.
+0iy=Zignoruj dopasowania URI
+0iz=Linie oznaczone gwiazdk± (*) bêd± traktowane jako proste wyra¿enia regularne; inaczej bêdzie traktowany czysty tekst.
+0j0=Zignoruj rozszerzenia
+0j1=Oddziel ka¿dy wpis odstêpami.
+0j2=Usuñ ci±gi znaków w tytule
+0j3=Nastêpuj±ce ci±gi znaków w tek¶cie zostan± usuniête z elementu HTML title w znalezionych plikach.
+0j4=Usuñ elementy
+0j5=Wymienione elementy HTML zostan± usuniête <em>wraz z zawarto¶ci±</em> przed indeksowaniem.
+0j6=Akceptuje proste znaczniki sk³adni CSS oddzielone odstêpami. Przejd¼ do <em>readme.txt</em> po wiêcej informacji.
+0j7=Wymaga dopasowanych URI
+0j8=Wy³±cznie URI pasuj±ce do co najmniej jednego wpisu zostan± przeszukane.
+0j9=Wymu¶ ponowne przeszukiwanie wszystkich wpisów, nawet je¿eli wydaj± siê nieaktualizowane od czasu poprzedniego przeszukiwania
+0ja=Awaria przeszukiwania
+0jb=Sprawd¼ <a href="%s">URI przeszukiwania</a> w celu ustalenia szczegó³ów.
+0jc=Akceptuj Cookies
+0jd=Dodatkowo zaakceptowane MIME-types
+0je=Pliki z MIME-types wymienione tutaj zostan± do³±czone, ale nie zindeksowane, podczas przeszukiwania.  Jeden wpis w linii
+0jf=Strony z tymi MIME-types bêd± zawiera³y ich tre¶æ dla wyszukiwania
+0jg=Ograniczenie g³êboko¶ci linku
+0jh=Maksymalna ilo¶æ linków do ¶ledzenia, pocz±wszy od pocz±tkowych URI
+0ji=Przeszukiwanie mo¿e byæ wywo³ane zarówno przez Crontab jak równie¿ przez samowywo³anie oparte na PHP
+0jk=lub
+0jl=W³±czaj±c tê opcjê, przeszukiwana bêdzie <em>kopia</em> tablicy index, zapobiegaj±c wy¶wietlaniu wiadomo¶ci <q>baza danych wyszukiwania jest obecnie aktualizowana</q>. Wymaga dodatkowej przestrzeni MySQL.
+0jm=Handler nie znaleziony!  %s
+0jn=Ograniczenie rozmiaru pliku
+0jo=Pliki o rozmiarze przekraczaj±cym ten limit zostan± zablokowane, aby zapobiec b³êdom przeci±¿enia pamiêci
+
+
+# Panel statystyk
+0l0=Statystyki przeszukiwania
+0l1=Czas ostatniego przeszukiwania
+0l2=Czas ostatniego wykonania przeszukiwania
+0l3=Poprzednie przeszukiwanie zajê³o tyle czasu, by zindeksowaæ wszystkie strony zapytania
+0l4=Transfer wszystkich danych
+0l5=Wszystkie zindeksowane dane
+0l6=Wydajno¶æ
+0l7=Zindeksowane strony
+0l8=Zaakceptowane strony
+0l9=Wynik wszystkich stron ze statusem OK lub &quot;sierota&quot;
+0la=Wynik wszystkich stron ze statusem OK
+0lb=Kategorie
+0lc=Zawarto¶æ uk³adu kodowania
+0ld=Niepowodzenie wszystkich kodowañ strony napotkanych przy przeszukiwaniu
+0le=Brak okre¶lonych
+0lf=Opcje logów zapytañ
+0lg=Resetuj logi zapytañ
+0lh=Wyma¿ rêcznie ca³e cache i przechowywany log wszystkich ¿±danych zapytañ wyszukiwania
+0li=Resetuj
+0lj=Czy na pewno chcesz wymazaæ ca³y log zapytañ wyszukiwania?
+0lk=Przedzia³ czasowy pomiêdzy resetowaniem logu zapytañ
+0ll=Okresowe resetowanie pozwoli unikn±æ &quot;przerostu&quot; tej tablicy
+0lm=Wiêkszo¶æ ostatnich zapytañ zwróci te same wyniki
+0ln=Ostatni reset logu zapytañ
+0lo=Log zapytañ
+0lp=Zapytanie
+0lq=Sortuj wed³ug zapytañ
+0lr=Trafienia
+0ls=Sortuj wed³ug ilo¶ci trafieñ
+0lt=Ostatnie zapytanie
+0lu=Sortuj wed³ug czasu ostatniego zapytania
+0lv=Wszystkie strony
+0lw=Wyniki
+0lx=Statystyki wyszukiwania
+0ly=¦rednia ilo¶æ wyszukiwañ na godzinê
+0lz=¦rednia wyników zwróconych wzglêdem zapytania
+0m0=Bazuj±c na najczêstszej wypadkowej ka¿dego zapytania
+0m1=¦rednia ilo¶æ wyszukiwañ na dzieñ
+0m2=Wyniki logu zapytañ od %s do %s.
+0m3=Wywo³ane przez interface wyszukiwania o:
+
+
+# JWriter
+0o0=Modu³ wyszukiwania Writer w trybie offline
+0o1=Zapisywanie do pliku Javascript
+0o2=Niew³a¶ciwy klucz inicjacyjny JWriter
+0o3=Wymagane URI linku zwrotnego
+0o4=Wyniki <strong>%1$s</strong> - <strong>%2$s</strong> z <strong>%3$s</strong> dla <strong>%4$s</strong> (<strong>%5$s</strong> sekund)
+0o5=Niniejsze wyrazy zosta³y zignorowane
+0o6=Nie znaleziono dopasowañ dla <strong>%s</strong>
+0o7=Proszê czekaæ...
+0o8=Spróbowaæ wyszukaæ we <a href="%s">wszystkich kategoriach</a>?
+0o9=Proszê wpisaæ zapytanie dla wyszukiwania
+0oa=w
+0ob=wszystkie kategorie
+0oc=Powodzenie!
+0od=Proces zajmuje <strong>%ss</strong>
+0oe=<strong>%1$skB</strong> indeks online zosta³ skompresowany przez <strong>%2$s%%</strong> do <strong>%3$skB</strong>.
+0of=Powrót do panelu kontrolnego
+
+
+# Przeszukiwanie
+0p0=Przeszukiwanie musi byæ zainicjowane automatycznie lub przez formularz w panelu kontrolnym
+0p1=Osi±gniêto limit strony
+0p2=Niew³a¶ciwy klucz inicjacyjny przeszukiwania
+0p3=B³±d: funkcja Cron jest niedostêpna
+0p4=Przeszukiwanie zainicjowane o %1$s przez %2$s
+0p5= przez %s
+0p6=Modu³ wyszukiwarki Orca
+0p7=Opcja przeszukiwania gotowa
+0p8=Akceptuj cookies
+0p9=Sprawdzanie robots.txt...
+0pa=Wymagany katalog /temp nie zosta³ odnaleziony lub nie mo¿e zostaæ otwarty!
+0pb=Tablica indeksowania zosta³a juz zablokowana!
+0pc=Wstrzymano skanowanie
+0pd=Inny proces skanowania jest obecnie aktywny
+0pe=Tablica indeksowania zablokowana
+0pf=Skanowanie...
+0pg=Proces przeszukiwania anulowany przez u¿ytkownika
+0ph=%1$s B³±d %2$s !  (Odno¶nik: %3$s )
+0pi=%1$s przekierowano do: %2$s !  (Odno¶nik: %3$s )
+0pj=%s aktualizowano do nowej lokacji
+0pk=%s przeniesiono do ulubionych w nowej lokacji
+0pl=%1$s przeniesiono.  Zawarto¶æ identyczna z %2$s  (Odno¶nik: %3$s )
+0pm=%1$s zignorowano.  Zawarto¶æ identyczna z %2$s  (Odno¶nik: %3$s )
+0pn=%s linki przeskanowane pomy¶lnie
+0po=Czas procesowania
+0pp=Czas procesowania w odniesieniu do linku
+0pq=Znaleziono nowe strony
+0pr=Zaktualizowano istniej±ce strony
+0ps=Nie znaleziono zindeksowanych stron
+0pt=Zindeksowane strony &quot;osierocono&quot;
+0pu=Zablokowano istniej±ce strony
+0pv=Generowanie mapy strony
+0pw=Nie mo¿na otworzyæ mapy strony w celu zapisu!
+0px=Mapa strony zapisana pomy¶lnie
+0py=Powodzenie!
+0pz=Nastêpuj±ce linki zosta³y zeskanowane
+0q0=Pocz±tkowe URI zosta³y zablokowane
+0q1=Powrót do panelu kontrolnego
+0q2=Informacje na temat procesowania
+0q3=W³a¶ciwe regu³y robots.txt
+0q4=Czas, jaki up³yn±³
+0q5=Wyniki przeszukiwania
+0q6=B³±d podczas procesowania
+0q7=Wstrzymano przeszukiwanie...
+0q8=Poziom b³êdu
+0q9=Szczegó³y
+0qa=Numer linii
+0qb=Przekroczono limit czasu podczas odbierania danych %s !
+0qc=%1$s nie zindeksowano; przekierowano poprzez od¶wie¿enie META do %2$s
+0qd=%s usuniêto w ulubionych nowego URI
+0qe=Przeszukiwanie oczekuje crontab trigger
+0qf=Brak dostêpu do danych w folderze /temp!
+0qg=Operacja

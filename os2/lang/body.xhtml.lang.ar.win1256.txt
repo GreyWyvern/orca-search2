@@ -1,0 +1,33 @@
+# ***** Orca Search - Arabic body.xhtml.php Language File ***********
+# This file contains language strings used in the body.xhtml.php
+# output file. See the readme.txt file for installation and usage
+# instructions.
+#
+# Compatible with 2.4
+#
+# Works with page charset of:
+# - Windows-1256
+#
+# Translation by Safaa Roumani
+# *******************************************************************
+
+
+# body.xhtml.php
+000=äÊíÌÉ <strong>%1$d</strong> - <strong>%2$d</strong> ãä <strong>%3$d</strong> ááãÕáÍ <strong>%4$s</strong> ( ËÇäíÉ <strong>%5$s</strong>)
+001=áã äÊãßä ãä ÇáÇÊÕÇá ãÚ ŞÇÚÏÉ ÇáÈíÇäÇÊ
+002=íÊã ÍÇáíÇ ÊØæíÑ ŞÇÚÏÉ ÈíÇäÇÊ ÇáÈÍË¡ íÑÌì ÅÚÇÏÉ ÇáÈÍË ãÌÏÏÇ ÎáÇá ÈÖÚ ÏŞÇÆŞ
+003= <strong>%s</strong> ÌÑì ÊÌÇåá åĞå ÇáãÕØáÍÇÊ
+004=ÇáÓÇÈŞ
+005=ÇááÇÍŞ
+006=áã äÌÏ ãÇ íÊæÇİŞ ãÚ <strong>%s</strong> 
+007=¿<a href="%1$s?q=%2$s">ÌãíÚ ÇáŞÆÇÊ</a> ÍÇæá ÇáÈÍË İí
+008=íÑÌì ÅÏÎÇá ÇáãÕØáÍ ÇáĞí ÊÈÍË Úäå İí ÇáÃÓİá
+009=íÊã ÊÌÇåá ãÕØáÍÇÊ ÇáÈÍË ÇáÊí ÊŞá Úä %d ÍÑİÇ 
+00a= ÖÚ ãÌãæÚÉ ÇáãÕØáÍÇÊ  ÏÇÎá åáÇáíä ÕÛíÑíä (&quot;&quot;) ááÈÍË Úä ÇáÚÈÇÑÇÊ
+00b=ÖÚ ÅÔÇÑÉ (+) ŞÈá ÇáãÕØáÍÇÊ áÊÔíÑ Åáì ÃåãíÊåÇ
+00c=ÖÚ ÅÔÇÑÉ (-) Ãæ ÅÔÇÑÉ (!) ŞÈá ÇáãÕØáÍÇÊ áÊÓÊËäíåÇ
+00d=Öãä
+00e=ÌãíÚ ÇáİÆÇÊ
+00f=ÇÈÍË
+00g=İÆÉ 
+00h=<strong>%s</strong> ÇáÈÍË İí İÆÉ

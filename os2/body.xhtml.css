@@ -1,0 +1,115 @@
+/* ***** Orca Search - Search Engine XHTML Output CSS ************ */
+
+
+#os_main {
+  font-size:90%;
+  padding:10px;
+}
+#os_main p#os_msg {
+  text-align:center;
+}
+#os_main ul {
+  text-align:left;
+}
+
+#os_resultbar {
+  background-color:#eeeeee;
+  border-top:1px solid #808080;
+  margin:3px 0px 1.5em 0px;
+  padding:2px;
+  text-align:right;
+}
+
+#os_results {
+  list-style-type:decimal;
+  margin:0px;
+  padding:0px 0px 0px 2em;
+  text-align:left;
+}
+#os_results li {
+  margin:15px 0px;
+}
+
+/* ***** Result Template ***** */
+#os_results li h3 {
+  font-weight:normal;
+  position:relative;
+  margin:0px;
+  border-bottom:2px solid #808080;
+  font-size:120%;
+}
+#os_results li h3 span.filetype {
+  font-size:70%;
+  text-transform:uppercase;
+  color:#0000cc;
+}
+#os_results li h3 small {
+  font-size:80%;
+}
+#os_results li h3 a {
+  text-decoration:none;
+}
+#os_results li h3 a:hover {}
+#os_results li p {
+  clear:left;
+  margin:2px;
+}
+#os_results li blockquote {
+  margin:0px;
+}
+#os_results li blockquote p {
+  margin:0px;
+}
+#os_results li blockquote p cite {
+  color:#008000;
+  background-color:transparent;
+}
+#os_results li blockquote p small {
+  font-size:80%;
+  color:#808080;
+  background-color:transparent;
+}
+
+/* ***** Search Form ***** */
+#os_search {
+  font-size:95%;
+  margin:1.5em 0px 0px 0px;
+  text-align:center;
+}
+#os_search div {
+  white-space:nowrap;
+  text-align:center;
+  margin:0px auto;
+  padding:5px;
+  border-top:1px solid #808080;
+  border-bottom:1px solid #808080;
+  color:#000000;
+  background-color:#eeeeee;
+}
+#os_search div input, #os_search div select {
+  vertical-align:middle;
+  font-size:inherit;
+}
+#os_search div label {}
+
+/* ***** Pagination ***** */
+#os_pagination {
+  margin:0.5em 15%;
+  font-size:90%;
+}
+#os_pagination div#os_pagin1 {
+  float:left;
+  width:15%;
+  white-space:nowrap;
+  text-align:right;
+}
+#os_pagination div#os_pagin2 {
+  margin:0px 20%;
+  text-align:center;
+}
+#os_pagination div#os_pagin3 {
+  float:right;
+  width:15%;
+  white-space:nowrap;
+  text-align:left;
+}

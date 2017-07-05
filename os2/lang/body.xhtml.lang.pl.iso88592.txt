@@ -1,0 +1,33 @@
+# ***** Orca Search - Polish body.xhtml.php Language File ***********
+# This file contains language strings used in the body.xhtml.php
+# output file. See the readme.txt file for installation and usage
+# instructions.
+#
+# Compatible with 2.4
+#
+# Works with page charset of:
+#   - ISO-8859-2
+#
+# Translated by Pawe³ Fadrowski
+# *******************************************************************
+
+
+# body.xhtml.php
+000=Wyniki <strong>%1$d</strong> - <strong>%2$d</strong> z <strong>%3$d</strong> dla <strong>%4$s</strong> (<strong>%5$s</strong> sekund)
+001=Nie mo¿na nawi±zaæ po³±czenia z baz± danych.
+002=Baza danych wyszukiwarki jest obecnie aktualizowana; proszê ponowiæ wyszukiwanie za kilka minut.
+003=Nastêpuj±ce wyra¿enia zosta³y zignorowane: <strong>%s</strong>
+004=Poprzednia
+005=Nastêpna
+006=Nie znaleziono wyników dla <strong>%s</strong>
+007=Spróbowaæ przeszukaæ <a href="%1$s?q=%2$s">wszystkie kategorie</a>?
+008=Proszê wpisaæ szukane wyra¿enia poni¿ej.
+009=Szukane wyra¿enia sk³adaj±ce siê z mniej ni¿ %d znaków bêd± ignorowane
+00a=Zamknij grupy wyrazów w cudzys³ów (&quot;&quot;) w celu wyszukiwania fraz
+00b=Poprzed¼ wyraz znakiem plusa (+) w celu zaznaczenia jego wa¿no¶ci
+00c=Poprzed¼ wyraz znakiem minusa (-) lub wykrzyknikiem (!) by go wykluczyæ
+00d=w
+00e=wszystkie kategorie
+00f=Szukaj
+00g=Kategoria
+00h=Wyszukiwanie w kategorii: <strong>%s</strong>

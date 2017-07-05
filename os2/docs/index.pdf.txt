@@ -1,0 +1,49 @@
+************************************************************************
+* Orca Search PDF indexing plugin - Installation guide                 *
+************************************************************************
+
+This plugin will enable the Orca Search script to index PDF files.
+Setting up this extension requires you to download the pdftotext binary
+from the XPDF package.
+
+Before downloading, make sure you know the *server* software which is
+running at your website, *not* the operating system you are currently
+using on your desktop computer.  It is the *server* software which
+dictates which version of the XPDF package you need to download.
+
+http://www.foolabs.com/xpdf/download.html
+
+Scroll down to the section titled "Precompiled binaries" and choose the
+package which matches your server software.  Once you have the package,
+unzip it to a temporary directory.
+
+The XPDF package contains many different PDF tools, but all we need is
+the pdftotext binary.  If you have the Windows package it will be called
+pdftotext.exe, and if you have the Linux package, it will just be called
+pdftotext without any extension.
+
+Upload this file to your os2/plugins/ directory and set permissions so
+it may be executed by the script.  eg. on *nix servers, you need to
+CHMOD this file to 755.  Also upload the indexing plugin file itself
+"index.pdf.php" to the os2/plugins/ directory and include the file in
+your "config.ini.php" file:
+
+include "plugins/index.pdf.php";
+
+The next step is to enable indexing of the pdf MIME-type in the Spider
+Panel (application/pdf).  Once you've submitted this, a new Indexed
+MIME-type will appear giving you important information as to the status
+of the plugin.  First of all, make sure the path to the pdftotext binary
+is correct.  Second, since the script creates temporary files while
+indexing, the os2/temp/ directory needs to have script writing
+permissions enabled.  That's CHMOD 777 on *nix servers.
+
+If there are no more visible error messages after submitting, the
+extension is functional!  PDFs should now be grabbed and indexed during
+the next spider crawl.
+
+IMPORTANT: you should double check your URI ignoring and filtering rules
+in the Spider Panel to make sure your soon-to-be-indexed PDFs will not
+be blocked.  The Orca Search comes with the pdf extension blocked by
+default; you will need to manually remove the extension from the list of
+Ignored Extensions.
