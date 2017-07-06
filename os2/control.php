@@ -20,7 +20,7 @@ function OS_countUp($time) {
   <span id="hours<?php echo $ctr; ?>"><?php printf("%02s", $hours); ?></span> <?php echo $_LANG['015']; ?>,
   <span id="minutes<?php echo $ctr; ?>"><?php printf("%02s", $minutes); ?></span> <?php echo $_LANG['016']; ?>,
   <span id="seconds<?php echo $ctr; ?>"><?php printf("%02s", $seconds); ?></span> <?php echo $_LANG['017'], " ", $_LANG['018']; ?> 
-  <script type="text/javascript"><!--<?php
+  <script type="text/javascript"><?php
     if ($ctr == 1) { ?> 
       function incrTime(y) {
         if (++atime[y][3] > 59) {
@@ -43,7 +43,7 @@ function OS_countUp($time) {
     } ?> 
     atime[<?php echo $ctr; ?>] = ["<?php echo $days; ?>", "<?php echo $hours; ?>", "<?php echo $minutes; ?>", "<?php echo $seconds; ?>"];
     setInterval("incrTime(<?php echo $ctr; ?>);", 1000);
-  // --></script><?php
+  </script><?php
 }
 
 
@@ -326,7 +326,8 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
         $_CDATA['row']['sm.changefreq'] = (isset($_POST['changefreq']) && array_key_exists($_POST['changefreq'], $_LANG['langcf'])) ? $_POST['changefreq'] : "weekly";
         $_CDATA['row']['sm.priority'] = (isset($_POST['priority'])) ? max(0, min(1, (float)$_POST['priority'])) : "0.5";
 
-        list($count) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `uri`='".addslashes($_POST['uri'])."';")->fetchAll(PDO::FETCH_NUM));
+        $result = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `uri`='".addslashes($_POST['uri'])."';")->fetchAll(PDO::FETCH_NUM);
+        list($count) = array_shift($result);
 
         if ($count) {
           $_ERROR['error'][] = $_LANG['03b'];
@@ -406,7 +407,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
         if (isset($_ERROR['error'])) $_CDATA['add'] = "Again";
 
       } else {
-        $_CDATA['row']['uri'] = "http://";
+        $_CDATA['row']['uri'] = $_SDATA['protocol']."://";
         $_CDATA['row']['title'] = "";
         $_CDATA['row']['category'] = $_VDATA['sp.defcat'];
         $_CDATA['row']['description'] = "";
@@ -495,12 +496,12 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
           $_POST = array_map(create_function('$v', 'return str_replace("\r", "", $v);'), $_POST);
 
           if ($_POST['pathto'] = trim($_POST['pathto'])) {
-            if (!preg_match("/^http:\/\//", $_POST['pathto'])) $_POST['pathto'] = "http://".$_POST['pathto'];
+            if (!preg_match("/^".$_SDATA['protocol'].":\/\//", $_POST['pathto'])) $_POST['pathto'] = $_SDATA['protocol']."://".$_POST['pathto'];
             OS_setData("sp.pathto", $_POST['pathto']);
           }
 
           if ($_POST['start'] = trim($_POST['start'])) {
-            $_POST['start'] = preg_grep("/^http:\/\/\w/", array_map("trim", explode("\n", $_POST['start'])));
+            $_POST['start'] = preg_grep("/^".$_SDATA['protocol'].":\/\/\w/", array_map("trim", explode("\n", $_POST['start'])));
             while (list($key, $value) = each($_POST['start'])) {
               $uri = parse_url($value);
               if (isset($uri['host']) && !isset($uri['path'])) $_POST['start'][$key] .= "/";
@@ -873,7 +874,8 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
       }
 
       if ($_VDATA['jw.hide'] == "false") {
-        list($count) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `unlist`!='true'{$_CDATA['lq']}{$_CDATA['nq']};")->fetchAll(PDO::FETCH_NUM));
+        $result = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `unlist`!='true'{$_CDATA['lq']}{$_CDATA['nq']};")->fetchAll(PDO::FETCH_NUM);
+        list($count) = array_shift($result);
 
         $_CDATA['jnf'] = true;
         $_CDATA['jnw'] = true;
@@ -884,7 +886,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
 
         $_CDATA['wnf'] = true;
         $_CDATA['wer'] = true;
-        if ($_VDATA['jw.writer'] != "http://") {
+        if ($_VDATA['jw.writer'] != $_SDATA['protocol']."://") {
           $tpage = new OS_Fetcher($_VDATA['jw.writer']);
           $tpage->request = "HEAD";
           $tpage->accept = array("text/html", "application/xhtml+xml", "text/xml");
@@ -896,7 +898,8 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
           }
         }
 
-        $_CDATA['indextable'] = array_shift($_DDATA['link']->query("SHOW TABLE STATUS LIKE '{$_DDATA['tablename']}';")->fetchAll());
+        $indextable = $_DDATA['link']->query("SHOW TABLE STATUS LIKE '{$_DDATA['tablename']}';")->fetchAll();
+        $_CDATA['indextable'] = array_shift($indextable);
         $_CDATA['indexmem'] = $_CDATA['indextable']['Data_length'];
 
         $_CDATA['phpmem'] = ini_get("memory_limit") or $_CDATA['phpmem'] = $_LANG['01o'];
@@ -905,20 +908,26 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
 
     case "Search": /* ******************************************** */
       $optimize = $_DDATA['link']->query("OPTIMIZE TABLE `{$_DDATA['tablestat']}`;");
-      list($_CDATA['cachedno']) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablestat']}` WHERE LENGTH(`cache`)>5;")->fetchAll(PDO::FETCH_NUM));
+      $cachedno = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablestat']}` WHERE LENGTH(`cache`)>5;")->fetchAll(PDO::FETCH_NUM);
+      list($_CDATA['cachedno']) = array_shift($cachedno);
 
-      list($_CDATA['cachekb']) = array_shift($_DDATA['link']->query("SELECT SUM(LENGTH(`cache`)) FROM `{$_DDATA['tablestat']}`;")->fetchAll(PDO::FETCH_NUM));
+      $cachekb = $_DDATA['link']->query("SELECT SUM(LENGTH(`cache`)) FROM `{$_DDATA['tablestat']}`;")->fetchAll(PDO::FETCH_NUM);
+      list($_CDATA['cachekb']) = array_shift($cachekb);
       $_CDATA['cachekb'] /= 1024;
       break;
 
     case "Stats": /* ********************************************* */
       if ($_VDATA['sp.lasttime'] != -1) {
-        $_CDATA['indextable'] = array_shift($_DDATA['link']->query("SHOW TABLE STATUS LIKE '{$_DDATA['tablename']}';")->fetchAll());
+        $indextable = $_DDATA['link']->query("SHOW TABLE STATUS LIKE '{$_DDATA['tablename']}';")->fetchAll();
+        $_CDATA['indextable'] = array_shift($indextable);
         $_CDATA['indexmem'] = $_CDATA['indextable']['Data_length'];
 
-        list($_CDATA['allpages']) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}`;")->fetchAll(PDO::FETCH_NUM));
-        list($_CDATA['indexpages']) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `body`!='';")->fetchAll(PDO::FETCH_NUM));
-        list($_CDATA['indexsrchd']) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `unlist`!='true' AND `body`!=''{$_CDATA['lq']}{$_CDATA['nq']};")->fetchAll(PDO::FETCH_NUM));
+        $allpages = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}`;")->fetchAll(PDO::FETCH_NUM);
+        list($_CDATA['allpages']) = array_shift($allpages);
+        $indexpages = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `body`!='';")->fetchAll(PDO::FETCH_NUM);
+        list($_CDATA['indexpages']) = array_shift($indexpages);
+        $indexsrchd = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `unlist`!='true' AND `body`!=''{$_CDATA['lq']}{$_CDATA['nq']};")->fetchAll(PDO::FETCH_NUM);
+        list($_CDATA['indexsrchd']) = array_shift($indexsrchd);
 
         $_CDATA['indexcats'] = count($_DDATA['link']->query("SELECT DISTINCT `category` FROM `{$_DDATA['tablename']}`;")->fetchAll());
 
@@ -929,11 +938,13 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
 
       if ($_VDATA['s.cachetime']) {
         if (time() > $_VDATA['s.cachetime']) {
-          list($_CDATA['scount']) = array_shift($_DDATA['link']->query("SELECT SUM(`hits`) FROM `{$_DDATA['tablestat']}`;")->fetchAll(PDO::FETCH_NUM));
+          $scount = $_DDATA['link']->query("SELECT SUM(`hits`) FROM `{$_DDATA['tablestat']}`;")->fetchAll(PDO::FETCH_NUM);
+          list($_CDATA['scount']) = array_shift($scount);
           $_CDATA['sperhour'] = $_CDATA['scount'] * 3600 / (time() - $_VDATA['s.cachetime']);
         } else $_CDATA['sperhour'] = 0;
 
-        list($_CDATA['sravg']) = array_shift($_DDATA['link']->query("SELECT AVG(`results`) FROM `{$_DDATA['tablestat']}`;")->fetchAll(PDO::FETCH_NUM));
+        $sravg = $_DDATA['link']->query("SELECT AVG(`results`) FROM `{$_DDATA['tablestat']}`;")->fetchAll(PDO::FETCH_NUM);
+        list($_CDATA['sravg']) = array_shift($sravg);
       }
       break;
 
@@ -942,7 +953,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
 
       $_CDATA['snf'] = true;
       $_CDATA['ser'] = true;
-      if ($_VDATA['sp.pathto'] != "http://") {
+      if ($_VDATA['sp.pathto'] != $_SDATA['protocol']."://") {
         $spage = new OS_Fetcher($_VDATA['sp.pathto']);
         $spage->request = "HEAD";
         $spage->accept = array("text/html", "application/xhtml+xml", "text/xml");
@@ -956,8 +967,10 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
 
       $_CDATA['cronsp'] = parse_url($_VDATA['sp.pathto']);
 
-      list($_CDATA['indexpages']) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `body`!='';")->fetchAll(PDO::FETCH_NUM));
-      list($_CDATA['utf8pages']) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `encoding`='UTF-8' AND `body`!='';")->fetchAll(PDO::FETCH_NUM));
+      $indexpages = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `body`!='';")->fetchAll(PDO::FETCH_NUM);
+      list($_CDATA['indexpages']) = array_shift($indexpages);
+      $utf8pages = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `encoding`='UTF-8' AND `body`!='';")->fetchAll(PDO::FETCH_NUM);
+      list($_CDATA['utf8pages']) = array_shift($utf8pages);
       break;
 
     default: /* ************************************************** */
@@ -991,7 +1004,8 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
         $_SDATA['orderby3'] = "<a href=\"?column=%2\$s\"><small>%1\$s</small></a>";
 
         /* ***** Filters ***************************************** */
-        list($_CDATA['new']) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `new`='true';")->fetchAll(PDO::FETCH_NUM));
+        $new = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `new`='true';")->fetchAll(PDO::FETCH_NUM);
+        list($_CDATA['new']) = array_shift($new);
 
         $sqlData['filters'] = "";
         if ($_VDATA['cf.textexclude']) $sqlData['filters'] .= " `{$_VDATA['c.column']}` NOT LIKE '%".addslashes(stripslashes($_VDATA['cf.textexclude']))."%' AND";
@@ -1029,7 +1043,8 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
         $_CDATA['nofilters'] = ($_VDATA['cf.textexclude'] === "" && $_VDATA['cf.textmatch'] === "" && $_VDATA['cf.category'] === "-" && $_VDATA['cf.status'] === "All" && $_VDATA['cf.new'] === "false") ? true : false;
         if ($sqlData['filters']) $sqlData['filters'] = " WHERE".preg_replace("/ AND$/", "", $sqlData['filters']);
 
-        list($_CDATA['count']) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}`{$sqlData['filters']}{$sqlData['orderby']};")->fetchAll(PDO::FETCH_NUM));
+        $count = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}`{$sqlData['filters']}{$sqlData['orderby']};")->fetchAll(PDO::FETCH_NUM);
+        list($_CDATA['count']) = array_shift($count);
 
         $_CDATA['start'] = ($_CDATA['count'] <= $_VDATA['c.pagination']) ? 0 : $_GET['start'];
         $_CDATA['end'] = min($_CDATA['start'] + $_VDATA['c.pagination'], $_CDATA['count']);
@@ -1050,7 +1065,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
   <title>Orca Search - <?php echo $_LANG['026']; ?></title>
   <meta http-equiv="Content-type" content="text/html; charset=<?php echo $_VDATA['c.charset']; ?>;" /><?php
   if ($_CDATA['loggedIn']) { ?> 
-    <meta http-equiv="Refresh" content="<?php echo ($_CDATA['cookietime'] - 30); ?>; URL=http://<?php echo $_SERVER['HTTP_HOST'], $_SERVER['PHP_SELF']; ?>?Timeout" /><?php
+    <meta http-equiv="Refresh" content="<?php echo ($_CDATA['cookietime'] - 30); ?>; URL=<?php echo $_SDATA['protocol'].'://'.$_SERVER['HTTP_HOST'], $_SERVER['PHP_SELF']; ?>?Timeout" /><?php
   } ?> 
   <link rel="stylesheet" type="text/css" href="control.css" />
 </head>
@@ -1454,7 +1469,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                 } else OS_countUp($_VDATA['sp.time']);
               ?></var>
               <input type="hidden" name="key" value="<?php echo $_VDATA['c.spkey']; ?>" />
-              <input type="hidden" name="linkback" value="http://<?php echo $_SERVER['HTTP_HOST'], $_SERVER['PHP_SELF']; ?>" />
+              <input type="hidden" name="linkback" value="<?php echo $_SDATA['protocol'].'://'.$_SERVER['HTTP_HOST'], $_SERVER['PHP_SELF']; ?>" />
               <h4><?php echo $_LANG['0i9']; ?></h4>
               <div></div>
             </li>
@@ -2124,8 +2139,8 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                   foreach ($_CDATA['list'] as $row) { ?> 
                     <tr<?php echo ($y++ % 2) ? "" : " class=\"drow\""; ?>>
                       <th colspan="4" class="titlecol"><?php
-                        $row['front'] = ($_VDATA['c.column'] == "uri") ? str_replace("http://", "", $row['uri']) : htmlspecialchars($row['title']);
-                        $row['back'] = ($_VDATA['c.column'] == "uri") ? htmlspecialchars($row['title']) : str_replace("http://", "", $row['uri']); ?> 
+                        $row['front'] = ($_VDATA['c.column'] == "uri") ? str_replace($_SDATA['protocol']."://", "", $row['uri']) : htmlspecialchars($row['title']);
+                        $row['back'] = ($_VDATA['c.column'] == "uri") ? htmlspecialchars($row['title']) : str_replace($_SDATA['protocol']."://", "", $row['uri']); ?>
                         <input type="checkbox" name="action[]" value="<?php echo $row['md5']; ?>"
                         />&nbsp;<a href="<?php echo $row['uri']; ?>" <?php if ($row['new'] == "true") echo " class=\"strong\""; ?> title="<?php echo $row['back']; ?>"><?php echo ($row['front']) ? $row['front'] : "&ndash;"; ?></a><?php
                         if ($row['locked'] == "true") echo "&nbsp;<span title=\"{$_LANG['0fq']}\">&copy;</span>"; ?> 

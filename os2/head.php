@@ -251,7 +251,9 @@ if ($_DDATA['online']) {
 
   if ($_VDATA['s.cachetime'] < (time() - $_VDATA['s.cachereset'] * 86400)) {
     if ($address = trim($_VDATA['s.cacheemail'])) {
-      require "phpmailer.php";
+      if (!class_exists('phpmailer')) {
+        require "phpmailer.php";
+      }
       $mail = new PHPMailer();
       $mail->From = $_SERVER['SERVER_ADMIN'];
       $mail->FromName = "Orca Search Spider";
@@ -267,7 +269,7 @@ if ($_DDATA['online']) {
       $mail->AddAddress($address[1], $address[0]);
       $mail->Subject = "{$_LANG['0lo']}: {$_SERVER['HTTP_HOST']} Orca Search";
       $mail->Body = sprintf($_LANG['0m2'], date("Y-m-d", $_VDATA['s.cachetime']), date("Y-m-d"))."\n\n";
-      $mail->Body .= "{$_LANG['0m3']}\n  http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\n\n";
+      $mail->Body .= "{$_LANG['0m3']}\n  {$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\n\n";
       $mail->Body .= " {$_LANG['0lr']}   {$_LANG['0lp']}\n";
       $mail->Body .= "______ _______________________________________________________________\n";
 
@@ -303,7 +305,7 @@ if ($_DDATA['online']) {
     $_QUERY = array();
 
     $_QUERY['query'] = $_QUERY['original'] = $_GET['q'];
-  
+
     preg_match_all("/[!+\-]?\".*?\"/", $_QUERY['query'], $quotes);
     $_QUERY['terms'] = str_replace('"', "", $quotes[0]);
     $_QUERY['query'] = preg_replace(array("/[!+\-]?\".*?\"/", "/\"/", "/\s{2,}/"), array("", "", " "), $_QUERY['query']);
@@ -467,9 +469,7 @@ if ($_DDATA['online']) {
     if (count(preg_grep("/^Orcascript: Search_Spider/", $rpage->headers))) {
       OS_setData("s.spkey", md5(time()));
       $conn2 = pfsockopen($rpage->parsed['realhost'], $rpage->parsed['port'], $erstr, $errno, 5);
-      @fwrite($conn2, "GET {$rpage->parsed['path']}?key={$_VDATA['s.spkey']} HTTP/1.0\r\nHost: {$rpage->parsed['hostport']}\r\nUser-Agent: {$_SDATA['userAgent']}\r\nReferer: http://{$_SERVER['HTTP_HOST']}{$_SERVER["REQUEST_URI"]}\r\n\r\n");
+      @fwrite($conn2, "GET {$rpage->parsed['path']}?key={$_VDATA['s.spkey']} HTTP/1.0\r\nHost: {$rpage->parsed['hostport']}\r\nUser-Agent: {$_SDATA['userAgent']}\r\nReferer: {$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}{$_SERVER["REQUEST_URI"]}\r\n\r\n");
     }
   }
 }
-
-?>
