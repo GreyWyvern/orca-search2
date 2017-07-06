@@ -144,16 +144,16 @@ function OS_latinAccents($_, $utf8 = true) {
 
   if ($utf8) {
     $_ = str_replace(array("AE", "Ae", "aE", "ae"), "(ae|Ã[†¦])", $_);
-    $_ = str_replace(array("A", "a"), "(a|Ã[€?‚ƒ„… ¡¢£¤¥])", $_);
+    $_ = str_replace(array("A", "a"), "(a|Ã[€‚ƒ„… ¡¢£¤¥])", $_);
     $_ = str_replace(array("C", "c"), "(c|Ã[‡§])", $_);
-    $_ = str_replace(array("E", "e"), "(e|Ã[?ˆ‰Š‹°¨©ª«])", $_);
-    $_ = str_replace(array("I", "i"), "(i|Ã[Œ??¬­®¯])", $_);
+    $_ = str_replace(array("E", "e"), "(e|Ã[ˆ‰Š‹°¨©ª«])", $_);
+    $_ = str_replace(array("I", "i"), "(i|Ã[Œ¬­®¯])", $_);
     $_ = str_replace(array("N", "n"), "(n|Ã[‘±])", $_);
     $_ = str_replace(array("O", "o"), "(o|Ã[’“”•–˜²³´µ¶¸])", $_);
     $_ = str_replace(array("S", "s"), "(s|ÃŸ)", $_);
     $_ = str_replace(array("T", "t"), "(t|Ã[¾])", $_);
     $_ = str_replace(array("U", "u"), "(u|Ã[™š›œº»¼])", $_);
-    $_ = str_replace(array("Y", "y"), "(y|Ã[?¸½¿])", $_);
+    $_ = str_replace(array("Y", "y"), "(y|Ã[¸½¿])", $_);
 
   } else {
     if (!count($accrep)) {
@@ -305,7 +305,7 @@ if ($_DDATA['online']) {
     $_QUERY = array();
 
     $_QUERY['query'] = $_QUERY['original'] = $_GET['q'];
-  
+
     preg_match_all("/[!+\-]?\".*?\"/", $_QUERY['query'], $quotes);
     $_QUERY['terms'] = str_replace('"', "", $quotes[0]);
     $_QUERY['query'] = preg_replace(array("/[!+\-]?\".*?\"/", "/\"/", "/\s{2,}/"), array("", "", " "), $_QUERY['query']);

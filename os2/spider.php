@@ -90,7 +90,7 @@ ERR;
 
     if ($_SERVER['REQUEST_METHOD'] != "CRON") { ?>
       <style type="text/css">form#canceller input { display:none; }</style><?php
-      echo $errtxt; ?>
+      echo $errtxt; ?> 
       <hr>
       <a href="<?php echo htmlspecialchars($_XDATA['linkback']); ?>" id="goback"><?php echo $_LANG['0q1']; ?></a>
       </body></html><?php
@@ -703,23 +703,23 @@ body div#lower ul { margin-top:8px; }
 </head>
 <body><?php
   OS_setData("sp.cancel", "false");
-  if ($_XDATA['linkback']) { ?>
+  if ($_XDATA['linkback']) { ?> 
     <form action="<?php echo htmlspecialchars($_XDATA['linkback']); ?>" method="post" id="canceller">
       <h1><?php echo $_LANG['0p7']; ?> <input type="submit" name="spider_Cancel" value="<?php echo $_LANG['01s']; ?>"></h1>
     </form><?php
 
-  } else { ?>
+  } else { ?> 
     <h1><?php echo $_LANG['0p7']; ?></h1><?php
   }
 
-  if (count($_XDATA['errors'])) { ?>
+  if (count($_XDATA['errors'])) { ?> 
     <ul class="warning"><?php
-      foreach ($_XDATA['errors'] as $error) { ?>
+      foreach ($_XDATA['errors'] as $error) { ?> 
         <li><?php echo $error; ?></li><?php
-      } ?>
+      } ?> 
     </ul><?php
 
-  } else { ?>
+  } else { ?> 
     <h2 class="green"><?php echo $_LANG['0p9']; ?></h2><?php
     flush();
 
@@ -771,7 +771,7 @@ body div#lower ul { margin-top:8px; }
 
     if (isset($_POST['spider_Force'])) OS_setData("sp.lock", "false");
 
-    if ($_VDATA['sp.lock'] == "true") { ?>
+    if ($_VDATA['sp.lock'] == "true") { ?> 
       <h2 class="warning"><?php echo $_LOG[] = $_LANG['0pb']; ?></h2>
       <h2><?php echo $_LANG['0pd']; ?></h2>
       <h2><?php echo $_LOG[] = $_LANG['0pc']; ?></h2><?php
@@ -780,7 +780,7 @@ body div#lower ul { margin-top:8px; }
       ignore_user_abort(true);
       @set_time_limit(0);
       set_error_handler("OS_spiderError");
-      OS_setData("sp.lock", "true"); ?>
+      OS_setData("sp.lock", "true"); ?> 
 
       <h2><?php echo $_LANG['0pe']; ?></h2>
       <h2><?php echo $_LANG['0pf']; ?></h2><?php
@@ -1256,7 +1256,7 @@ body div#lower ul { margin-top:8px; }
         ***************************************************************
         ******** Begin Sitemap ************************************* */
 
-        if ($_VDATA['sm.enable'] == "true") { ?>
+        if ($_VDATA['sm.enable'] == "true") { ?> 
           <h2><?php echo $_LANG['0pv']; ?></h2><?php
           flush();
 
@@ -1266,7 +1266,7 @@ body div#lower ul { margin-top:8px; }
             $cData['smnf'] = false;
             if (is_writable($_VDATA['sm.pathto'])) $cData['smnw'] = false;
           }
-          if ($cData['smnf'] || $cData['smnw']) { ?>
+          if ($cData['smnf'] || $cData['smnw']) { ?> 
             <h2 class="warning"><?php echo $_LOG[] = $_LANG['0pw']; ?></h2><?php
 
           } else {
@@ -1292,9 +1292,9 @@ body div#lower ul { margin-top:8px; }
     <loc><?php echo htmlspecialchars($smrow['uri']); ?></loc>
     <lastmod><?php echo date("Y-m-d", $smrow['sm.lastmod']); ?></lastmod>
     <changefreq><?php echo $smrow['sm.changefreq']; ?></changefreq><?php
-    if ($smrow['sm.priority'] != 0.5) { ?>
+    if ($smrow['sm.priority'] != 0.5) { ?> 
     <priority><?php echo $smrow['sm.priority']; ?></priority><?php
-    } ?>
+    } ?> 
   </url>
 <?php } ?></urlset><?php
 
@@ -1315,7 +1315,7 @@ body div#lower ul { margin-top:8px; }
           }
         }
         /* ***** End Sitemap ******************************************
-        ********************************************************* */ ?>
+        ********************************************************* */ ?> 
 
         <h1><?php echo $_LANG['0py']; ?></h1>
         <style type="text/css">form#canceller input { display:none; }</style>
@@ -1360,14 +1360,14 @@ body div#lower ul { margin-top:8px; }
         </table><?php
       } else {
 
-        OS_setData("sp.lock", "false"); ?>
+        OS_setData("sp.lock", "false"); ?> 
         <h2 class="warning"><?php echo $_LANG['0q0']; ?></h1><?php
       }
     }
 
-    if ($_SERVER['REQUEST_METHOD'] != "CRON" && $_XDATA['linkback']) { ?>
+    if ($_SERVER['REQUEST_METHOD'] != "CRON" && $_XDATA['linkback']) { ?> 
       <a href="<?php echo htmlspecialchars($_XDATA['linkback']); ?>" id="goback"><?php echo $_LANG['0q1']; ?></a><?php
-    } ?>
+    } ?> 
 
     <hr>
 
@@ -1375,15 +1375,15 @@ body div#lower ul { margin-top:8px; }
       <h1><?php echo $_LANG['0q2']; ?></h1>
 
       <h2><?php echo $_LANG['0q3']; ?></h2><?php
-      if (count($_XDATA['robotsCancel'])) { ?>
+      if (count($_XDATA['robotsCancel'])) { ?> 
         <ul><?php
-          foreach ($_XDATA['robotsCancel'] as $robotrule) { ?>
+          foreach ($_XDATA['robotsCancel'] as $robotrule) { ?> 
             <li><?php echo $robotrule; ?></li><?php
-          } ?>
+          } ?> 
         </ul><?php
-      } else { ?>
+      } else { ?> 
         <div>None</div><?php
-      } ?>
+      } ?> 
 
       <h2><?php echo $_LANG['0p8']; ?></h2>
       <pre><?php echo ((sizeof($_XDATA['cookies']) > 0) ? print_r($_XDATA['cookies'], true) : ''); ?></pre>
@@ -1397,17 +1397,17 @@ body div#lower ul { margin-top:8px; }
         </thead>
         <tbody><?php
           while (list($key, $value) = each($_TIMER)) {
-            if ($key != "__log") { ?>
+            if ($key != "__log") { ?> 
               <tr>
                 <th><?php echo $key; ?></th>
                 <td><?php printf("%01.3f", $value); ?>s</td>
               </tr><?php
             }
-          } ?>
+          } ?> 
         </tbody>
       </table>
     </div><?php
-  } ?>
+  } ?> 
 </body>
 </html><?php
 
