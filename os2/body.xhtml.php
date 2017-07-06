@@ -83,7 +83,7 @@ ORCA;
 
 /* ******************************************************************
 ******** Script Setup ******************************************** */
-$_SDATA['root'] = "http://{$_SERVER['HTTP_HOST']}".preg_replace("/\/[^\/]*$/", "/", $_SERVER['PHP_SELF']);
+$_SDATA['root'] = "{$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}".preg_replace("/\/[^\/]*$/", "/", $_SERVER['PHP_SELF']);
 $_SDATA['find'] = array(
   "{R_NUMBER}",
   "{R_RELEVANCE}",
@@ -163,10 +163,10 @@ if (!isset($_QUERY['original'])) $_QUERY['original'] = "";
             $puri = @parse_url($_RESULTS[$x]['uri']);
             if (isset($puri['path'])) $_RESULTS[$x]['title'] = basename($puri['path']);
             if (strlen($_RESULTS[$x]['title']) <= 3)
-              $_RESULTS[$x]['title'] = htmlspecialchars(str_replace(array($_SDATA['root'], "http://"), array("/", ""), $_RESULTS[$x]['uri']));
+              $_RESULTS[$x]['title'] = htmlspecialchars(str_replace(array($_SDATA['root'], "{$_SDATA['protocol']}://"), array("/", ""), $_RESULTS[$x]['uri']));
           }
-          $_RESULTS[$x]['uri'] = str_replace(array($_SDATA['root'], "http://{$_SERVER['HTTP_HOST']}/"), array("/", "/"), $_RESULTS[$x]['uri']);
-          $_RESULTS[$x]['matchURI'] = str_replace(array($_SDATA['root'], "http://{$_SERVER['HTTP_HOST']}/", "http://"), array("/", "/", ""), $_RESULTS[$x]['matchURI']);
+          $_RESULTS[$x]['uri'] = str_replace(array($_SDATA['root'], "{$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}/"), array("", "/"), $_RESULTS[$x]['uri']);
+          $_RESULTS[$x]['matchURI'] = str_replace(array($_SDATA['root'], "{$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}/", "https://"), array("/", "/", ""), $_RESULTS[$x]['matchURI']);
           $_SDATA['repl'] = array(
             $x + 1,
             sprintf("%01.1f", $_RESULTS[$x]['relevance']),

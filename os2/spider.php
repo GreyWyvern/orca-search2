@@ -14,7 +14,7 @@ function OS_add2Queue($uri, $referer = "", $parentdepth = 0, $verifyonly = false
   $uri = preg_replace("/(?<!:)\/{2,}/", "/", $uri);
 
   $turi = @parse_url($uri);
-  if (!isset($turi['host']) || !isset($turi['scheme']) || !in_array($turi['scheme'], array("http"))) return "";
+  if (!isset($turi['host']) || !isset($turi['scheme']) || !in_array($turi['scheme'], array("http", "https"))) return "";
   if (isset($turi['port'])) $turi['host'] .= ":".$turi['port'];
 
   if (!isset($turi['path'])) $turi['path'] = "/";
@@ -90,7 +90,7 @@ ERR;
 
     if ($_SERVER['REQUEST_METHOD'] != "CRON") { ?>
       <style type="text/css">form#canceller input { display:none; }</style><?php
-      echo $errtxt; ?> 
+      echo $errtxt; ?>
       <hr>
       <a href="<?php echo htmlspecialchars($_XDATA['linkback']); ?>" id="goback"><?php echo $_LANG['0q1']; ?></a>
       </body></html><?php
@@ -151,8 +151,8 @@ function OS_parseHTMLTag($tag, $debug = false) {
           $slice = explode("=", $slice, 2);
           if (isset($slice[0]) && preg_match("/^[\w\-]+$/", $slice[0])) {
             if (count($slice) == 2) {
-              $slice[1] = preg_replace(array("/^\x05$/e", "/\x05/e"), array('trim(next($qsin), "\'");', 'next($qsin);'), $slice[1]);
-              $slice[1] = preg_replace(array("/^\x06$/e", "/\x06/e"), array('trim(next($qdub), "\"");', 'next($qdub);'), $slice[1]);
+              $slice[1] = preg_replace(array("/^\x05$/", "/\x05/"), array('trim(next($qsin), "\'");', 'next($qsin);'), $slice[1]);
+              $slice[1] = preg_replace(array("/^\x06$/", "/\x06/"), array('trim(next($qdub), "\"");', 'next($qdub);'), $slice[1]);
               $output[strtolower($slice[0])] = $slice[1];
             } else if (count($slice) == 1) $output[$slice[0]] = true;
           } else if ($debug) trigger_error("OS_parseHTMLTag: Invalid attribute name ".htmlspecialchars($slice[0]));
@@ -228,7 +228,7 @@ function OS_entities2utf8($_) {
     uksort($trans, create_function('$k1, $k2', 'return ($k1 == "&amp;") ? 1 : -1;'));
   }
 
-  $_ = preg_replace(array("/&#(\d{2,7});/e", "/&#x([\da-f]{2,6});/ie"), array("OS_unichr('$1');", "OS_unichr(hexdec('$1'));"), $_);
+  $_ = preg_replace(array("/&#(\d{2,7});/", "/&#x([\da-f]{2,6});/i"), array("OS_unichr('$1');", "OS_unichr(hexdec('$1'));"), $_);
   return strtr($_, $trans);
 }
 
@@ -244,7 +244,7 @@ function OS_entities2ascii($_) {
     );
   }
 
-  $_ = preg_replace(array("/(&#(\d{2,3});)/e", "/(&#([\da-f]{2});)/ie"), array("(((int)$2 < 256) ? chr('$2') : '$1')", "chr(hexdec('$2'))"), $_);
+  $_ = preg_replace(array("/(&#(\d{2,3});)/", "/(&#([\da-f]{2});)/i"), array("(((int)$2 < 256) ? chr('$2') : '$1')", "chr(hexdec('$2'))"), $_);
   return strtr($_, $trans);
 }
 
@@ -383,7 +383,7 @@ class OS_Resource {
   var $parsed      = array();
 
 
-  function OS_Resource($uri, $value) {
+  function __construct($uri, $value) {
     $this->uri = $uri;
     $this->depth = $value[0];
     $this->referer = $value[1];
@@ -392,7 +392,7 @@ class OS_Resource {
   }
 
   function setStatus($status) {
-    global $_DDATA, $_XDATA;
+    global $_DDATA, $_XDATA, $page;
 
     $bodyblow = (in_array($status, array("Blocked", "Not Found"))) ? ", `body`=''" : "";
     $update = $_DDATA['link']->query("UPDATE `{$_DDATA['tabletemp']}` SET `status`='$status'$bodyblow WHERE `uri`='".addslashes($this->uri)."';");
@@ -403,6 +403,8 @@ class OS_Resource {
   }
 
   function getMetatags($html) {
+    global $_SDATA;
+
     preg_match("/<head.*?\/head>/is", $this->body, $headtag);
     if (isset($headtag[0])) {
       preg_match_all("/<meta\s[^>]+>/i", $headtag[0], $this->metatags);
@@ -419,7 +421,7 @@ class OS_Resource {
                   preg_match("/^([\d\s]+);/", $value['content'], $reftime);
                   if (isset($reftime[1])) {
                     $this->reftime = (int)trim($reftime[1]);
-                    preg_match("/http:\/\/.+;?/i", $value['content'], $refresh);
+                    preg_match("/".$_SDATA['protocol'].":\/\/.+;?/i", $value['content'], $refresh);
                     if (isset($refresh[0])) $this->refresh = $refresh[0];
                   }
                   break;
@@ -631,7 +633,9 @@ if ($_VDATA['sp.utf8'] == "true") {
 
 
 /* ***** Mail Data *********************************************** */
-require "phpmailer.php";
+if (!class_exists('phpmailer')) {
+  require "phpmailer.php";
+}
 $mail = new PHPMailer();
 $mail->From = $_SERVER['SERVER_ADMIN'];
 $mail->FromName = "Orca Search Spider";
@@ -699,23 +703,23 @@ body div#lower ul { margin-top:8px; }
 </head>
 <body><?php
   OS_setData("sp.cancel", "false");
-  if ($_XDATA['linkback']) { ?> 
+  if ($_XDATA['linkback']) { ?>
     <form action="<?php echo htmlspecialchars($_XDATA['linkback']); ?>" method="post" id="canceller">
       <h1><?php echo $_LANG['0p7']; ?> <input type="submit" name="spider_Cancel" value="<?php echo $_LANG['01s']; ?>"></h1>
     </form><?php
 
-  } else { ?> 
+  } else { ?>
     <h1><?php echo $_LANG['0p7']; ?></h1><?php
   }
 
-  if (count($_XDATA['errors'])) { ?> 
+  if (count($_XDATA['errors'])) { ?>
     <ul class="warning"><?php
-      foreach ($_XDATA['errors'] as $error) { ?> 
+      foreach ($_XDATA['errors'] as $error) { ?>
         <li><?php echo $error; ?></li><?php
-      } ?> 
+      } ?>
     </ul><?php
 
-  } else { ?> 
+  } else { ?>
     <h2 class="green"><?php echo $_LANG['0p9']; ?></h2><?php
     flush();
 
@@ -727,7 +731,7 @@ body div#lower ul { margin-top:8px; }
     if ($_XDATA['checkRobots']) {
       $domCount = 0;
       foreach ($_XDATA['allDomains'] as $allDomains) {
-        $robot = new OS_Fetcher("http://$allDomains/robots.txt");
+        $robot = new OS_Fetcher($_SDATA['protocol']."://$allDomains/robots.txt");
         $robot->accept[] = "text/plain";
         $robot->cookies = $_XDATA['cookies'];
         $robot->fetch();
@@ -767,7 +771,7 @@ body div#lower ul { margin-top:8px; }
 
     if (isset($_POST['spider_Force'])) OS_setData("sp.lock", "false");
 
-    if ($_VDATA['sp.lock'] == "true") { ?> 
+    if ($_VDATA['sp.lock'] == "true") { ?>
       <h2 class="warning"><?php echo $_LOG[] = $_LANG['0pb']; ?></h2>
       <h2><?php echo $_LANG['0pd']; ?></h2>
       <h2><?php echo $_LOG[] = $_LANG['0pc']; ?></h2><?php
@@ -776,7 +780,7 @@ body div#lower ul { margin-top:8px; }
       ignore_user_abort(true);
       @set_time_limit(0);
       set_error_handler("OS_spiderError");
-      OS_setData("sp.lock", "true"); ?> 
+      OS_setData("sp.lock", "true"); ?>
 
       <h2><?php echo $_LANG['0pe']; ?></h2>
       <h2><?php echo $_LANG['0pf']; ?></h2><?php
@@ -786,7 +790,8 @@ body div#lower ul { margin-top:8px; }
       /* **************************************************************
       ******** Begin Spider **************************************** */
       foreach ($_XDATA['starters'] as $starter) OS_add2Queue($starter);
-      list($indexed) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tabletemp']}`;")->fetchAll(PDO::FETCH_NUM));
+      $result = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tabletemp']}`;")->fetchAll(PDO::FETCH_NUM);
+      list($indexed) = array_shift($result);
       if (count($_XDATA['queue']) || $indexed) {
         if ($_XDATA['reindex']) {
           foreach ($_XDATA['reindexmd5s'] as $md5)
@@ -854,7 +859,8 @@ body div#lower ul { margin-top:8px; }
                 if ($fpage->redirect) {
                   echo "<h3 class=\"notice\">&bull; ", $_LOG[] = sprintf($_LANG['0pi'], $page->uri, $fpage->redirect, $page->referer), "</h3>\n";
 
-                  list($newbump) = array_shift($_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tabletemp']}` WHERE `uri`='".addslashes($fpage->redirect)."';")->fetchAll(PDO::FETCH_NUM));
+                  $result = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tabletemp']}` WHERE `uri`='".addslashes($fpage->redirect)."';")->fetchAll(PDO::FETCH_NUM);
+                  list($newbump) = array_shift($result);
                   if (!$newbump) {
                     if ($newuri = OS_add2Queue($fpage->redirect, $page->uri, $page->depth)) {
                       $update = $_DDATA['link']->query("UPDATE `{$_DDATA['tabletemp']}` SET `uri`='".addslashes($newuri)."' WHERE `uri`='".addslashes($page->uri)."';");
@@ -1008,7 +1014,7 @@ body div#lower ul { margin-top:8px; }
                             preg_match_all($linkRegexp, $page->body, $links);
                             $links = array_unique($links[2]);
                             foreach ($links as $link) {
-                              if ($link && $link{0} != "#" && $link != "http://") {
+                              if ($link && $link{0} != "#" && $link != $_SDATA['protocol']."://") {
                                 if (preg_match("/^\/\//", $link)) {
                                   $link = "{$page->parsed['scheme']}:$link";
                                 } else if (!preg_match("/^\w+:/", $link)) {
@@ -1103,7 +1109,7 @@ body div#lower ul { margin-top:8px; }
                 } else {
                   // Accepted but not indexed types
                   // User must supply details via Entry List panel
-  
+
                 }
 
                 $page->status = ($_XDATA['cleanup']) ? "Orphan" : "OK";
@@ -1250,7 +1256,7 @@ body div#lower ul { margin-top:8px; }
         ***************************************************************
         ******** Begin Sitemap ************************************* */
 
-        if ($_VDATA['sm.enable'] == "true") { ?> 
+        if ($_VDATA['sm.enable'] == "true") { ?>
           <h2><?php echo $_LANG['0pv']; ?></h2><?php
           flush();
 
@@ -1260,7 +1266,7 @@ body div#lower ul { margin-top:8px; }
             $cData['smnf'] = false;
             if (is_writable($_VDATA['sm.pathto'])) $cData['smnw'] = false;
           }
-          if ($cData['smnf'] || $cData['smnw']) { ?> 
+          if ($cData['smnf'] || $cData['smnw']) { ?>
             <h2 class="warning"><?php echo $_LOG[] = $_LANG['0pw']; ?></h2><?php
 
           } else {
@@ -1286,9 +1292,9 @@ body div#lower ul { margin-top:8px; }
     <loc><?php echo htmlspecialchars($smrow['uri']); ?></loc>
     <lastmod><?php echo date("Y-m-d", $smrow['sm.lastmod']); ?></lastmod>
     <changefreq><?php echo $smrow['sm.changefreq']; ?></changefreq><?php
-    if ($smrow['sm.priority'] != 0.5) { ?> 
+    if ($smrow['sm.priority'] != 0.5) { ?>
     <priority><?php echo $smrow['sm.priority']; ?></priority><?php
-    } ?> 
+    } ?>
   </url>
 <?php } ?></urlset><?php
 
@@ -1309,14 +1315,14 @@ body div#lower ul { margin-top:8px; }
           }
         }
         /* ***** End Sitemap ******************************************
-        ********************************************************* */ ?> 
+        ********************************************************* */ ?>
 
         <h1><?php echo $_LANG['0py']; ?></h1>
         <style type="text/css">form#canceller input { display:none; }</style>
 
         <label><?php echo $_LANG['0pz']; ?>:<br>
           <textarea rows="15" cols="60" readonly="readonly" wrap="off"><?php
-            foreach ($_XDATA['scanned'] as $key => $scanned) echo "\n", str_replace("http://{$_SERVER['HTTP_HOST']}/", "/", $key);
+            foreach ($_XDATA['scanned'] as $key => $scanned) echo "\n", str_replace("{$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}/", "/", $key);
           ?></textarea>
         </label>
 
@@ -1354,14 +1360,14 @@ body div#lower ul { margin-top:8px; }
         </table><?php
       } else {
 
-        OS_setData("sp.lock", "false"); ?> 
+        OS_setData("sp.lock", "false"); ?>
         <h2 class="warning"><?php echo $_LANG['0q0']; ?></h1><?php
       }
     }
 
-    if ($_SERVER['REQUEST_METHOD'] != "CRON" && $_XDATA['linkback']) { ?> 
+    if ($_SERVER['REQUEST_METHOD'] != "CRON" && $_XDATA['linkback']) { ?>
       <a href="<?php echo htmlspecialchars($_XDATA['linkback']); ?>" id="goback"><?php echo $_LANG['0q1']; ?></a><?php
-    } ?> 
+    } ?>
 
     <hr>
 
@@ -1369,18 +1375,18 @@ body div#lower ul { margin-top:8px; }
       <h1><?php echo $_LANG['0q2']; ?></h1>
 
       <h2><?php echo $_LANG['0q3']; ?></h2><?php
-      if (count($_XDATA['robotsCancel'])) { ?> 
+      if (count($_XDATA['robotsCancel'])) { ?>
         <ul><?php
-          foreach ($_XDATA['robotsCancel'] as $robotrule) { ?> 
+          foreach ($_XDATA['robotsCancel'] as $robotrule) { ?>
             <li><?php echo $robotrule; ?></li><?php
-          } ?> 
+          } ?>
         </ul><?php
-      } else { ?> 
+      } else { ?>
         <div>None</div><?php
-      } ?> 
+      } ?>
 
       <h2><?php echo $_LANG['0p8']; ?></h2>
-      <pre><?php print_r($_XDATA['cookies']); ?></pre>
+      <pre><?php echo ((sizeof($_XDATA['cookies']) > 0) ? print_r($_XDATA['cookies'], true) : ''); ?></pre>
 
       <table cellspacing="0" border="1">
         <thead>
@@ -1391,17 +1397,17 @@ body div#lower ul { margin-top:8px; }
         </thead>
         <tbody><?php
           while (list($key, $value) = each($_TIMER)) {
-            if ($key != "__log") { ?> 
+            if ($key != "__log") { ?>
               <tr>
                 <th><?php echo $key; ?></th>
                 <td><?php printf("%01.3f", $value); ?>s</td>
               </tr><?php
             }
-          } ?> 
+          } ?>
         </tbody>
       </table>
     </div><?php
-  } ?> 
+  } ?>
 </body>
 </html><?php
 
@@ -1426,6 +1432,3 @@ if ($_SERVER['REQUEST_METHOD'] == "CRON") {
 
   // @mail($_VDATA['sp.email'], "{$_LANG['0q5']}: {$_VDATA['sp.pathto']}", implode("\n", $_LOG)."\n\n".implode("\n", $_XDATA['errors']), $mData['headers']);
 }
-
-
-?>

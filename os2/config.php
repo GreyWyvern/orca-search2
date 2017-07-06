@@ -58,7 +58,7 @@ function OS_clearCache() {
 class OS_TypeList {
   var $ctype = array();
 
-  function OS_TypeList() {}
+  function __construct() {}
 
   function get_ctype($cmtype) {
     foreach ($this->ctype as $key => $value) {
@@ -110,7 +110,7 @@ class OS_ContentType {
   var $indexer = "";
   var $ctypes  = array();
 
-  function OS_ContentType($mtypes = array(), $tofile = false) {
+  function __construct($mtypes = array(), $tofile = false) {
     $this->mtypes = $mtypes;
     $this->tofile = $tofile;
   }
@@ -144,7 +144,7 @@ class OS_Fetcher {
   var $cookies   = array();
   var $dataleng  = 0;
 
-  function OS_Fetcher($uri = "") {
+  function __construct($uri = "") {
     global $_VDATA;
 
     $this->uri = $uri;
@@ -159,8 +159,11 @@ class OS_Fetcher {
         if ($this->uri{strlen($this->uri) - 1} != "/") $this->uri .= "/";
       }
       $this->parsed['full'] = $this->parsed['path'].((isset($this->parsed['query'])) ? "?{$this->parsed['query']}" : "");
+      $this->parsed['port'] = "80";
+      if ($this->parsed['scheme'] == 'https') {
+        $this->parsed['port'] = "443";
+      }
       $this->parsed['hostport'] = $this->parsed['host'].((isset($this->parsed['port'])) ? ":".$this->parsed['port'] : "");
-      if (!isset($this->parsed['port'])) $this->parsed['port'] = "80";
 
       // if ($this->curl) {
       //   $this->fetchCURL();
@@ -282,15 +285,48 @@ class OS_Fetcher {
   function fetchSocket() {
     global $_VDATA, $_SDATA, $_MIME;
 
-    $conn = @fsockopen("tcp://{$this->parsed['host']}", $this->parsed['port'], $erstr, $errno, 5);
+    $debug = false;
+
+    $starttime = timerVal();
+
+    $protocol = 'tcp';
+    if ($this->parsed['port'] == 443) {
+      $protocol = 'ssl';
+    }
+
+    //$conn = @fsockopen($protocol."://{$this->parsed['host']}", $this->parsed['port'], $erstr, $errno, 5);
+    // disable ssl checking
+    $context = stream_context_create([
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true,
+	    'verify_depth' => 0
+        ]
+    ]);
+    $timeout = ini_get("default_socket_timeout");
+    $remote_socket = "$protocol://{$this->parsed['host']}:{$this->parsed['port']}";
+    $conn = stream_socket_client($remote_socket, $errno, $erstr, $timeout, STREAM_CLIENT_CONNECT, $context);
+    $currenttime = timerVal();
+    if ($debug) {
+      echo '<p>Breakpoint 1: '.($currenttime - $starttime).'</p>'."\n";
+      if (!empty($erstr)) {
+        echo '<p>Socket error(s): '.$erstr.'</p>'."\n";
+      }
+    }
     if ($conn) {
       $this->parsed['realhost'] = $this->parsed['host'];
     } else if ($_SERVER['HTTP_HOST'] == $this->parsed['host']) {
-      $conn = @fsockopen("tcp://{$_SERVER['SERVER_ADDR']}", $this->parsed['port'], $erstr, $errno, 5);
+      //$conn = @fsockopen($protocol."://{$_SERVER['SERVER_ADDR']}", $this->parsed['port'], $erstr, $errno, 5);
+      $remote_socket = "$protocol://{$_SERVER['SERVER_ADDR']}:{$this->parsed['port']}";
+      $conn = stream_socket_client($remote_socket, $errno, $erstr, $timeout, STREAM_CLIENT_CONNECT, $context);
       if ($conn) {
         $this->parsed['realhost'] = $_SERVER['SERVER_ADDR'];
       } else if (($ip = @gethostbyname($this->parsed['host'])) != $this->parsed['host']) {
-        $conn = @fsockopen("tcp://$ip", $this->parsed['port'], $erstr, $errno, 5);
+        //$conn = @fsockopen($protocol."://$ip", $this->parsed['port'], $erstr, $errno, 5);
+        $remote_socket = "$protocol://$ip:{$this->parsed['port']}";
+        $conn = stream_socket_client($remote_socket, $errno, $erstr, $timeout, STREAM_CLIENT_CONNECT, $context);
+
         if ($conn)
           $this->parsed['realhost'] = $ip;
       }
@@ -299,7 +335,7 @@ class OS_Fetcher {
     if ($conn) {
       $status = socket_get_status($conn);
       if (!$status['blocked']) socket_set_blocking($conn, true);
-      socket_set_timeout($conn, 5);
+      //socket_set_timeout($conn, 5);
 
       $cookiereq = "";
       if ($_VDATA['sp.cookies'] == "true")
@@ -399,6 +435,13 @@ class OS_Fetcher {
       $this->status = 6;
       $this->errstr = "$errno ~ $erstr";
     }
+
+    $currenttime = timerVal();
+    $totaltime = $currenttime - $starttime;
+    if ($debug) {
+      echo '<p>Time to fetch remote socket ('.$remote_socket.'): '.$totaltime.'</p>'."\n";
+      exit;
+    }
   }
 }
 
@@ -420,7 +463,7 @@ class OS_Cookie {
   var $valid   = true;
   var $expired = false;
 
-  function OS_Cookie($cookytext, $host, $path) {
+  function __construct($cookytext, $host, $path) {
     $host = strtolower($host);
 
     $ahost = explode(".", $host);
@@ -476,9 +519,16 @@ class OS_Cookie {
 }
 
 
+function timerVal() {
+  $mtime = microtime();
+  $mtime = explode(' ', $mtime);
+  $mtime = $mtime[1] + $mtime[0];
+  return $mtime;
+}
+
 /* ******************************************************************
 ******** Begin Program ******************************************* */
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
 $_SDATA['now'] = array_sum(explode(" ", microtime()));
 
 
@@ -581,7 +631,7 @@ if (!$_DDATA['error'][0]) {
       `sm.lastmod` int(11) NOT NULL default '0',
       `sm.changefreq` enum('always','hourly','daily','weekly','monthly','yearly','never') NOT NULL default 'weekly',
       `sm.priority` float NOT NULL default '0.5'
-    ) TYPE=MyISAM;");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
     $err = $_DDATA['link']->errorInfo();
     if ((int)$err[0])
@@ -629,7 +679,7 @@ if (!$_DDATA['error'][0]) {
       `s.weight` tinytext NOT NULL,
       `s.latinacc` enum('true','false') NOT NULL default 'false',
       `s.weightedtags` text NOT NULL,
-      `s.resultlimit` smallint(6) NOT NULL default '0',
+      `s.resultlimit` smallint(6) NOT NULL default '500',
       `s.pagination` tinyint(4) NOT NULL default '10',
       `s.matchingtext` smallint(6) NOT NULL default '300',
       `s.ignore` text NOT NULL,
@@ -678,7 +728,7 @@ if (!$_DDATA['error'][0]) {
       `jw.index` tinytext NOT NULL,
       `jw.template` text NOT NULL,
       `jw.pagination` tinyint(4) NOT NULL default '10'
-    ) TYPE=MyISAM;");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
     $err = $_DDATA['link']->errorInfo();
     if ((int)$err[0])
@@ -691,13 +741,13 @@ if (!$_DDATA['error'][0]) {
     $insert = $_DDATA['link']->query("INSERT INTO `{$_DDATA['tablevars']}` SET
 
       /* ***** Spider ******************************************** */
-      `sp.start`='http://{$_SERVER["HTTP_HOST"]}/',
+      `sp.start`='{$_SDATA['protocol']}://{$_SERVER["HTTP_HOST"]}/',
       `sp.domains`='{$_SERVER["HTTP_HOST"]}',
       `sp.extensions`='7z au aiff avi bin bz bz2 cab cda cdr class com css csv doc dll dtd dwg dxf eps exe gif hqx ico image jar jav jfif jpeg jpg js kbd mid moov mov movie mp3 mpeg mpg ocx ogg pdf png pps ppt ps psd qt ra ram rar rm rpm rtf scr sea sit svg swf sys tar.gz tga tgz tif tiff ttf uu uue vob wav xls z zip',
       `sp.type.index`='txt html',
-      `sp.remtags`='.noindex form head noscript select style textarea',
+      `sp.remtags`='.noindex form head nav noscript select style textarea',
       `sp.defcat`='Main',
-      `sp.pathto`='http://{$_SERVER["HTTP_HOST"]}/{$_SDATA['directory']}/spider.php',
+      `sp.pathto`='{$_SDATA['protocol']}://{$_SERVER["HTTP_HOST"]}/{$_SDATA['directory']}/spider.php',
 
       /* ***** Search ******************************************** */
       `s.weight`='1.3%0.5%2.1%1.9%0.2%2.5%1.5',
@@ -717,11 +767,14 @@ if (!$_DDATA['error'][0]) {
 
       /* ***** JWriter ******************************************* */
       `jw.egg`='.".DIRECTORY_SEPARATOR."egg.js',
-      `jw.writer`='http://{$_SERVER['HTTP_HOST']}/{$_SDATA['directory']}/jwriter.php',
-      `jw.remuri`='http://{$_SERVER['HTTP_HOST']}/',
+      `jw.writer`='{$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}/{$_SDATA['directory']}/jwriter.php',
+      `jw.remuri`='{$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}/',
       `jw.index`='index.html',
       `jw.template`='<h3>\n  <span class=\"filetype\">{R_FILETYPE}</span>\n  <a href=\"{R_URI}\" title=\"{R_DESCRIPTION}\">{R_TITLE}</a>\n  - <small>{R_CATEGORY}</small>\n</h3>\n<blockquote>\n  <p>\n    {R_MATCH}<br />\n    <cite>{R_URI}</cite> <small>({R_RELEVANCE})</small>\n  </p>\n</blockquote>'
     ;");
+    $err = $_DDATA['link']->errorInfo();
+    if ((int)$err[0])
+      die("Could not insert default data: {$_DDATA['tablevars']}\n - ".print_r($err, true));
   }
 
   if (!in_array($_DDATA['tablestat'], $_DDATA['tables'])) {
@@ -733,7 +786,7 @@ if (!$_DDATA['error'][0]) {
       `lasthit` int(11) NOT NULL default '0',
       `cache` longblob NOT NULL,
       KEY `qk` (`query`(127))
-    ) TYPE=MyISAM;");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
     $err = $_DDATA['link']->errorInfo();
     if ((int)$err[0])
@@ -988,5 +1041,3 @@ header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-
-?>
