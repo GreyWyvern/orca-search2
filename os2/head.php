@@ -468,8 +468,23 @@ if ($_DDATA['online']) {
 
     if (count(preg_grep("/^Orcascript: Search_Spider/", $rpage->headers))) {
       OS_setData("s.spkey", md5(time()));
-      $conn2 = pfsockopen($rpage->parsed['realhost'], $rpage->parsed['port'], $erstr, $errno, 5);
-      @fwrite($conn2, "GET {$rpage->parsed['path']}?key={$_VDATA['s.spkey']} HTTP/1.0\r\nHost: {$rpage->parsed['hostport']}\r\nUser-Agent: {$_SDATA['userAgent']}\r\nReferer: {$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}{$_SERVER["REQUEST_URI"]}\r\n\r\n");
+
+      $stream_context = stream_context_create([
+        'ssl' => [
+          'verify_peer' => false,
+          'verify_peer_name' => false,
+          'allow_self_signed' => true,
+          'verify_depth' => 0
+        ]
+      ]);
+      $timeout = ini_get("default_socket_timeout");
+      $protocol = ($rpage->parsed['scheme'] == 'https') ? 'ssl' : 'tcp';
+
+      // $conn2 = pfsockopen($rpage->parsed['realhost'], $rpage->parsed['port'], $erstr, $errno, 5);
+      $conn2 = stream_socket_client("{$protocol}://{$rpage->parsed['host']}:{$rpage->parsed['port']}", $erstr, $errno, $timeout, STREAM_CLIENT_CONNECT, $stream_context);
+      stream_set_blocking($conn2, false);
+
+      @fwrite($conn2, "GET {$rpage->parsed['path']}?key={$_VDATA['s.spkey']} HTTP/1.0\r\nHost: {$rpage->parsed['hostport']}\r\nUser-Agent: {$_SDATA['userAgent']}\r\nReferer: {$_SDATA['scheme']}://{$_SERVER['HTTP_HOST']}{$_SERVER["REQUEST_URI"]}\r\n\r\n");
     }
   }
 }
