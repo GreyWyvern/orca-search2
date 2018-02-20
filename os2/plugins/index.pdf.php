@@ -4,8 +4,13 @@
 
 $_MIME->ctype['pdf'] = new OS_ContentType(array("application/pdf"), true);
 
+// ***** pdftotext executable location
+// You may need to place this file in a shared folder with executable
+// permissions such as /usr/bin/
+// Make sure PHP has permission to execute the file (CHMOD 755 or 775)
+
 // $_MIME->ctype['pdf']->handler = ".\\plugins\\pdftotext.exe";  // Windows server
-$_MIME->ctype['pdf']->handler = "./plugins/pdftotext";       // *nix server
+$_MIME->ctype['pdf']->handler = './plugins/pdftotext';           // *nix server
 
 $_MIME->ctype['pdf']->indexer = "indexPDF";
 $_MIME->ctype['pdf']->ctypes = array("pdf");
@@ -15,7 +20,13 @@ function indexPDF(&$page) {
 
   if ($page->intostat == true) {
     ob_start();
-    passthru("{$_MIME->ctype['pdf']->handler} -htmlmeta -nopgbrk -q {$_XDATA['tempfile']} -");
+
+    // pdftotext version < 3.04
+    // passthru("{$_MIME->ctype['pdf']->handler} -htmlmeta -nopgbrk -q {$_XDATA['tempfile']} -");
+
+    // pdftotext version >= 3.04
+    passthru("{$_MIME->ctype['pdf']->handler} -nopgbrk -q {$_XDATA['tempfile']} -");
+
     $pdfoutput = ob_get_contents();
     ob_end_clean();
     if ($pdfoutput) {
@@ -37,5 +48,3 @@ function indexPDF(&$page) {
   } else return -1;
   return 0;
 }
-
-?>
