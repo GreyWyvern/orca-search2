@@ -407,7 +407,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
         if (isset($_ERROR['error'])) $_CDATA['add'] = "Again";
 
       } else {
-        $_CDATA['row']['uri'] = $_SDATA['protocol']."://";
+        $_CDATA['row']['uri'] = $_SDATA['scheme']."://";
         $_CDATA['row']['title'] = "";
         $_CDATA['row']['category'] = $_VDATA['sp.defcat'];
         $_CDATA['row']['description'] = "";
@@ -496,12 +496,12 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
           $_POST = array_map(create_function('$v', 'return str_replace("\r", "", $v);'), $_POST);
 
           if ($_POST['pathto'] = trim($_POST['pathto'])) {
-            if (!preg_match("/^".$_SDATA['protocol'].":\/\//", $_POST['pathto'])) $_POST['pathto'] = $_SDATA['protocol']."://".$_POST['pathto'];
+            if (!preg_match("/^{$_SDATA['scheme']}:\/\//", $_POST['pathto'])) $_POST['pathto'] = "{$_SDATA['scheme']}://{$_POST['pathto']}";
             OS_setData("sp.pathto", $_POST['pathto']);
           }
 
           if ($_POST['start'] = trim($_POST['start'])) {
-            $_POST['start'] = preg_grep("/^".$_SDATA['protocol'].":\/\/\w/", array_map("trim", explode("\n", $_POST['start'])));
+            $_POST['start'] = preg_grep("/^{$_SDATA['scheme']}:\/\/\w/", array_map("trim", explode("\n", $_POST['start'])));
             while (list($key, $value) = each($_POST['start'])) {
               $uri = parse_url($value);
               if (isset($uri['host']) && !isset($uri['path'])) $_POST['start'][$key] .= "/";
@@ -886,7 +886,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
 
         $_CDATA['wnf'] = true;
         $_CDATA['wer'] = true;
-        if ($_VDATA['jw.writer'] != $_SDATA['protocol']."://") {
+        if ($_VDATA['jw.writer'] != $_SDATA['scheme']."://") {
           $tpage = new OS_Fetcher($_VDATA['jw.writer']);
           $tpage->request = "HEAD";
           $tpage->accept = array("text/html", "application/xhtml+xml", "text/xml");
@@ -928,8 +928,8 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
         list($_CDATA['indexpages']) = array_shift($indexpages);
         $indexsrchd = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `unlist`!='true' AND `body`!=''{$_CDATA['lq']}{$_CDATA['nq']};")->fetchAll(PDO::FETCH_NUM);
         list($_CDATA['indexsrchd']) = array_shift($indexsrchd);
-
-        $_CDATA['indexcats'] = count($_DDATA['link']->query("SELECT DISTINCT `category` FROM `{$_DDATA['tablename']}`;")->fetchAll());
+        $indexcats = $_DDATA['link']->query("SELECT DISTINCT `category` FROM `{$_DDATA['tablename']}`;")->fetchAll();
+        $_CDATA['indexcats'] = count($indexcats);
 
         $_CDATA['encodings'] = array();
         $encodings = $_DDATA['link']->query("SELECT `encoding`, COUNT(*) as `num` FROM `{$_DDATA['tablename']}` WHERE `body`!='' GROUP BY `encoding` ORDER BY `num` DESC;")->fetchAll();
@@ -953,7 +953,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
 
       $_CDATA['snf'] = true;
       $_CDATA['ser'] = true;
-      if ($_VDATA['sp.pathto'] != $_SDATA['protocol']."://") {
+      if ($_VDATA['sp.pathto'] != $_SDATA['scheme']."://") {
         $spage = new OS_Fetcher($_VDATA['sp.pathto']);
         $spage->request = "HEAD";
         $spage->accept = array("text/html", "application/xhtml+xml", "text/xml");
@@ -962,6 +962,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
         if (!$spage->errstr) {
           if ($spage->httpcode[0] == "2") $_CDATA['snf'] = false;
           if (count(preg_grep("/^Orcascript: Search_Spider/", $spage->headers))) $_CDATA['ser'] = false;
+          // $_ERROR['error'][] = '<pre>'.print_r($spage, true).'</pre>';
         }
       }
 
@@ -1065,7 +1066,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
   <title>Orca Search - <?php echo $_LANG['026']; ?></title>
   <meta http-equiv="Content-type" content="text/html; charset=<?php echo $_VDATA['c.charset']; ?>;" /><?php
   if ($_CDATA['loggedIn']) { ?> 
-    <meta http-equiv="Refresh" content="<?php echo ($_CDATA['cookietime'] - 30); ?>; URL=<?php echo $_SDATA['protocol'].'://'.$_SERVER['HTTP_HOST'], $_SERVER['PHP_SELF']; ?>?Timeout" /><?php
+    <meta http-equiv="Refresh" content="<?php echo ($_CDATA['cookietime'] - 30); ?>; URL=<?php echo $_SDATA['scheme'].'://'.$_SERVER['HTTP_HOST'], $_SERVER['PHP_SELF']; ?>?Timeout" /><?php
   } ?> 
   <link rel="stylesheet" type="text/css" href="control.css" />
 </head>
@@ -1469,7 +1470,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                 } else OS_countUp($_VDATA['sp.time']);
               ?></var>
               <input type="hidden" name="key" value="<?php echo $_VDATA['c.spkey']; ?>" />
-              <input type="hidden" name="linkback" value="<?php echo $_SDATA['protocol'].'://'.$_SERVER['HTTP_HOST'], $_SERVER['PHP_SELF']; ?>" />
+              <input type="hidden" name="linkback" value="<?php echo $_SDATA['scheme'].'://'.$_SERVER['HTTP_HOST'], $_SERVER['PHP_SELF']; ?>" />
               <h4><?php echo $_LANG['0i9']; ?></h4>
               <div></div>
             </li>
@@ -2139,8 +2140,8 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                   foreach ($_CDATA['list'] as $row) { ?> 
                     <tr<?php echo ($y++ % 2) ? "" : " class=\"drow\""; ?>>
                       <th colspan="4" class="titlecol"><?php
-                        $row['front'] = ($_VDATA['c.column'] == "uri") ? str_replace($_SDATA['protocol']."://", "", $row['uri']) : htmlspecialchars($row['title']);
-                        $row['back'] = ($_VDATA['c.column'] == "uri") ? htmlspecialchars($row['title']) : str_replace($_SDATA['protocol']."://", "", $row['uri']); ?>
+                        $row['front'] = ($_VDATA['c.column'] == "uri") ? str_replace($_SDATA['scheme']."://", "", $row['uri']) : htmlspecialchars($row['title']);
+                        $row['back'] = ($_VDATA['c.column'] == "uri") ? htmlspecialchars($row['title']) : str_replace($_SDATA['scheme']."://", "", $row['uri']); ?>
                         <input type="checkbox" name="action[]" value="<?php echo $row['md5']; ?>"
                         />&nbsp;<a href="<?php echo $row['uri']; ?>" <?php if ($row['new'] == "true") echo " class=\"strong\""; ?> title="<?php echo $row['back']; ?>"><?php echo ($row['front']) ? $row['front'] : "&ndash;"; ?></a><?php
                         if ($row['locked'] == "true") echo "&nbsp;<span title=\"{$_LANG['0fq']}\">&copy;</span>"; ?> 
@@ -2241,5 +2242,6 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
 
     }
   } ?> 
+
 </body>
 </html>

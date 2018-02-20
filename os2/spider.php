@@ -71,7 +71,7 @@ function OS_isBlocked($uri) {
 }
 
 function OS_spiderError($errno, $errstr, $errfile, $errline) {
-  global $_LOG, $_LANG, $page, $_VDATA, $mData, $_XDATA, $_DDATA;
+  global $_LOG, $_LANG, $page, $_VDATA, $mData, $_XDATA, $_DDATA, $mail;
 
   if ($errno < 2048 && error_reporting() != 0) {
     OS_setData("sp.lock", "false");
@@ -79,9 +79,11 @@ function OS_spiderError($errno, $errstr, $errfile, $errline) {
     $merror = $_DDATA['link']->errorInfo();
     $merror = ((int)$merror[0]) ? "<br>\nMySQL error: {$merror[2]}" : "";
 
+    $uri = (isset($page->uri)) ? $page->uri : '';
+
     $errtxt = <<<ERR
 <br>
-{$_LANG['0q6']} {$page->uri}<br>
+{$_LANG['0q6']} {$uri}<br>
 {$_LANG['0q7']}<br>
 {$_LANG['0q8']}: $errno<br>
 {$_LANG['0q9']}: $errstr<br>
@@ -118,7 +120,12 @@ ERR;
   }
 }
 
+$qsin = false;
+$qdub = false;
+
 function OS_parseHTMLTag($tag, $debug = false) {
+  global $qsin, $qdub;
+
   $output = array("closing" => false);
   $loaf = $tag = trim($tag);
 
@@ -151,8 +158,10 @@ function OS_parseHTMLTag($tag, $debug = false) {
           $slice = explode("=", $slice, 2);
           if (isset($slice[0]) && preg_match("/^[\w\-]+$/", $slice[0])) {
             if (count($slice) == 2) {
-              $slice[1] = preg_replace(array("/^\x05$/", "/\x05/"), array('trim(next($qsin), "\'");', 'next($qsin);'), $slice[1]);
-              $slice[1] = preg_replace(array("/^\x06$/", "/\x06/"), array('trim(next($qdub), "\"");', 'next($qdub);'), $slice[1]);
+              $slice[1] = preg_replace_callback("/^\x05$/", function($_) { global $qsin; return trim(next($qsin), "\'"); }, $slice[1]);
+              $slice[1] = preg_replace_callback("/\x05/", function($_) { global $qsin; return next($qsin); }, $slice[1]);
+              $slice[1] = preg_replace_callback("/^\x06$/", function($_) { global $qdub; return trim(next($qdub), "\""); }, $slice[1]);
+              $slice[1] = preg_replace_callback("/\x06/", function($_) { global $qdub; return next($qdub); }, $slice[1]);
               $output[strtolower($slice[0])] = $slice[1];
             } else if (count($slice) == 1) $output[$slice[0]] = true;
           } else if ($debug) trigger_error("OS_parseHTMLTag: Invalid attribute name ".htmlspecialchars($slice[0]));
@@ -228,7 +237,8 @@ function OS_entities2utf8($_) {
     uksort($trans, create_function('$k1, $k2', 'return ($k1 == "&amp;") ? 1 : -1;'));
   }
 
-  $_ = preg_replace(array("/&#(\d{2,7});/", "/&#x([\da-f]{2,6});/i"), array("OS_unichr('$1');", "OS_unichr(hexdec('$1'));"), $_);
+  $_ = preg_replace_callback("/&#(\d{2,7});/", function($_) { return OS_unichr($_[1]); }, $_);
+  $_ = preg_replace_callback("/&#x([\da-f]{2,6});/i", function($_) { return OS_unichr(hexdec($_[1])); }, $_);
   return strtr($_, $trans);
 }
 
@@ -244,7 +254,8 @@ function OS_entities2ascii($_) {
     );
   }
 
-  $_ = preg_replace(array("/(&#(\d{2,3});)/", "/(&#([\da-f]{2});)/i"), array("(((int)$2 < 256) ? chr('$2') : '$1')", "chr(hexdec('$2'))"), $_);
+  $_ = preg_replace_callback("/(&#(\d{2,3});)/", function($_) { return ((int)$_[2] < 256) ? chr($_[2]) : $_[1]; }, $_);
+  $_ = preg_replace_callback("/(&#([\da-f]{2});)/i", function($_) { return chr(hexdec($_[2])); }, $_);
   return strtr($_, $trans);
 }
 
@@ -403,8 +414,6 @@ class OS_Resource {
   }
 
   function getMetatags($html) {
-    global $_SDATA;
-
     preg_match("/<head.*?\/head>/is", $this->body, $headtag);
     if (isset($headtag[0])) {
       preg_match_all("/<meta\s[^>]+>/i", $headtag[0], $this->metatags);
@@ -421,7 +430,7 @@ class OS_Resource {
                   preg_match("/^([\d\s]+);/", $value['content'], $reftime);
                   if (isset($reftime[1])) {
                     $this->reftime = (int)trim($reftime[1]);
-                    preg_match("/".$_SDATA['protocol'].":\/\/.+;?/i", $value['content'], $refresh);
+                    preg_match("/https?:\/\/.+;?/i", $value['content'], $refresh);
                     if (isset($refresh[0])) $this->refresh = $refresh[0];
                   }
                   break;
@@ -633,9 +642,7 @@ if ($_VDATA['sp.utf8'] == "true") {
 
 
 /* ***** Mail Data *********************************************** */
-if (!class_exists('phpmailer')) {
-  require "phpmailer.php";
-}
+require_once "phpmailer.php";
 $mail = new PHPMailer();
 $mail->From = $_SERVER['SERVER_ADMIN'];
 $mail->FromName = "Orca Search Spider";
@@ -731,7 +738,7 @@ body div#lower ul { margin-top:8px; }
     if ($_XDATA['checkRobots']) {
       $domCount = 0;
       foreach ($_XDATA['allDomains'] as $allDomains) {
-        $robot = new OS_Fetcher($_SDATA['protocol']."://$allDomains/robots.txt");
+        $robot = new OS_Fetcher("{$_SDATA['scheme']}://{$allDomains}/robots.txt");
         $robot->accept[] = "text/plain";
         $robot->cookies = $_XDATA['cookies'];
         $robot->fetch();
@@ -1014,7 +1021,7 @@ body div#lower ul { margin-top:8px; }
                             preg_match_all($linkRegexp, $page->body, $links);
                             $links = array_unique($links[2]);
                             foreach ($links as $link) {
-                              if ($link && $link{0} != "#" && $link != $_SDATA['protocol']."://") {
+                              if ($link && $link{0} != "#" && $link != "http://" && $link != "https://") {
                                 if (preg_match("/^\/\//", $link)) {
                                   $link = "{$page->parsed['scheme']}:$link";
                                 } else if (!preg_match("/^\w+:/", $link)) {
@@ -1322,7 +1329,7 @@ body div#lower ul { margin-top:8px; }
 
         <label><?php echo $_LANG['0pz']; ?>:<br>
           <textarea rows="15" cols="60" readonly="readonly" wrap="off"><?php
-            foreach ($_XDATA['scanned'] as $key => $scanned) echo "\n", str_replace("{$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}/", "/", $key);
+            foreach ($_XDATA['scanned'] as $key => $scanned) echo "\n", str_replace("{$_SDATA['scheme']}://{$_SERVER['HTTP_HOST']}/", "/", $key);
           ?></textarea>
         </label>
 

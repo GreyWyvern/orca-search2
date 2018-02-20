@@ -159,10 +159,8 @@ class OS_Fetcher {
         if ($this->uri{strlen($this->uri) - 1} != "/") $this->uri .= "/";
       }
       $this->parsed['full'] = $this->parsed['path'].((isset($this->parsed['query'])) ? "?{$this->parsed['query']}" : "");
-      $this->parsed['port'] = "80";
-      if ($this->parsed['scheme'] == 'https') {
-        $this->parsed['port'] = "443";
-      }
+      if (!isset($this->parsed['port']) || !$this->parsed['port'])
+        $this->parsed['port'] = ($this->parsed['scheme'] == 'https') ? '443' : '80';
       $this->parsed['hostport'] = $this->parsed['host'].((isset($this->parsed['port'])) ? ":".$this->parsed['port'] : "");
 
       // if ($this->curl) {
@@ -285,47 +283,31 @@ class OS_Fetcher {
   function fetchSocket() {
     global $_VDATA, $_SDATA, $_MIME;
 
-    $debug = false;
-
-    $starttime = timerVal();
-
-    $protocol = 'tcp';
-    if ($this->parsed['port'] == 443) {
-      $protocol = 'ssl';
-    }
-
-    //$conn = @fsockopen($protocol."://{$this->parsed['host']}", $this->parsed['port'], $erstr, $errno, 5);
-    // disable ssl checking
-    $context = stream_context_create([
-        'ssl' => [
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true,
-	    'verify_depth' => 0
-        ]
+    $stream_context = stream_context_create([
+      'ssl' => [
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true,
+        'verify_depth' => 0
+      ]
     ]);
+
     $timeout = ini_get("default_socket_timeout");
-    $remote_socket = "$protocol://{$this->parsed['host']}:{$this->parsed['port']}";
-    $conn = stream_socket_client($remote_socket, $errno, $erstr, $timeout, STREAM_CLIENT_CONNECT, $context);
-    $currenttime = timerVal();
-    if ($debug) {
-      echo '<p>Breakpoint 1: '.($currenttime - $starttime).'</p>'."\n";
-      if (!empty($erstr)) {
-        echo '<p>Socket error(s): '.$erstr.'</p>'."\n";
-      }
-    }
+    $protocol = ($this->parsed['scheme'] == 'https') ? 'ssl' : 'tcp';
+
+    $conn = stream_socket_client("{$protocol}://{$this->parsed['host']}:{$this->parsed['port']}", $erstr, $errno, $timeout, STREAM_CLIENT_CONNECT, $stream_context);
+
     if ($conn) {
       $this->parsed['realhost'] = $this->parsed['host'];
+
     } else if ($_SERVER['HTTP_HOST'] == $this->parsed['host']) {
-      //$conn = @fsockopen($protocol."://{$_SERVER['SERVER_ADDR']}", $this->parsed['port'], $erstr, $errno, 5);
-      $remote_socket = "$protocol://{$_SERVER['SERVER_ADDR']}:{$this->parsed['port']}";
-      $conn = stream_socket_client($remote_socket, $errno, $erstr, $timeout, STREAM_CLIENT_CONNECT, $context);
+      $conn = stream_socket_client("{$protocol}://{$_SERVER['SERVER_ADDR']}:{$this->parsed['port']}", $erstr, $errno, $timeout, STREAM_CLIENT_CONNECT, $stream_context);
+
       if ($conn) {
         $this->parsed['realhost'] = $_SERVER['SERVER_ADDR'];
+
       } else if (($ip = @gethostbyname($this->parsed['host'])) != $this->parsed['host']) {
-        //$conn = @fsockopen($protocol."://$ip", $this->parsed['port'], $erstr, $errno, 5);
-        $remote_socket = "$protocol://$ip:{$this->parsed['port']}";
-        $conn = stream_socket_client($remote_socket, $errno, $erstr, $timeout, STREAM_CLIENT_CONNECT, $context);
+        $conn = stream_socket_client("{$protocol}://{$ip}:{$this->parsed['port']}", $erstr, $errno, $timeout, STREAM_CLIENT_CONNECT, $stream_context);
 
         if ($conn)
           $this->parsed['realhost'] = $ip;
@@ -335,7 +317,7 @@ class OS_Fetcher {
     if ($conn) {
       $status = socket_get_status($conn);
       if (!$status['blocked']) socket_set_blocking($conn, true);
-      //socket_set_timeout($conn, 5);
+      // socket_set_timeout($conn, 5);
 
       $cookiereq = "";
       if ($_VDATA['sp.cookies'] == "true")
@@ -532,21 +514,17 @@ error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
 $_SDATA['now'] = array_sum(explode(" ", microtime()));
 
 
-/* ***** Magic Quotes Fix **************************************** */
-if (get_magic_quotes_gpc()) {
-  $fsmq = create_function('&$mData, $fnSelf', 'if (is_array($mData)) foreach ($mData as $mKey=>$mValue) $fnSelf($mData[$mKey], $fnSelf); else $mData = stripslashes($mData);');
-  $fsmq($_POST, $fsmq);
-  $fsmq($_GET, $fsmq);
-  $fsmq($_REQUEST, $fsmq);
-  $fsmq($_COOKIE, $fsmq);
-  $fsmq($_ENV, $fsmq);
-  $fsmq($_SERVER, $fsmq);
-}
-ini_set("magic_quotes_runtime", 0);
-
-
 /* ***** Include User Variables ********************************** */
 $_MIME = new OS_TypeList();
+
+
+/* ***** URL Scheme ********************************************** */
+$_SDATA['scheme'] = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http");
+
+// Detect CDN-provided SSL such as CloudFlare Flexible SSL
+if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']))
+  $_SDATA['scheme'] = $_SERVER['HTTP_X_FORWARDED_PROTO'];
+
 
 require "config.ini.php";
 
@@ -741,13 +719,13 @@ if (!$_DDATA['error'][0]) {
     $insert = $_DDATA['link']->query("INSERT INTO `{$_DDATA['tablevars']}` SET
 
       /* ***** Spider ******************************************** */
-      `sp.start`='{$_SDATA['protocol']}://{$_SERVER["HTTP_HOST"]}/',
+      `sp.start`='{$_SDATA['scheme']}://{$_SERVER['HTTP_HOST']}/',
       `sp.domains`='{$_SERVER["HTTP_HOST"]}',
       `sp.extensions`='7z au aiff avi bin bz bz2 cab cda cdr class com css csv doc dll dtd dwg dxf eps exe gif hqx ico image jar jav jfif jpeg jpg js kbd mid moov mov movie mp3 mpeg mpg ocx ogg pdf png pps ppt ps psd qt ra ram rar rm rpm rtf scr sea sit svg swf sys tar.gz tga tgz tif tiff ttf uu uue vob wav xls z zip',
       `sp.type.index`='txt html',
       `sp.remtags`='.noindex form head nav noscript select style textarea',
       `sp.defcat`='Main',
-      `sp.pathto`='{$_SDATA['protocol']}://{$_SERVER["HTTP_HOST"]}/{$_SDATA['directory']}/spider.php',
+      `sp.pathto`='{$_SDATA['scheme']}://{$_SERVER['HTTP_HOST']}/{$_SDATA['directory']}/spider.php',
 
       /* ***** Search ******************************************** */
       `s.weight`='1.3%0.5%2.1%1.9%0.2%2.5%1.5',
@@ -767,8 +745,8 @@ if (!$_DDATA['error'][0]) {
 
       /* ***** JWriter ******************************************* */
       `jw.egg`='.".DIRECTORY_SEPARATOR."egg.js',
-      `jw.writer`='{$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}/{$_SDATA['directory']}/jwriter.php',
-      `jw.remuri`='{$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}/',
+      `jw.writer`='{$_SDATA['scheme']}://{$_SERVER['HTTP_HOST']}/{$_SDATA['directory']}/jwriter.php',
+      `jw.remuri`='{$_SDATA['scheme']}://{$_SERVER['HTTP_HOST']}/',
       `jw.index`='index.html',
       `jw.template`='<h3>\n  <span class=\"filetype\">{R_FILETYPE}</span>\n  <a href=\"{R_URI}\" title=\"{R_DESCRIPTION}\">{R_TITLE}</a>\n  - <small>{R_CATEGORY}</small>\n</h3>\n<blockquote>\n  <p>\n    {R_MATCH}<br />\n    <cite>{R_URI}</cite> <small>({R_RELEVANCE})</small>\n  </p>\n</blockquote>'
     ;");

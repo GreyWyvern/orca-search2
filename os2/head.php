@@ -56,7 +56,7 @@
 *     -> "description" - String
 *          => Meta (or table-assigned) description
 *     -> "category" - String
-*          => Assigned category, pre-filtered by $_GET['c']
+*          => Assigned category, pre-filtered by $_REQUEST['c']
 *     -> "uri" - String
 *          => Full URI of match
 *     -> "matchURI" - String
@@ -246,14 +246,12 @@ if ($_DDATA['online']) {
   $select = $_DDATA['link']->query("SELECT DISTINCT `category` FROM `{$_DDATA['tablename']}` WHERE `unlist`='false'{$_SDATA['lq']}{$_SDATA['nq']} ORDER BY `category`;")->fetchAll();
   foreach ($select as $row) $_SDATA['categories'][] = $row['category'];
 
-  $_GET['c'] = (isset($_GET['c'])) ? $_GET['c'] : "";
-  if (!in_array($_GET['c'], $_SDATA['categories'])) $_GET['c'] = "";
+  $_REQUEST['c'] = (isset($_REQUEST['c'])) ? $_REQUEST['c'] : "";
+  if (!in_array($_REQUEST['c'], $_SDATA['categories'])) $_REQUEST['c'] = "";
 
   if ($_VDATA['s.cachetime'] < (time() - $_VDATA['s.cachereset'] * 86400)) {
     if ($address = trim($_VDATA['s.cacheemail'])) {
-      if (!class_exists('phpmailer')) {
-        require "phpmailer.php";
-      }
+      if (!class_exists('phpmailer')) require "phpmailer.php";
       $mail = new PHPMailer();
       $mail->From = $_SERVER['SERVER_ADMIN'];
       $mail->FromName = "Orca Search Spider";
@@ -269,7 +267,7 @@ if ($_DDATA['online']) {
       $mail->AddAddress($address[1], $address[0]);
       $mail->Subject = "{$_LANG['0lo']}: {$_SERVER['HTTP_HOST']} Orca Search";
       $mail->Body = sprintf($_LANG['0m2'], date("Y-m-d", $_VDATA['s.cachetime']), date("Y-m-d"))."\n\n";
-      $mail->Body .= "{$_LANG['0m3']}\n  {$_SDATA['protocol']}://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\n\n";
+      $mail->Body .= "{$_LANG['0m3']}\n  {$_SDATA['scheme']}://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\n\n";
       $mail->Body .= " {$_LANG['0lr']}   {$_LANG['0lp']}\n";
       $mail->Body .= "______ _______________________________________________________________\n";
 
@@ -301,10 +299,10 @@ if ($_DDATA['online']) {
 
   /* ****************************************************************
   ******** Search ************************************************ */
-  if (isset($_GET['q']) && $_GET['q'] = trim($_GET['q'])) {
+  if (isset($_REQUEST['q']) && $_REQUEST['q'] = trim($_REQUEST['q'])) {
     $_QUERY = array();
 
-    $_QUERY['query'] = $_QUERY['original'] = $_GET['q'];
+    $_QUERY['query'] = $_QUERY['original'] = $_REQUEST['q'];
 
     preg_match_all("/[!+\-]?\".*?\"/", $_QUERY['query'], $quotes);
     $_QUERY['terms'] = str_replace('"', "", $quotes[0]);
@@ -437,7 +435,7 @@ if ($_DDATA['online']) {
         $_RESULTS = $_SDATA['count'][0]['cache'];
         $_RESULTS = unserialize(($_VDATA['s.cachegzip'] == "on") ? gzuncompress($_RESULTS) : stripslashes($_RESULTS));
 
-        if (!isset($_GET['start'])) {
+        if (!isset($_REQUEST['start'])) {
           $update = $_DDATA['link']->query("UPDATE `{$_DDATA['tablestat']}` SET
             `hits`=`hits`+1,
             `lasthit`=UNIX_TIMESTAMP(),
@@ -446,7 +444,7 @@ if ($_DDATA['online']) {
         }
       }
 
-      $_QUERY['category'] = $_GET['c'];
+      $_QUERY['category'] = $_REQUEST['c'];
       if ($_QUERY['category'] != "") {
         $_RESULTS = array_filter($_RESULTS, create_function('$v', 'global $_QUERY; return ($v[\'category\'] != $_QUERY[\'category\']) ? false : true;'));
         $_RESULTS = array_values($_RESULTS);
