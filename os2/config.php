@@ -417,13 +417,6 @@ class OS_Fetcher {
       $this->status = 6;
       $this->errstr = "$errno ~ $erstr";
     }
-
-    $currenttime = timerVal();
-    $totaltime = $currenttime - $starttime;
-    if ($debug) {
-      echo '<p>Time to fetch remote socket ('.$remote_socket.'): '.$totaltime.'</p>'."\n";
-      exit;
-    }
   }
 }
 
