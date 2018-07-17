@@ -1,5 +1,11 @@
 <?php /* ***** Orca Search - Spidering Engine ******************** */
 
+// Import PHPMailer classes into the global namespace
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
 
 $_SDATA['lang'] = true;
 include "config.php";
@@ -642,7 +648,6 @@ if ($_VDATA['sp.utf8'] == "true") {
 
 
 /* ***** Mail Data *********************************************** */
-require_once "phpmailer.php";
 $mail = new PHPMailer();
 $mail->From = $_SERVER['SERVER_ADMIN'];
 $mail->FromName = "Orca Search Spider";

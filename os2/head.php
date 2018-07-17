@@ -69,6 +69,13 @@
 *          => Relevance score
 ****************************************************************** */
 
+// Import PHPMailer classes into the global namespace
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
 /* ******************************************************************
 ******** Functions *********************************************** */
 function OS_mysqlFormat($input, $neg) {
@@ -251,7 +258,6 @@ if ($_DDATA['online']) {
 
   if ($_VDATA['s.cachetime'] < (time() - $_VDATA['s.cachereset'] * 86400)) {
     if ($address = trim($_VDATA['s.cacheemail'])) {
-      if (!class_exists('phpmailer')) require "phpmailer.php";
       $mail = new PHPMailer();
       $mail->From = $_SERVER['SERVER_ADMIN'];
       $mail->FromName = "Orca Search Spider";
