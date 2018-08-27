@@ -4,8 +4,10 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-//Load Composer's autoloader
-require 'vendor/autoload.php';
+//Load PHPMailer required files
+require 'phpmailer/PHPMailer.php';
+require 'phpmailer/Exception.php';
+require 'phpmailer/SMTP.php';
 
 $_SDATA['lang'] = true;
 include "config.php";
