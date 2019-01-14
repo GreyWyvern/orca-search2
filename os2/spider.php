@@ -914,7 +914,8 @@ body div#lower ul { margin-top:8px; }
             if ($fpage->status > 1) continue;
             $page->md5 = ($fpage->status == 1) ? $_EXISTING['md5'] : (($page->body) ? md5($page->body) : md5($page->uri));
 
-            $dbl = $_DDATA['link']->query("SELECT `uri` FROM `{$_DDATA['tabletemp']}` WHERE `uri`!='".addslashes($page->uri)."' AND `md5`='{$page->md5}';")->fetchAll();
+            // $dbl = $_DDATA['link']->query("SELECT `uri` FROM `{$_DDATA['tabletemp']}` WHERE `uri`!='".addslashes($page->uri)."' AND `md5`='{$page->md5}';")->fetchAll();
+            $dbl = $_DDATA['link']->query("SELECT `uri` FROM `{$_DDATA['tabletemp']}` WHERE `md5`='{$page->md5}';")->fetchAll();
             for ($x = 0, $dblskip = false; $x < count($dbl); $x++) {
               $dbluri = $dbl[$x]['uri'];
               if (isset($_XDATA['scanned'][$dbluri])) {
@@ -925,7 +926,7 @@ body div#lower ul { margin-top:8px; }
                   if ($pka > $pkb || ($pka == $pkb && strlen($page->uri) > strlen($dbluri))) {
                     list($pka, $pkb) = array($page->uri, $dbluri);
                   } else list($pka, $pkb) = array($dbluri, $page->uri);
-                  $delete = $_DDATA['link']->query("DELETE FROM `{$_DDATA['tabletemp']}` WHERE `uri`='".addslashes($pka)."';");
+                  $delete = $_DDATA['link']->query("DELETE FROM `{$_DDATA['tabletemp']}` WHERE `uri`='".addslashes($pka)."' LIMIT 1;");
                   echo "<h3 class=\"notice\">&bull; ", $_LOG[] = sprintf(($delete->rowCount()) ? $_LANG['0pl'] : $_LANG['0pm'], $pka, $pkb, $_XDATA['scanned'][$pka]." + ".$_XDATA['scanned'][$pkb]), "</h3>\n";
                   if ($pka == $page->uri) $dblskip = true;
                 }
