@@ -73,10 +73,12 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-//Load PHPMailer required files
-require 'phpmailer/PHPMailer.php';
-require 'phpmailer/Exception.php';
-require 'phpmailer/SMTP.php';
+if (!class_exists('PHPMailer')) {
+	//Load PHPMailer required files
+	require 'phpmailer/PHPMailer.php';
+	require 'phpmailer/Exception.php';
+	require 'phpmailer/SMTP.php';
+}
 
 /* ******************************************************************
 ******** Functions *********************************************** */
@@ -124,8 +126,9 @@ function OS_addRelevance(&$value, $terms, $multiplier) {
     }
 
     reset($areas);
-    while (list($key, $val) = each($areas))
+    foreach($areas as $key => $val) {
       $value['relevance'] += $_VDATA['s.weight'][$key] * min($foundlimit, $found[$val]) * $multiplier;
+    }
     if ($value['relevance'] > $relevance) $multi++;
 
     unset($matchtext);
@@ -317,7 +320,7 @@ if ($_DDATA['online']) {
     $_QUERY['query'] = preg_replace(array("/[!+\-]?\".*?\"/", "/\"/", "/\s{2,}/"), array("", "", " "), $_QUERY['query']);
     $_QUERY['terms'] = array_merge($_QUERY['terms'], explode(" ", $_QUERY['query']));
     $_QUERY['allterms'] = $_QUERY['terms'];
-    $_QUERY['terms'] = array_filter($_QUERY['terms'], create_function('$value', 'return (strlen($value) >= '.$_VDATA['s.termlength'].') ? true : false;'));
+    $_QUERY['terms'] = array_filter($_QUERY['terms'], function($value) { global $_VDATA; return (strlen($value) >= $_VDATA['s.termlength']) ? true : false; } );
     $_QUERY['terms'] = array_slice($_QUERY['terms'], 0, $_VDATA['s.termlimit']);
 
     $_QUERY['sorted'] = $_QUERY['terms'];
@@ -333,8 +336,8 @@ if ($_DDATA['online']) {
           $_QUERY['and'] = preg_grep("/^\+/", $_QUERY['terms']);
           $_QUERY['not'] = preg_grep("/^[!\-]/", $_QUERY['terms']);
           $_QUERY['or'] = array_diff($_QUERY['terms'], $_QUERY['and'], $_QUERY['not']);
-          array_walk($_QUERY['and'], create_function('&$v, $k', '$v = substr($v, 1);'));
-          array_walk($_QUERY['not'], create_function('&$v, $k', '$v = substr($v, 1);'));
+          array_walk($_QUERY['and'], function(&$v, $k) { $v = substr($v, 1); });
+          array_walk($_QUERY['not'], function(&$v, $k) { $v = substr($v, 1); });
           $_QUERY['andor'] = array_merge($_QUERY['and'], $_QUERY['or']);
 
           $_QUERY['typey'] = preg_grep("/^filetype:\w+/", $_QUERY['andor']);
@@ -407,7 +410,7 @@ if ($_DDATA['online']) {
 
           $_DDATA['link']->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
           if (count($_RESULTS)) {
-            usort($_RESULTS, create_function('$a, $b', 'return($a["relevance"]==$b["relevance"])?0:(($a["relevance"]>$b["relevance"])?-1:1);'));
+            usort($_RESULTS, function($a, $b) { return ($a["relevance"] == $b["relevance"]) ? 0 : (($a["relevance"] > $b["relevance"]) ? -1 : 1); });
             $_RESULTS = array_slice($_RESULTS, 0, ($_VDATA['s.resultlimit']) ? $_VDATA['s.resultlimit'] : max(5, min(100, ceil($_SDATA['totalRows'] / 6))));
           }
 
@@ -454,7 +457,7 @@ if ($_DDATA['online']) {
 
       $_QUERY['category'] = $_REQUEST['c'];
       if ($_QUERY['category'] != "") {
-        $_RESULTS = array_filter($_RESULTS, create_function('$v', 'global $_QUERY; return ($v[\'category\'] != $_QUERY[\'category\']) ? false : true;'));
+        $_RESULTS = array_filter($_RESULTS, function($v) { global $_QUERY; return ($v['category'] != $_QUERY['category']) ? false : true; } );
         $_RESULTS = array_values($_RESULTS);
       }
     }

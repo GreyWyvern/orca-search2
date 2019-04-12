@@ -117,7 +117,7 @@ if ($_CDATA['loggedIn']) {
     }
   } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
     reset($_POST);
-    while (list($key, $value) = each($_POST)) {
+    foreach($_POST as $key => $value) {
       if (strpos($key, "_")) {
         $command = explode("_", $key);
         $_CDATA['command'] = $command[0];
@@ -493,7 +493,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
       OS_setData("c.location", "Spider");
       switch ($_CDATA['spider']) {
         case "Edit": /* ****************************************** */
-          $_POST = array_map(create_function('$v', 'return str_replace("\r", "", $v);'), $_POST);
+          $_POST = array_map(function($v) { return str_replace("\r", "", $v); }, $_POST);
 
           if ($_POST['pathto'] = trim($_POST['pathto'])) {
             if (!preg_match("/^{$_SDATA['scheme']}:\/\//", $_POST['pathto'])) $_POST['pathto'] = "{$_SDATA['scheme']}://{$_POST['pathto']}";
@@ -502,7 +502,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
 
           if ($_POST['start'] = trim($_POST['start'])) {
             $_POST['start'] = preg_grep("/^{$_SDATA['scheme']}:\/\/\w/", array_map("trim", explode("\n", $_POST['start'])));
-            while (list($key, $value) = each($_POST['start'])) {
+            foreach($_POST['start'] as $key => $value) {
               $uri = parse_url($value);
               if (isset($uri['host']) && !isset($uri['path'])) $_POST['start'][$key] .= "/";
             }
@@ -619,7 +619,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
           break;
 
         case "Edit": /* ****************************************** */
-          $_POST = array_map(create_function('$v', 'return str_replace("\r", "", $v);'), $_POST);
+          $_POST = array_map(function($v) { return str_replace("\r", "", $v); }, $_POST);
 
           $_POST['ignore'] = preg_replace("/\n{2,}/", "\n", trim($_POST['ignore']));
           OS_setData("s.ignore", $_POST['ignore']);
@@ -795,7 +795,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
     /* *********************************************************** */
     case "jwriter";
       OS_setData("c.location", "Tools");
-      $_POST = array_map(create_function('$v', 'return str_replace("\r", "", $v);'), $_POST);
+      $_POST = array_map(function($v) { return str_replace("\r", "", $v); }, $_POST);
       switch ($_CDATA['jwriter']) {
         case "Options": /* *************************************** */
           OS_setData("jw.hide", (isset($_POST['hide'])) ? "false" : "true");
@@ -1209,7 +1209,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                 <var><select name="domain" size="1"<?php if (!count($_CDATA['domains'])) echo " disabled=\"disabled\""; ?>>
                   <?php if (count($_CDATA['domains'])) {
                     reset ($_CDATA['domains']);
-                    while (list($key,) = each($_CDATA['domains'])) { ?> 
+                    foreach($_CDATA['domains'] as $key => $value) { ?> 
                       <option value="<?php echo $key; ?>"<?php if ($key == $_VDATA['sm.domain']) echo " selected=\"selected\""; ?>><?php echo $key; ?></option><?php
                     }
                   } else { ?> 
@@ -1906,7 +1906,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                   <ul>
                     <li><h4><?php echo $_LANG['0fa']; ?></h4>
                       <select name="changefreq" size="1">
-                        <?php while (list($key, $value) = each($_LANG['langcf'])) {
+                        <?php foreach($_LANG['langcf'] as $key => $value) {
                           ?><option value="<?php echo $key; ?>"<?php if ($key == "weekly") echo " selected=\"selected\""; ?>><?php echo $value; ?></option>
                           <?php
                         } ?> 
@@ -1993,7 +1993,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                   </li>
                   <li><h4><?php echo $_LANG['0fs']; ?></h4>
                     <select name="changefreq" size="1"<?php if ($_VDATA['sm.changefreq'] == "true") echo " disabled=\"disabled\""; ?>>
-                      <?php while (list($key, $value) = each($_LANG['langcf'])) {
+                      <?php foreach($_LANG['langcf'] as $key => $value) {
                         ?><option value="<?php echo $key; ?>"<?php if ($_CDATA['row']['sm.changefreq'] == $key) echo " selected=\"selected\""; ?>><?php echo $value; ?></option>
                         <?php
                       } ?> 
