@@ -74,7 +74,7 @@ class OS_TypeList {
 
     clearstatcache();
     reset($this->ctype);
-    while (list($key, $value) = each($this->ctype)) {
+    foreach($this->ctype as $key => $value) {
       $this->ctype[$key]->index = false;
       $this->ctype[$key]->ready = false;
       if (in_array($key, $_SDATA['sp.type.index'])) $this->ctype[$key]->index = true;
@@ -238,8 +238,9 @@ class OS_Fetcher {
         $cooky = new OS_Cookie($cooky[1], $this->parsed['host'], $this->parsed['path']);
         if ($cooky->valid) {
           reset($this->cookies);
-          while (list($key, $value) = each($this->cookies))
+          foreach($this->cookies as $key => $value) {
             if ($cooky->name == $value->name && $cooky->domain == $value->domain && $cooky->path == $value->path) unset($this->cookies[$key]);
+          }
           if (!$cooky->expired) $this->cookies[] = $cooky;
         }
       }
@@ -350,8 +351,9 @@ class OS_Fetcher {
             $cooky = new OS_Cookie($cooky[1], $this->parsed['host'], $this->parsed['path']);
             if ($cooky->valid) {
               reset($this->cookies);
-              while (list($key, $value) = each($this->cookies))
+              foreach($this->cookies as $key => $value) {
                 if ($cooky->name == $value->name && $cooky->domain == $value->domain && $cooky->path == $value->path) unset($this->cookies[$key]);
+              }
               if (!$cooky->expired) $this->cookies[] = $cooky;
             }
           }

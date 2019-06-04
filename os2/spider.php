@@ -4,10 +4,12 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-//Load PHPMailer required files
-require 'phpmailer/PHPMailer.php';
-require 'phpmailer/Exception.php';
-require 'phpmailer/SMTP.php';
+if (!class_exists('PHPMailer')) {
+	//Load PHPMailer required files
+	require 'phpmailer/PHPMailer.php';
+	require 'phpmailer/Exception.php';
+	require 'phpmailer/SMTP.php';
+}
 
 $_SDATA['lang'] = true;
 include "config.php";
@@ -206,7 +208,9 @@ function OS_entities2utf8($_) {
 
   if (!count($trans)) {
     $trans = array_flip(get_html_translation_table(HTML_ENTITIES));
-    while (list($key, $value) = each($trans)) $trans[$key] = utf8_encode($value);
+    foreach($trans as $key => $value) {
+      $trans[$key] = utf8_encode($value);
+    }
 
     $trans = array_merge($trans, array(
       '&apos;'     => "'",   '&OElig;'    => "Œ",  '&oelig;'    => "œ",  '&Scaron;'   => "Š",  '&scaron;'   => "š",
@@ -242,7 +246,7 @@ function OS_entities2utf8($_) {
       '&clubs;'    => "♣", '&hearts;'   => "♥", '&diams;'    => "♦"
     ));
 
-    uksort($trans, create_function('$k1, $k2', 'return ($k1 == "&amp;") ? 1 : -1;'));
+    uksort($trans, function($k1, $k2) { return ($k1 == "&amp;") ? 1 : -1; } );
   }
 
   $_ = preg_replace_callback("/&#(\d{2,7});/", function($_) { return OS_unichr($_[1]); }, $_);
@@ -428,7 +432,7 @@ class OS_Resource {
       if (isset($this->metatags[0])) {
         $this->metatags = $this->metatags[0];
 
-        while (list($key, $value) = each($this->metatags)) {
+        foreach($this->metatags as $key => $value) {
           $value = $this->metatags[$key] = OS_parseHTMLTag($value);
 
           if (isset($value['content'])) {
@@ -768,7 +772,7 @@ body div#lower ul { margin-top:8px; }
               if (preg_match("/^[^#]*?Disallow:(.*?)($|#)/i", $line, $match)) {
                 if ($match[1] = trim($match[1])) {
                   if ($match[1]{0} == "/") $_XDATA['robotsCancel'][] = $allDomains.$match[1];
-                } else $_XDATA['robotsCancel'] = array_values(array_filter($_XDATA['robotsCancel'], create_function('$a', 'return (strpos($a, "'.$allDomains.'") === false);')));
+                } else $_XDATA['robotsCancel'] = array_values(array_filter($_XDATA['robotsCancel'], function($a) { return (strpos($a, "'.$allDomains.'") === false); }));
               }
             }
           }
@@ -831,7 +835,8 @@ body div#lower ul { margin-top:8px; }
             }
 
             reset($_XDATA['queue']);
-            list($uri, $value) = each($_XDATA['queue']);
+            $uri = key($_XDATA['queue']);
+            $value = current($_XDATA['queue']);
             $page = new OS_Resource($uri, $value);
             array_shift($_XDATA['queue']);
             $_XDATA['scanned'][$page->uri] = $page->referer;
@@ -978,7 +983,7 @@ body div#lower ul { margin-top:8px; }
                           $_XDATA['cleanup']))))) {
                 $page->links = array_filter(explode("\n", $_EXISTING['links']));
                 $lalt = false;
-                while (list($key, $value) = each($page->links)) {
+                foreach($page->links as $key => $value) {
                   $valid = OS_add2Queue($value, $page->uri, $page->depth);
                   if (!$valid) {
                     $lalt = true;
@@ -1411,7 +1416,7 @@ body div#lower ul { margin-top:8px; }
           </tr>
         </thead>
         <tbody><?php
-          while (list($key, $value) = each($_TIMER)) {
+          foreach($_TIMER as $key => $value) {
             if ($key != "__log") { ?> 
               <tr>
                 <th><?php echo $key; ?></th>
