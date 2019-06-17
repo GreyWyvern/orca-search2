@@ -1240,9 +1240,8 @@ body div#lower ul { margin-top:8px; }
           echo "<h3 class=\"notice warning\">", $_LOG[] = sprintf($_LANG['03o'], $_XDATA['tempfile']), "</h3>\n";
 
         if ($_VDATA['sp.seamless'] == "true") {
-          $truncate = $_DDATA['link']->query("TRUNCATE TABLE `{$_DDATA['tablename']}`;");
-          $insert = $_DDATA['link']->query("INSERT INTO `{$_DDATA['tablename']}` SELECT * FROM `{$_DDATA['tabletemp']}`;");
-          $drop = $_DDATA['link']->query("DROP TABLE `{$_DDATA['tabletemp']}`;");
+          $drop = $_DDATA['link']->query("DROP TABLE `{$_DDATA['tablename']}`;");
+          $rename = $_DDATA['link']->query("RENAME TABLE `{$_DDATA['tabletemp']}` TO `{$_DDATA['tablename']}`;");
         }
         $optimize = $_DDATA['link']->query("OPTIMIZE TABLE `{$_DDATA['tablename']}`;");
         $update = $_DDATA['link']->query("UPDATE `{$_DDATA['tablestat']}` SET `cache`='';");
