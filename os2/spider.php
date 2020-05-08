@@ -1,15 +1,5 @@
 <?php /* ***** Orca Search - Spidering Engine ******************** */
 
-// Import PHPMailer classes into the global namespace
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-if (!class_exists('PHPMailer')) {
-	//Load PHPMailer required files
-	require 'phpmailer/PHPMailer.php';
-	require 'phpmailer/Exception.php';
-	require 'phpmailer/SMTP.php';
-}
 
 $_SDATA['lang'] = true;
 include "config.php";
@@ -246,7 +236,9 @@ function OS_entities2utf8($_) {
       '&clubs;'    => "♣", '&hearts;'   => "♥", '&diams;'    => "♦"
     ));
 
-    uksort($trans, function($k1, $k2) { return ($k1 == "&amp;") ? 1 : -1; } );
+    uksort($trans, function($k1, $k2) {
+      return ($k1 == "&amp;") ? 1 : -1;
+    });
   }
 
   $_ = preg_replace_callback("/&#(\d{2,7});/", function($_) { return OS_unichr($_[1]); }, $_);
@@ -562,7 +554,7 @@ $_XDATA['noSpider']         = array_filter(array_map("OS_pquote", explode("\n", 
 $_XDATA['titleStrip']       = array_filter(array_map("OS_pquote", explode("\n", $_VDATA['sp.remtitle'])));
 $_XDATA['autoCat']          = array_filter(array_map("trim", explode("\n", $_VDATA['sp.autocat'])));
 $_XDATA['ignoreExtensions'] = array_map("trim", explode(" ", $_VDATA['sp.extensions']));
-foreach($_XDATA['ignoreExtensions'] as $ignoreExtensions)
+foreach ($_XDATA['ignoreExtensions'] as $ignoreExtensions)
   $_XDATA['noSpider'][]     = "\.".preg_quote($ignoreExtensions)."(\?|$)";
 
 $_XDATA['checkRobots']      = true;
@@ -654,7 +646,7 @@ if ($_VDATA['sp.utf8'] == "true") {
 
 
 /* ***** Mail Data *********************************************** */
-$mail = new PHPMailer();
+$mail = new PHPMailer\PHPMailer\PHPMailer();
 $mail->From = $_SERVER['SERVER_ADMIN'];
 $mail->FromName = "Orca Search Spider";
 $mail->CharSet = $_VDATA['c.charset'];
@@ -772,7 +764,12 @@ body div#lower ul { margin-top:8px; }
               if (preg_match("/^[^#]*?Disallow:(.*?)($|#)/i", $line, $match)) {
                 if ($match[1] = trim($match[1])) {
                   if ($match[1]{0} == "/") $_XDATA['robotsCancel'][] = $allDomains.$match[1];
-                } else $_XDATA['robotsCancel'] = array_values(array_filter($_XDATA['robotsCancel'], function($a) { return (strpos($a, "'.$allDomains.'") === false); }));
+                } else {
+                  $_XDATA['robotsCancel'] = array_values(array_filter($_XDATA['robotsCancel'], function($a) {
+                    global $allDomains;
+                    return (strpos($a, $allDomains) === false);
+                  }));
+                }
               }
             }
           }
@@ -839,6 +836,7 @@ body div#lower ul { margin-top:8px; }
             $value = current($_XDATA['queue']);
             $page = new OS_Resource($uri, $value);
             array_shift($_XDATA['queue']);
+            if (isset($_XDATA['scanned'][$page->uri])) continue;
             $_XDATA['scanned'][$page->uri] = $page->referer;
 
             $select = $_DDATA['link']->query("SELECT `md5`, `status`, `links`, `locked`, `sm.lastmod`, `sm.changefreq` FROM `{$_DDATA['tabletemp']}` WHERE `uri`='".addslashes($page->uri)."' LIMIT 1;")->fetchAll();
@@ -926,8 +924,8 @@ body div#lower ul { margin-top:8px; }
             if ($fpage->status > 1) continue;
             $page->md5 = ($fpage->status == 1) ? $_EXISTING['md5'] : (($page->body) ? md5($page->body) : md5($page->uri));
 
-            // $dbl = $_DDATA['link']->query("SELECT `uri` FROM `{$_DDATA['tabletemp']}` WHERE `uri`!='".addslashes($page->uri)."' AND `md5`='{$page->md5}';")->fetchAll();
-            $dbl = $_DDATA['link']->query("SELECT `uri` FROM `{$_DDATA['tabletemp']}` WHERE `md5`='{$page->md5}';")->fetchAll();
+            $dbl = $_DDATA['link']->query("SELECT `uri` FROM `{$_DDATA['tabletemp']}` WHERE `uri`!='".addslashes($page->uri)."' AND `md5`='{$page->md5}';")->fetchAll();
+            // $dbl = $_DDATA['link']->query("SELECT `uri` FROM `{$_DDATA['tabletemp']}` WHERE `md5`='{$page->md5}';")->fetchAll();
             for ($x = 0, $dblskip = false; $x < count($dbl); $x++) {
               $dbluri = $dbl[$x]['uri'];
               if (isset($_XDATA['scanned'][$dbluri])) {
@@ -1023,7 +1021,7 @@ body div#lower ul { margin-top:8px; }
                               $_LOG[] = "--> ".sprintf($_LANG['0qd'], $page->uri);
                             }
                           }
-                          continue;
+                          continue 2;
                         }
 
                         if (!$page->nofollow) {
@@ -1100,7 +1098,7 @@ body div#lower ul { margin-top:8px; }
 
                         } else {
                           $page->setStatus("Blocked");
-                          continue;
+                          continue 2;
                         }
                         break;
 
@@ -1117,13 +1115,13 @@ body div#lower ul { margin-top:8px; }
                             break;
                           case -1: // Error
                             $page->setStatus("Blocked");
-                            continue;
+                            continue 3;
                         }
                     }
 
                   } else {
                     $page->setStatus("Blocked");
-                    continue;
+                    continue 2;
                   }
 
                 } else {
@@ -1164,7 +1162,6 @@ body div#lower ul { margin-top:8px; }
 
                 } else {
                   $category = $_VDATA['sp.defcat'];
-                  reset($_XDATA['autoCat']);
                   foreach ($_XDATA['autoCat'] as $autoCat) {
                     $against = "";
                     if (strpos($autoCat, $sep = ":::")) {
@@ -1180,26 +1177,30 @@ body div#lower ul { margin-top:8px; }
                     }
                   }
 
-                  $insert = $_DDATA['link']->query("INSERT INTO `{$_DDATA['tabletemp']}` SET
-                    `uri`='".addslashes($page->uri)."',
-                    `md5`='{$page->md5}',
-                    `ctype`='{$page->ctype}',
-                    `title`='{$page->title}',
-                    `category`='$category',
-                    `description`='{$page->description}',
-                    `keywords`='{$page->keywords}',
-                    `wtags`='{$page->wtags}',
-                    `body`='{$page->body}',
-                    `links`='{$page->links}',
-                    `encoding`='{$page->charset}',
-                    `sm.lastmod`=UNIX_TIMESTAMP()
-                  ;");
-                  if ($insert->rowCount()) $_XDATA['stats']['New']++;
+                  // Check if it already exists???
+                  // $select = $_DDATA['link']->query("SELECT `md5` FROM `{$_DDATA['tabletemp']}` WHERE `uri`='".addslashes($page->uri)."';")->fetchAll();
+                  // if (!count($select)) {
+
+                    $insert = $_DDATA['link']->query("INSERT INTO `{$_DDATA['tabletemp']}` SET
+                      `uri`='".addslashes($page->uri)."',
+                      `md5`='{$page->md5}',
+                      `ctype`='{$page->ctype}',
+                      `title`='{$page->title}',
+                      `category`='$category',
+                      `description`='{$page->description}',
+                      `keywords`='{$page->keywords}',
+                      `wtags`='{$page->wtags}',
+                      `body`='{$page->body}',
+                      `links`='{$page->links}',
+                      `encoding`='{$page->charset}',
+                      `sm.lastmod`=UNIX_TIMESTAMP()
+                    ;");
+                    if ($insert->rowCount()) $_XDATA['stats']['New']++;
 
 
-                  addTime("MySQL");
+                    addTime("MySQL");
 
-
+                  // }
                 }
               }
             }

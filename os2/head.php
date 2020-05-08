@@ -69,16 +69,6 @@
 *          => Relevance score
 ****************************************************************** */
 
-// Import PHPMailer classes into the global namespace
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-if (!class_exists('PHPMailer')) {
-	//Load PHPMailer required files
-	require 'phpmailer/PHPMailer.php';
-	require 'phpmailer/Exception.php';
-	require 'phpmailer/SMTP.php';
-}
 
 /* ******************************************************************
 ******** Functions *********************************************** */
@@ -125,7 +115,6 @@ function OS_addRelevance(&$value, $terms, $multiplier) {
       } else $found[$area] = 0;
     }
 
-    reset($areas);
     foreach($areas as $key => $val) {
       $value['relevance'] += $_VDATA['s.weight'][$key] * min($foundlimit, $found[$val]) * $multiplier;
     }
@@ -248,7 +237,7 @@ if ($_DDATA['online']) {
 
   $_SDATA['nq'] = "";
   foreach ($_SDATA['noSearch'] as $noSearch)
-    $_SDATA['nq'] .= " AND `uri` NOT ".(($noSearch{0} == "*") ? "REGEXP '".substr($noSearch, 1)."'": " LIKE '%{$noSearch}%'");
+    $_SDATA['nq'] .= " AND `uri` NOT ".(($noSearch[0] == "*") ? "REGEXP '".substr($noSearch, 1)."'": " LIKE '%{$noSearch}%'");
 
   $trow = $_DDATA['link']->query("SELECT COUNT(*) FROM `{$_DDATA['tablename']}` WHERE `unlist`='false'{$_SDATA['lq']}{$_SDATA['nq']};")->fetchAll(PDO::FETCH_NUM);
   list($_SDATA['totalRows']) = array_shift($trow);
@@ -263,7 +252,7 @@ if ($_DDATA['online']) {
 
   if ($_VDATA['s.cachetime'] < (time() - $_VDATA['s.cachereset'] * 86400)) {
     if ($address = trim($_VDATA['s.cacheemail'])) {
-      $mail = new PHPMailer();
+      $mail = new PHPMailer\PHPMailer\PHPMailer();
       $mail->From = $_SERVER['SERVER_ADMIN'];
       $mail->FromName = "Orca Search Spider";
       $mail->CharSet = $_VDATA['c.charset'];
@@ -320,7 +309,10 @@ if ($_DDATA['online']) {
     $_QUERY['query'] = preg_replace(array("/[!+\-]?\".*?\"/", "/\"/", "/\s{2,}/"), array("", "", " "), $_QUERY['query']);
     $_QUERY['terms'] = array_merge($_QUERY['terms'], explode(" ", $_QUERY['query']));
     $_QUERY['allterms'] = $_QUERY['terms'];
-    $_QUERY['terms'] = array_filter($_QUERY['terms'], function($value) { global $_VDATA; return (strlen($value) >= $_VDATA['s.termlength']) ? true : false; } );
+    $_QUERY['terms'] = array_filter($_QUERY['terms'], function($value) {
+      global $_VDATA;
+      return (strlen($value) >= $_VDATA['s.termlength']) ? true : false;
+    });
     $_QUERY['terms'] = array_slice($_QUERY['terms'], 0, $_VDATA['s.termlimit']);
 
     $_QUERY['sorted'] = $_QUERY['terms'];
@@ -377,8 +369,8 @@ if ($_DDATA['online']) {
 
             if ($uri['matchText']) {
               $uri['matchText'] = trim(substr($uri['matchText'], 0, strlen($uri['matchText']) - 5));
-              if (preg_match("/^[^A-Z]/", $uri['matchText']{0})) $uri['matchText'] = " ... ".$uri['matchText'];
-              if (preg_match("/[^.?!]/", $uri['matchText']{strlen($uri['matchText']) - 1})) $uri['matchText'] .= " ... ";
+              if (preg_match("/^[^A-Z]/", $uri['matchText'][0])) $uri['matchText'] = " ... ".$uri['matchText'];
+              if (preg_match("/[^.?!]/", $uri['matchText'][strlen($uri['matchText']) - 1])) $uri['matchText'] .= " ... ";
               $uri['matchText'] = str_replace(array("\n", "\r"), "", $uri['matchText']);
             } else if (trim($uri['description'])) {
               $uri['matchText'] = $uri['description'];
@@ -410,7 +402,9 @@ if ($_DDATA['online']) {
 
           $_DDATA['link']->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
           if (count($_RESULTS)) {
-            usort($_RESULTS, function($a, $b) { return ($a["relevance"] == $b["relevance"]) ? 0 : (($a["relevance"] > $b["relevance"]) ? -1 : 1); });
+            usort($_RESULTS, function($a, $b) {
+              return ($a["relevance"] == $b["relevance"]) ? 0 : (($a["relevance"] > $b["relevance"]) ? -1 : 1);
+            });
             $_RESULTS = array_slice($_RESULTS, 0, ($_VDATA['s.resultlimit']) ? $_VDATA['s.resultlimit'] : max(5, min(100, ceil($_SDATA['totalRows'] / 6))));
           }
 
@@ -457,7 +451,10 @@ if ($_DDATA['online']) {
 
       $_QUERY['category'] = $_REQUEST['c'];
       if ($_QUERY['category'] != "") {
-        $_RESULTS = array_filter($_RESULTS, function($v) { global $_QUERY; return ($v['category'] != $_QUERY['category']) ? false : true; } );
+        $_RESULTS = array_filter($_RESULTS, function($v) {
+          global $_QUERY;
+          return ($v['category'] != $_QUERY['category']) ? false : true;
+        });
         $_RESULTS = array_values($_RESULTS);
       }
     }

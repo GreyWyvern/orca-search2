@@ -214,7 +214,7 @@ body a#goback { display:block; text-align:center; font:bold 125% sans-serif; bor
       }
     }
 
-    reset($_ALL);
+
     $wl = floor($rowcount / 3);
     foreach($_ALL as $key => $value) {
       if ($value <= $wl) unset($_ALL[$key]);

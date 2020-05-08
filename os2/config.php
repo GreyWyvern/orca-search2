@@ -73,7 +73,6 @@ class OS_TypeList {
     global $_SDATA;
 
     clearstatcache();
-    reset($this->ctype);
     foreach($this->ctype as $key => $value) {
       $this->ctype[$key]->index = false;
       $this->ctype[$key]->ready = false;
@@ -237,7 +236,6 @@ class OS_Fetcher {
       if (preg_match("/^Set-Cookie:\s*([^\r\n]*?)[\r\n]/i", $header, $cooky)) {
         $cooky = new OS_Cookie($cooky[1], $this->parsed['host'], $this->parsed['path']);
         if ($cooky->valid) {
-          reset($this->cookies);
           foreach($this->cookies as $key => $value) {
             if ($cooky->name == $value->name && $cooky->domain == $value->domain && $cooky->path == $value->path) unset($this->cookies[$key]);
           }
@@ -350,7 +348,6 @@ class OS_Fetcher {
           if (preg_match("/^Set-Cookie:\s*([^\r\n]*?)[\r\n]/i", $data, $cooky)) {
             $cooky = new OS_Cookie($cooky[1], $this->parsed['host'], $this->parsed['path']);
             if ($cooky->valid) {
-              reset($this->cookies);
               foreach($this->cookies as $key => $value) {
                 if ($cooky->name == $value->name && $cooky->domain == $value->domain && $cooky->path == $value->path) unset($this->cookies[$key]);
               }
@@ -507,6 +504,12 @@ function timerVal() {
 ******** Begin Program ******************************************* */
 error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
 $_SDATA['now'] = array_sum(explode(" ", microtime()));
+
+if (!class_exists('PHPMailer\PHPMailer\PHPMailer')) {
+  require 'phpmailer/PHPMailer.php';
+  require 'phpmailer/Exception.php';
+  require 'phpmailer/SMTP.php';
+}
 
 
 /* ***** Include User Variables ********************************** */

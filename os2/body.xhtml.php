@@ -49,7 +49,7 @@ if ($langfile = @fopen("{$_SERVER['DOCUMENT_ROOT']}/{$_SDATA['directory']}/body.
     $langfile = @fopen("body.xhtml.lang.txt", "r")) {
   while (!feof($langfile)) {
     $line = fgets($langfile);
-    if (strpos($line, "=") && $line{0} != "#") {
+    if (strpos($line, "=") && $line[0] != "#") {
       $line = explode("=", $line, 2);
       if (trim($line[1]) == "{") {
         $_OLANG[$line[0]] = "";
@@ -260,6 +260,6 @@ if (!isset($_QUERY['original'])) $_QUERY['original'] = "";
 
   <div style="text-align:center;font:italic 80% Arial,sans-serif;">
     <hr style="width:60%;margin:10px auto 2px auto;" />
-    An <a href="http://www.greywyvern.com/" title="GreyWyvern.com">Orca</a> Script
+    An <a href="https://greywyvern.com/" title="GreyWyvern.com">Orca</a> Script
   </div>
 </div>

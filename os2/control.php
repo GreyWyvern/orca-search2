@@ -116,7 +116,6 @@ if ($_CDATA['loggedIn']) {
     } else {
     }
   } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    reset($_POST);
     foreach($_POST as $key => $value) {
       if (strpos($key, "_")) {
         $command = explode("_", $key);
@@ -493,7 +492,9 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
       OS_setData("c.location", "Spider");
       switch ($_CDATA['spider']) {
         case "Edit": /* ****************************************** */
-          $_POST = array_map(function($v) { return str_replace("\r", "", $v); }, $_POST);
+          $_POST = array_map(function($v) {
+            return str_replace("\r", "", $v);
+          }, $_POST);
 
           if ($_POST['pathto'] = trim($_POST['pathto'])) {
             if (!preg_match("/^{$_SDATA['scheme']}:\/\//", $_POST['pathto'])) $_POST['pathto'] = "{$_SDATA['scheme']}://{$_POST['pathto']}";
@@ -619,7 +620,9 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
           break;
 
         case "Edit": /* ****************************************** */
-          $_POST = array_map(function($v) { return str_replace("\r", "", $v); }, $_POST);
+          $_POST = array_map(function($v) {
+            return str_replace("\r", "", $v);
+          }, $_POST);
 
           $_POST['ignore'] = preg_replace("/\n{2,}/", "\n", trim($_POST['ignore']));
           OS_setData("s.ignore", $_POST['ignore']);
@@ -795,7 +798,9 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
     /* *********************************************************** */
     case "jwriter";
       OS_setData("c.location", "Tools");
-      $_POST = array_map(function($v) { return str_replace("\r", "", $v); }, $_POST);
+      $_POST = array_map(function($v) {
+        return str_replace("\r", "", $v);
+      }, $_POST);
       switch ($_CDATA['jwriter']) {
         case "Options": /* *************************************** */
           OS_setData("jw.hide", (isset($_POST['hide'])) ? "false" : "true");
@@ -1208,7 +1213,6 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
               <li class="drow">
                 <var><select name="domain" size="1"<?php if (!count($_CDATA['domains'])) echo " disabled=\"disabled\""; ?>>
                   <?php if (count($_CDATA['domains'])) {
-                    reset ($_CDATA['domains']);
                     foreach($_CDATA['domains'] as $key => $value) { ?> 
                       <option value="<?php echo $key; ?>"<?php if ($key == $_VDATA['sm.domain']) echo " selected=\"selected\""; ?>><?php echo $key; ?></option><?php
                     }
@@ -1821,7 +1825,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
             headers[0].onclick = new Function("qlsort('asc', 0);");
             headers[1].onclick = new Function("qlsort('dsc', 1);");
             headers[3].onclick = new Function("qlsort('dsc', 3);");
-            var times = [<?php foreach($timeColl as $tc) echo "$tc, "; ?>0];
+            var times = [<?php foreach ($timeColl as $tc) echo "$tc, "; ?>0];
             var qlrows = document.getElementById("querylog").tBodies[0].rows;
             var qldata = [];
             for (var x = 0; x < qlrows.length; x++) {
@@ -1882,7 +1886,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                     <li><h4><?php echo $_LANG['0f4']; ?></h4>
                       <select name="categoryExist" size="1" title="<?php echo $_LANG['0f5']; ?>" onchange="document.getElementById('editform').categoryNew.disabled=(this.value!='-')?'disabled':'';">
                         <option value="-" selected="selected"><?php echo $_LANG['0f6']; ?> &gt;&gt;</option>
-                        <?php foreach($_CDATA['categories'] as $category) { ?> 
+                        <?php foreach ($_CDATA['categories'] as $category) { ?> 
                           <option value="<?php echo htmlspecialchars($category); ?>"><?php echo htmlspecialchars($category); ?></option>
                         <?php } ?> 
                       </select>
@@ -1906,7 +1910,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                   <ul>
                     <li><h4><?php echo $_LANG['0fa']; ?></h4>
                       <select name="changefreq" size="1">
-                        <?php foreach($_LANG['langcf'] as $key => $value) {
+                        <?php foreach ($_LANG['langcf'] as $key => $value) {
                           ?><option value="<?php echo $key; ?>"<?php if ($key == "weekly") echo " selected=\"selected\""; ?>><?php echo $value; ?></option>
                           <?php
                         } ?> 
@@ -1962,7 +1966,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                 <li><h4><?php echo $_LANG['0f4']; ?></h4>
                   <select name="categoryExist" size="1" title="<?php echo $_LANG['0f5']; ?>" onchange="document.getElementById('editform').categoryNew.disabled=(this.value!='-')?'disabled':'';">
                     <option value="-"><?php echo $_LANG['0f6']; ?> &gt;&gt;</option>
-                    <?php foreach($_CDATA['categories'] as $category) { ?> 
+                    <?php foreach ($_CDATA['categories'] as $category) { ?> 
                       <option value="<?php echo htmlspecialchars($category); ?>"<?php if ($_CDATA['row']['category'] == $category) echo " selected=\"selected\""; ?>><?php echo htmlspecialchars($category); ?></option>
                     <?php } ?> 
                   </select>
@@ -1993,7 +1997,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                   </li>
                   <li><h4><?php echo $_LANG['0fs']; ?></h4>
                     <select name="changefreq" size="1"<?php if ($_VDATA['sm.changefreq'] == "true") echo " disabled=\"disabled\""; ?>>
-                      <?php foreach($_LANG['langcf'] as $key => $value) {
+                      <?php foreach ($_LANG['langcf'] as $key => $value) {
                         ?><option value="<?php echo $key; ?>"<?php if ($_CDATA['row']['sm.changefreq'] == $key) echo " selected=\"selected\""; ?>><?php echo $value; ?></option>
                         <?php
                       } ?> 
@@ -2065,7 +2069,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
                       <?php if (count($_CDATA['categories']) > 1) { ?> 
                         <select name="category" size="1" title="<?php echo $_LANG['0g4']; ?>">
                           <option value="-"<?php echo ($_VDATA['cf.category'] == "-") ? " selected=\"selected\"" : ""; ?>><?php echo $_LANG['0g6']; ?></option>
-                          <?php foreach($_CDATA['categories'] as $category) { ?> 
+                          <?php foreach ($_CDATA['categories'] as $category) { ?> 
                             <option value="<?php echo htmlspecialchars($category); ?>"<?php if ($_VDATA['cf.category'] == $category) echo " selected=\"selected\""; ?>><?php echo htmlspecialchars($category); ?></option>
                           <?php } ?> 
                         </select>
