@@ -514,7 +514,7 @@ if ($_DDATA['online'] && $_CDATA['loggedIn']) {
 
           OS_setData("sp.pagelimit", max(1, abs((int)trim($_POST['pagelimit']))));
 
-          OS_setData("sp.filesizelimit", max(1, abs((int)trim($_POST['pagelimit']))) * 1024);
+          OS_setData("sp.filesizelimit", max(1, abs((int)trim($_POST['filesizelimit']))) * 1024);
 
           if (isset($_POST['interval']))
             OS_setData("sp.interval", min(1536, abs((int)trim($_POST['interval']))));
